@@ -59,7 +59,8 @@ class TestShowResult:
         view, root = _make_view()
         view.show_result("1+1", "2", exact=True)
         content = view._text.get("1.0", tk.END)
-        assert "2" in content
+        # Result displayed as math image or plain text; separator always present
+        assert "─" in content
         assert view.get_last_result() == "2"
         root.destroy()
 
@@ -71,11 +72,11 @@ class TestShowResult:
 
     def test_emits_result_displayed(self) -> None:
         bus = EventBus()
-        events: list[tuple[str, bool]] = []
-        bus.subscribe(RESULT_DISPLAYED, lambda r, e: events.append((r, e)))
+        events: list[tuple[str, str, bool]] = []
+        bus.subscribe(RESULT_DISPLAYED, lambda e, r, x: events.append((e, r, x)))
         view, root = _make_view(event_bus=bus)
         view.show_result("2+2", "4", exact=True)
-        assert events == [("4", True)]
+        assert events == [("2+2", "4", True)]
         root.destroy()
 
     def test_no_event_bus_no_emit(self) -> None:

@@ -10,11 +10,14 @@ from __future__ import annotations
 import tkinter as tk
 from tkinter import ttk
 
+from PIL import ImageTk
+
 from pyqalculate_gui.event_bus import (
     EXPRESSION_SUBMITTED,
     RESULT_DISPLAYED,
     EventBus,
 )
+from pyqalculate_gui.math_renderer import MathRenderer
 from pyqalculate_gui.theme import LIGHT, Theme
 
 SEPARATOR_LEN = 40
@@ -38,6 +41,8 @@ class ResultView(ttk.Frame):
         self._theme = theme
         self._event_bus = event_bus
         self._last_result: str = ""
+        self._math_renderer = MathRenderer(dpi=96)
+        self._photo_refs: list = []  # prevent GC of embedded images
 
         if self._event_bus is not None:
             self._event_bus.subscribe(
@@ -90,10 +95,23 @@ class ResultView(ttk.Frame):
         self._append(f">>> {expression}\n", "expression")
 
     def show_result(self, expression: str, result: str, exact: bool = True) -> None:
-        """Show a calculation result."""
+        """Show a calculation result.
+
+        Attempts to render the result as a typeset math image first.
+        Falls back to plain text if rendering fails.
+        """
         self._last_result = result
         tag = "result" if exact else "approx"
-        self._append(f"{result}\n", tag)
+        color = self._theme.result_fg if exact else self._theme.result_approx_fg
+
+        photo = self._math_renderer.render(
+            result, font_size=12, color=color, master=self
+        )
+        if photo is not None:
+            self._insert_image(photo)
+        else:
+            self._append(f"{result}\n", tag)
+
         self._append("─" * SEPARATOR_LEN + "\n", "separator")
         if self._event_bus is not None:
             self._event_bus.emit(RESULT_DISPLAYED, expression, result, exact)
@@ -113,6 +131,7 @@ class ResultView(ttk.Frame):
         self._text.delete("1.0", tk.END)
         self._text.config(state=tk.DISABLED)
         self._last_result = ""
+        self._photo_refs.clear()
 
     def get_last_result(self) -> str:
         """Return the last result string."""
@@ -125,5 +144,14 @@ class ResultView(ttk.Frame):
             self._text.insert(tk.END, text, tag)
         else:
             self._text.insert(tk.END, text)
+        self._text.config(state=tk.DISABLED)
+        self._text.see(tk.END)
+
+    def _insert_image(self, photo: ImageTk.PhotoImage) -> None:
+        """Insert a rendered math image at the end of the text widget."""
+        self._photo_refs.append(photo)
+        self._text.config(state=tk.NORMAL)
+        self._text.image_create(tk.END, image=photo)
+        self._text.insert(tk.END, "\n")
         self._text.config(state=tk.DISABLED)
         self._text.see(tk.END)
