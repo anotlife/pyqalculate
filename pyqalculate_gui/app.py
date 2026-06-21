@@ -118,11 +118,11 @@ class App:
             calculator=self._calculator,
         )
         self._autocomplete.set_on_select(self._on_autocomplete_select)
-        self._expr_edit._entry.bind("<KeyRelease>", self._on_key_release)
-        self._expr_edit._entry.bind("<Up>", self._on_nav_key)
-        self._expr_edit._entry.bind("<Down>", self._on_nav_key)
-        self._expr_edit._entry.bind("<Escape>", self._on_escape_key)
-        self._expr_edit._entry.bind("<Tab>", self._on_tab_key)
+        self._expr_edit.bind_key("<KeyRelease>", self._on_key_release)
+        self._expr_edit.bind_key("<Up>", self._on_nav_key)
+        self._expr_edit.bind_key("<Down>", self._on_nav_key)
+        self._expr_edit.bind_key("<Escape>", self._on_escape_key)
+        self._expr_edit.bind_key("<Tab>", self._on_tab_key)
 
         self._expr_status = ExpressionStatusBar(
             main,
@@ -410,7 +410,7 @@ class App:
                 self._on_autocomplete_select(selected)
         else:
             # Trigger completion for the current word
-            text = self._expr_edit._entry.get("1.0", tk.INSERT)
+            text = self._expr_edit.get_text_before_cursor()
             full_text = self._expr_edit.get_expression()
             self._autocomplete.update(full_text, len(text))
 
@@ -423,7 +423,7 @@ class App:
         if event.keysym in ("Up", "Down", "Tab", "Escape", "Return"):
             return
         text = self._expr_edit.get_expression()
-        cursor_text = self._expr_edit._entry.get("1.0", tk.INSERT)
+        cursor_text = self._expr_edit.get_text_before_cursor()
         self._autocomplete.update(text, len(cursor_text))
 
     def _on_nav_key(self, event: tk.Event) -> str | None:
@@ -454,18 +454,13 @@ class App:
 
     def _on_autocomplete_select(self, name: str) -> None:
         """Insert the selected completion into the expression edit."""
-        entry = self._expr_edit._entry
         text = self._expr_edit.get_expression()
-        cursor_text = entry.get("1.0", tk.INSERT)
-        cursor_pos = len(cursor_text)
+        cursor_pos = self._expr_edit.get_cursor_position()
 
         # Find word start (same break-char logic as AutoComplete)
         word_start = cursor_pos
         while word_start > 0 and text[word_start - 1] not in " \t+-*/^()=,;<>!|&%":
             word_start -= 1
-
-        # Delete the partial word
-        entry.delete(f"1.0+{word_start}c", f"1.0+{cursor_pos}c")
 
         # Insert completion — append "(" for functions
         insert_text = name
@@ -473,8 +468,7 @@ class App:
             if func_name == name:
                 insert_text = f"{name}("
                 break
-        entry.insert(f"1.0+{word_start}c", insert_text)
-        self._expr_edit._track_change()
+        self._expr_edit.replace_current_word(insert_text, word_start)
 
     # ------------------------------------------------------------------
     # Status

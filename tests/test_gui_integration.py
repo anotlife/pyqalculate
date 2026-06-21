@@ -227,7 +227,7 @@ class TestEventBusWiring:
     def test_result_displayed_event(self, root: tk.Tk, bus: EventBus) -> None:
         """RESULT_DISPLAYED event fires after show_result."""
         received: list[tuple[str, bool]] = []
-        bus.subscribe(RESULT_DISPLAYED, lambda r, e: received.append((r, e)))
+        bus.subscribe(RESULT_DISPLAYED, lambda expr, r, e: received.append((r, e)))
 
         result_view = ResultView(root, theme=LIGHT, event_bus=bus)
         result_view.pack()

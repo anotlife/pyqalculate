@@ -96,7 +96,7 @@ class ResultView(ttk.Frame):
         self._append(f"{result}\n", tag)
         self._append("─" * SEPARATOR_LEN + "\n", "separator")
         if self._event_bus is not None:
-            self._event_bus.emit(RESULT_DISPLAYED, result, exact)
+            self._event_bus.emit(RESULT_DISPLAYED, expression, result, exact)
 
     def show_error(self, error: str) -> None:
         """Show an error message."""

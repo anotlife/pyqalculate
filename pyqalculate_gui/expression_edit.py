@@ -143,3 +143,35 @@ class ExpressionEdit(ttk.Frame):
         Stub for future completion popup integration.
         """
         # TODO: integrate with completion popup when available
+
+    # ------------------------------------------------------------------
+    # Public API for external widget integration
+    # ------------------------------------------------------------------
+
+    def bind_key(self, sequence: str, callback) -> None:
+        """Bind a keyboard event to the internal text widget."""
+        self._entry.bind(sequence, callback)
+
+    def get_text_before_cursor(self) -> str:
+        """Get text from start to cursor position."""
+        return self._entry.get("1.0", tk.INSERT)
+
+    def get_cursor_position(self) -> int:
+        """Get flat cursor position (character count from start)."""
+        return len(self.get_text_before_cursor())
+
+    def delete_range(self, start: str, end: str) -> None:
+        """Delete text in range (tk.Text indices like '1.0', 'end')."""
+        self._entry.delete(start, end)
+
+    def replace_current_word(self, new_text: str, word_start: int) -> None:
+        """Replace the current word from word_start to cursor with new_text."""
+        cursor = self.get_cursor_position()
+        # Convert flat positions to tk.Text indices
+        self._entry.delete(f"1.0+{word_start}c", f"1.0+{cursor}c")
+        self._entry.insert(f"1.0+{word_start}c", new_text)
+        self._track_change()
+
+    def get_text_widget(self) -> tk.Text:
+        """Get the underlying text widget (for advanced integration)."""
+        return self._entry
