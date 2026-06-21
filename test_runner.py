@@ -14,50 +14,45 @@ from datetime import datetime
 
 
 def run_command(cmd, output_file, label):
-    """Run a command and capture output to file. Shows summary on PASS, failures on FAIL."""
+    """Run a command with LIVE streaming output, also saving to file."""
     import re
     print(f'  Running {label}...')
     try:
-        result = subprocess.run(
+        process = subprocess.Popen(
             cmd,
-            capture_output=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,  # pytest writes to stderr
             text=True,
             encoding='utf-8',
             errors='replace',
             cwd=os.path.dirname(os.path.abspath(__file__)),
+            bufsize=1,  # line-buffered
         )
+
+        output_lines = []
+        assert process.stdout is not None
         with open(output_file, 'w', encoding='utf-8') as f:
-            f.write(result.stdout or '')
-            if result.stderr:
-                f.write('\n--- STDERR ---\n')
-                f.write(result.stderr)
+            for line in process.stdout:
+                print(line, end='')  # LIVE in terminal
+                f.write(line)        # save to file
+                output_lines.append(line)
 
-        combined = (result.stdout or '') + '\n' + (result.stderr or '')
+        process.wait()
+        combined = ''.join(output_lines)
 
-        if result.returncode == 0:
-            # Extract pytest summary line: "N passed, M skipped in Xs"
-            summary_match = re.search(
-                r'(\d+ passed(?:,\s*\d+ \w+)*\s+in\s+[\d.]+s)', combined
-            )
+        if process.returncode == 0:
+            summary_match = re.search(r'(\d+ passed(?:,\s*\d+ \w+)*\s+in\s+[\d.]+s)', combined)
             if summary_match:
                 print(f'    [PASS] {label} -- {summary_match.group(1)}')
             else:
                 print(f'    [PASS] {label}')
         else:
-            print(f'    [FAIL] {label} (exit code {result.returncode})')
-            # Show failed test names
+            print(f'    [FAIL] {label} (exit code {process.returncode})')
             failed_tests = re.findall(r'FAILED\s+(\S+)', combined)
             for t in failed_tests:
                 print(f'      FAILED {t}')
-            # Show last 15 lines for traceback context
-            lines = combined.strip().splitlines()
-            if lines:
-                last_lines = lines[-15:]
-                print(f'      --- Last lines ---')
-                for line in last_lines:
-                    print(f'      {line}')
             print(f'    Full output: {output_file}')
-        return result.returncode == 0
+        return process.returncode == 0
     except Exception as e:
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(f'ERROR: {e}\n')

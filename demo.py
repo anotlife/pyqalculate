@@ -213,6 +213,7 @@ def main():
     for name, expr, xmin, xmax in plot_tests:
         fname = f'{name}.png'.replace(' ', '_')
         path = f"{plot_dir}/{fname}"
+        path = path.replace("\\", "/")
         result = calc.calculate_and_print(f'plot({expr}, {xmin}, {xmax}, "{path}")')
         if os.path.exists(path) and os.path.getsize(path) > 0:
             content += f'## {name}\n'
