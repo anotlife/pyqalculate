@@ -363,8 +363,9 @@ class App:
 
     def _show_help(self) -> None:
         """Open the help dialog."""
-        from tkinter import messagebox
-        messagebox.showinfo("Help", "PyQalculate — keyboard shortcuts:\n\nCtrl+B: Number bases\nCtrl+Q: Quit\nF1: Help\nCtrl+S: Store result\nCtrl+M: Manage variables\nCtrl+F: Manage functions\nCtrl+U: Manage units\nCtrl+K: Show keypad\nCtrl+H: Show history\nCtrl+Space: Toggle minimal")
+        from pyqalculate_gui.dialogs.help_dialog import HelpDialog
+
+        HelpDialog(self._root, theme=self._theme).show()
 
     def _open_number_bases(self) -> None:
         """Open number base conversion dialog."""
