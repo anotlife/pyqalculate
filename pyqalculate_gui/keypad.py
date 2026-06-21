@@ -1,130 +1,94 @@
-"""Virtual keypad widget for PyQalculate GUI.
-
-Provides an on-screen button grid with:
-- Digits 0-9 and decimal point
-- Arithmetic operators (+, -, *, /, ^)
-- Scientific functions (sin, cos, tan, log, ln, sqrt, etc.)
-- Constants (pi, e)
-- Variables (ans, x, y, z)
-- Parentheses, clear, backspace, and equals
-"""
+"""Virtual calculator keypad with state-driven theme and event bus."""
 
 from __future__ import annotations
 
 import tkinter as tk
 from tkinter import ttk
-from typing import Callable
 
+from pyqalculate_gui.event_bus import EXPRESSION_SUBMITTED, EventBus
+from pyqalculate_gui.theme import LIGHT, ButtonStyle, Theme
 
-# Button definition: (label, insert_text, tooltip, style_tag)
-# insert_text is None for action buttons (clear, backspace, equals)
-# style_tag groups buttons visually: "digit", "op", "func", "const", "var", "action", "equals"
-_ButtonDef = tuple[str, str | None, str, str]
-_BUTTON_DEFS: list[list[_ButtonDef]] = [
-    # Row 0: Trig functions + log/ln
+# (label, action_type, value, style_key)
+_ButtonDef = tuple[str, str, str, str]
+
+BUTTON_DEFS: list[list[_ButtonDef]] = [
     [
-        ("sin",  "sin(",  "Sine",           "func"),
-        ("cos",  "cos(",  "Cosine",         "func"),
-        ("tan",  "tan(",  "Tangent",        "func"),
-        ("log",  "log(",  "Log base 10",    "func"),
-        ("ln",   "ln(",   "Natural log",    "func"),
+        ("AC", "clear", "", "action"),
+        ("DEL", "backspace", "", "action"),
+        ("(", "insert", "(", "op"),
+        (")", "insert", ")", "op"),
+        ("÷", "insert", "/", "op"),
     ],
-    # Row 1: More functions + digits 7-8
     [
-        ("\u221a", "sqrt(", "Square root",   "func"),
-        ("x\u00b2", "^2",  "Square",         "func"),
-        ("x\u207b\u00b9", "^(-1)", "Reciprocal", "func"),
-        ("7",    "7",      "Digit 7",        "digit"),
-        ("8",    "8",      "Digit 8",        "digit"),
+        ("7", "insert", "7", "digit"),
+        ("8", "insert", "8", "digit"),
+        ("9", "insert", "9", "digit"),
+        ("×", "insert", "*", "op"),
+        ("x²", "insert", "^2", "op"),
     ],
-    # Row 2: Constants + abs + digits 9,6
     [
-        ("\u03c0", "pi",   "Pi (3.14159\u2026)",  "const"),
-        ("e",    "e",      "Euler\u2019s number",  "const"),
-        ("|x|",  "abs(",   "Absolute value",       "func"),
-        ("9",    "9",      "Digit 9",              "digit"),
-        ("6",    "6",      "Digit 6",              "digit"),
+        ("4", "insert", "4", "digit"),
+        ("5", "insert", "5", "digit"),
+        ("6", "insert", "6", "digit"),
+        ("−", "insert", "-", "op"),
+        ("√", "insert", "sqrt(", "func"),
     ],
-    # Row 3: Variables + digits 4-5
     [
-        ("ans",  "ans",   "Last answer",    "var"),
-        ("x",    "x",     "Variable x",     "var"),
-        ("y",    "y",     "Variable y",     "var"),
-        ("4",    "4",     "Digit 4",        "digit"),
-        ("5",    "5",     "Digit 5",        "digit"),
+        ("1", "insert", "1", "digit"),
+        ("2", "insert", "2", "digit"),
+        ("3", "insert", "3", "digit"),
+        ("+", "insert", "+", "op"),
+        ("xʸ", "insert", "^", "op"),
     ],
-    # Row 4: Variable z + parens + digits 1-2
     [
-        ("z",    "z",     "Variable z",     "var"),
-        ("(",    "(",     "Left paren",     "op"),
-        (")",    ")",     "Right paren",    "op"),
-        ("1",    "1",     "Digit 1",        "digit"),
-        ("2",    "2",     "Digit 2",        "digit"),
+        ("0", "insert", "0", "digit"),
+        (".", "insert", ".", "digit"),
+        ("EXP", "insert", "E", "digit"),
+        ("±", "negate", "", "op"),
+        ("=", "submit", "", "equals"),
     ],
-    # Row 5: Power, clear, backspace, divide, 3
     [
-        ("x^y",  "^",     "Power",          "op"),
-        ("C",    "",      "Clear all",      "action"),
-        ("\u232b", "",    "Backspace",      "action"),
-        ("\u00f7", "/",   "Divide",         "op"),
-        ("3",    "3",     "Digit 3",        "digit"),
-    ],
-    # Row 6: Decimal, add, subtract, multiply, 0
-    [
-        (".",    ".",     "Decimal point",  "digit"),
-        ("+",    "+",     "Add",            "op"),
-        ("\u2212", "-",   "Subtract",       "op"),
-        ("\u00d7", "*",   "Multiply",       "op"),
-        ("0",    "0",     "Digit 0",        "digit"),
-    ],
-    # Row 7: Factorial, negate, EXP, equals
-    [
-        ("!",    "!",     "Factorial",      "op"),
-        ("\u00b1", "(-)", "Negate",         "op"),
-        ("mod",  " mod ", "Modulo",         "op"),
-        ("=",    "",      "Calculate",      "equals"),
-        ("",     "",      "",               "digit"),  # empty spacer
+        ("sin", "insert", "sin(", "func"),
+        ("cos", "insert", "cos(", "func"),
+        ("tan", "insert", "tan(", "func"),
+        ("ln", "insert", "ln(", "func"),
+        ("log", "insert", "log(", "func"),
     ],
 ]
+
+_STYLE_KEYS = {"digit", "op", "func", "action", "equals"}
+
+
+def _style_for_button(
+    theme: Theme, style_key: str
+) -> ButtonStyle:
+    """Return ButtonStyle for a key, defaulting to digit."""
+    if style_key not in _STYLE_KEYS:
+        style_key = "digit"
+    return getattr(theme, f"keypad_{style_key}")
 
 
 class KeypadWidget(ttk.Frame):
     """Virtual calculator keypad with grid layout.
 
-    Signals:
-        on_insert(text: str)  - insert text at cursor in expression
-        on_clear()            - clear the expression
-        on_backspace()        - delete character before cursor
-        on_submit()           - calculate the expression
+    Emits events via EventBus:
+        keypad_insert(value)   – insert text at cursor
+        keypad_clear           – clear expression
+        keypad_backspace       – delete character before cursor
+        keypad_negate          – negate expression
+        EXPRESSION_SUBMITTED   – evaluate expression
     """
-
-    _COLS = 5
-
-    # Color palette per button category: (bg, fg, hover_bg, font_family, font_size)
-    _STYLES: dict[str, tuple[str, str, str, tuple[str, int]]] = {
-        "digit":  ("#2d2d2d", "#ffffff", "#404040", ("Segoe UI", 14)),
-        "op":     ("#4a3728", "#ffd5a0", "#5e4a38", ("Segoe UI", 14)),
-        "func":   ("#1a3a4a", "#8ad4f0", "#244e62", ("Segoe UI", 11)),
-        "const":  ("#1a3a2a", "#80e0a0", "#245e3a", ("Segoe UI", 13)),
-        "var":    ("#3a2a4a", "#c8a0f0", "#4e3a62", ("Segoe UI", 13)),
-        "action": ("#5a1a1a", "#ff9090", "#7a2a2a", ("Segoe UI", 13)),
-        "equals": ("#1a5a1a", "#90ff90", "#2a7a2a", ("Segoe UI", 16)),
-    }
 
     def __init__(
         self,
         parent: tk.Misc,
-        on_insert: Callable[[str], None] | None = None,
-        on_clear: Callable[[], None] | None = None,
-        on_backspace: Callable[[], None] | None = None,
-        on_submit: Callable[[], None] | None = None,
+        theme: Theme = LIGHT,
+        event_bus: EventBus | None = None,
     ) -> None:
         super().__init__(parent)
-        self._on_insert = on_insert
-        self._on_clear = on_clear
-        self._on_backspace = on_backspace
-        self._on_submit = on_submit
-        self._buttons: list[tk.Button] = []
+        self._theme = theme
+        self._event_bus = event_bus
+        self._buttons: dict[str, tk.Button] = {}
         self._build_ui()
 
     # ------------------------------------------------------------------
@@ -132,51 +96,25 @@ class KeypadWidget(ttk.Frame):
     # ------------------------------------------------------------------
 
     def _build_ui(self) -> None:
-        """Build the keypad grid."""
-        # Configure grid: equal-weight columns that expand
-        for col in range(self._COLS):
-            self.columnconfigure(col, weight=1, uniform="keypad")
-
-        for row_idx, row_def in enumerate(_BUTTON_DEFS):
+        for row_idx, row in enumerate(BUTTON_DEFS):
             self.rowconfigure(row_idx, weight=1)
+            for col_idx, (label, action, value, style_key) in enumerate(row):
+                self.columnconfigure(col_idx, weight=1)
 
-            for col_idx, (label, insert_text, tooltip, style_tag) in enumerate(row_def):
-                bg, fg, hover_bg, btn_font = self._STYLES.get(
-                    style_tag, self._STYLES["digit"]
-                )
-
-                # Skip empty spacer cells
-                if not label and not tooltip:
-                    spacer = ttk.Frame(self)
-                    spacer.grid(row=row_idx, column=col_idx, sticky="nsew")
-                    continue
-
-                # Determine command
-                if style_tag == "action" and label == "C":
-                    cmd: Callable[[], None] | None = self._do_clear
-                elif style_tag == "action" and label == "\u232b":
-                    cmd = self._do_backspace
-                elif style_tag == "equals":
-                    cmd = self._do_submit
-                else:
-                    # Capture insert_text in closure default arg
-                    cmd = lambda t=insert_text: self._fire_insert(t)  # type: ignore[arg-type]
-
+                style = _style_for_button(self._theme, style_key)
                 btn = tk.Button(
                     self,
                     text=label,
-                    command=cmd if cmd else lambda: None,
-                    bg=bg,
-                    fg=fg,
-                    activebackground=hover_bg,
-                    activeforeground=fg,
+                    font=style.font,
+                    bg=style.bg,
+                    fg=style.fg,
+                    activebackground=style.hover_bg,
                     relief=tk.FLAT,
                     borderwidth=0,
                     highlightthickness=0,
-                    font=btn_font,
                     cursor="hand2",
                     takefocus=False,
-                    height=1,
+                    command=lambda a=action, v=value: self._on_button(a, v),
                 )
                 btn.grid(
                     row=row_idx,
@@ -185,98 +123,50 @@ class KeypadWidget(ttk.Frame):
                     padx=1,
                     pady=1,
                 )
+                self._buttons[label] = btn
 
-                # Hover effect
                 btn.bind(
                     "<Enter>",
-                    lambda e, b=btn, h=hover_bg: b.config(bg=h),  # type: ignore[arg-type]
+                    lambda e, b=btn, h=style.hover_bg: b.config(bg=h),
                 )
                 btn.bind(
                     "<Leave>",
-                    lambda e, b=btn, c=bg: b.config(bg=c),  # type: ignore[arg-type]
+                    lambda e, b=btn, c=style.bg: b.config(bg=c),
                 )
 
-                # Tooltip
-                if tooltip:
-                    self._create_tooltip(btn, tooltip)
-
-                self._buttons.append(btn)
-
-    def _create_tooltip(self, widget: tk.Widget, text: str) -> None:
-        """Attach a tooltip to a widget."""
-        tip_win: tk.Toplevel | None = None
-
-        def _show(event: tk.Event) -> None:
-            nonlocal tip_win
-            if tip_win is not None:
-                return
-            x = event.x_root + 8
-            y = event.y_root - 20
-            tip_win = tk.Toplevel(widget)
-            tip_win.wm_overrideredirect(True)
-            tip_win.wm_geometry(f"+{x}+{y}")
-            tk.Label(
-                tip_win,
-                text=text,
-                background="#ffffdd",
-                foreground="#333333",
-                font=("Segoe UI", 9),
-                padx=6,
-                pady=2,
-                relief=tk.SOLID,
-                borderwidth=1,
-            ).pack()
-
-        def _hide(event: tk.Event) -> None:
-            nonlocal tip_win
-            if tip_win is not None:
-                tip_win.destroy()
-                tip_win = None
-
-        widget.bind("<Enter>", _show, add="+")
-        widget.bind("<Leave>", _hide, add="+")
-
     # ------------------------------------------------------------------
-    # Signal dispatch
+    # Event dispatch
     # ------------------------------------------------------------------
 
-    def _fire_insert(self, text: str) -> None:
-        """Dispatch insert signal."""
-        if self._on_insert:
-            self._on_insert(text)
-
-    def _do_clear(self) -> None:
-        """Dispatch clear signal."""
-        if self._on_clear:
-            self._on_clear()
-
-    def _do_backspace(self) -> None:
-        """Dispatch backspace signal."""
-        if self._on_backspace:
-            self._on_backspace()
-
-    def _do_submit(self) -> None:
-        """Dispatch submit signal."""
-        if self._on_submit:
-            self._on_submit()
+    def _on_button(self, action: str, value: str) -> None:
+        if self._event_bus is None:
+            return
+        if action == "insert":
+            self._event_bus.emit("keypad_insert", value)
+        elif action == "clear":
+            self._event_bus.emit("keypad_clear")
+        elif action == "backspace":
+            self._event_bus.emit("keypad_backspace")
+        elif action == "negate":
+            self._event_bus.emit("keypad_negate")
+        elif action == "submit":
+            self._event_bus.emit(EXPRESSION_SUBMITTED, "")
 
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
 
-    def set_callbacks(
-        self,
-        on_insert: Callable[[str], None] | None = None,
-        on_clear: Callable[[], None] | None = None,
-        on_backspace: Callable[[], None] | None = None,
-        on_submit: Callable[[], None] | None = None,
-    ) -> None:
-        """Update callback references (used for late binding)."""
-        if on_insert is not None:
-            self._on_insert = on_insert
-        if on_clear is not None:
-            self._on_clear = on_clear
-        if on_backspace is not None:
-            self._on_backspace = on_backspace
-        if on_submit is not None:
-            self._on_submit = on_submit
+    def set_theme(self, theme: Theme) -> None:
+        """Update theme for all buttons."""
+        self._theme = theme
+        for label, btn in self._buttons.items():
+            for row in BUTTON_DEFS:
+                for l, _, _, style_key in row:
+                    if l == label:
+                        style = _style_for_button(theme, style_key)
+                        btn.config(
+                            bg=style.bg,
+                            fg=style.fg,
+                            font=style.font,
+                            activebackground=style.hover_bg,
+                        )
