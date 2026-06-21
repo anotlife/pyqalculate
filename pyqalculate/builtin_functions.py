@@ -3205,14 +3205,56 @@ class GenVectorFunction(MathFunction):
 
 
 class LoadFunction(MathFunction):
-    """Load file: load(filename)."""
+    """Load CSV file: load(filename[, delimiter]).
+
+    Imports a CSV file and returns the data as a matrix.
+    Also registers each column as a variable.
+
+    Examples:
+        load("data.csv")
+        load("data.csv", ";")
+    """
     def __init__(self):
-        super().__init__("load", 1, 1, "Utility", "Load file")
+        super().__init__("load", 1, 2, "Utility", "Load CSV file")
         self.set_argument_definition(0, TextArgument("filename"))
+        self.set_argument_definition(1, TextArgument("delimiter", does_test=False))
     def id(self) -> int: return FUNCTION_ID_LOAD
     def calculate(self, vargs, eo=None):
-        return _undef()
+        from pyqalculate.calculator import get_calculator
+        filename = str(vargs[0])
+        delimiter = str(vargs[1]) if len(vargs) > 1 else ","
+        calc = get_calculator()
+        result = calc.importCSV(filename, delimiter=delimiter, to_matrix=True)
+        return result
     def copy(self): return LoadFunction()
+
+
+class ExportFunction(MathFunction):
+    """Export to CSV file: export(data, filename[, delimiter]).
+
+    Exports a matrix or vector to a CSV file.
+
+    Examples:
+        export(mydata, "output.csv")
+        export(mydata, "output.csv", ";")
+    """
+    def __init__(self):
+        super().__init__("export", 2, 3, "Utility", "Export to CSV file")
+        self.set_argument_definition(0, Argument("data"))
+        self.set_argument_definition(1, TextArgument("filename"))
+        self.set_argument_definition(2, TextArgument("delimiter", does_test=False))
+    def id(self) -> int: return FUNCTION_ID_EXPORT
+    def calculate(self, vargs, eo=None):
+        from pyqalculate.calculator import get_calculator
+        data = vargs[0]
+        filename = str(vargs[1])
+        delimiter = str(vargs[2]) if len(vargs) > 2 else ","
+        calc = get_calculator()
+        success = calc.exportCSV(data, filename, delimiter=delimiter)
+        if success:
+            return _ms(_num(1))
+        return _undef()
+    def copy(self): return ExportFunction()
 
 
 class ReplaceFunction(MathFunction):
@@ -3624,6 +3666,7 @@ def get_default_registry() -> FunctionRegistry:
         _default_registry.register(ForFunction())
         _default_registry.register(GenVectorFunction())
         _default_registry.register(LoadFunction())
+        _default_registry.register(ExportFunction())
         _default_registry.register(ReplaceFunction())
         _default_registry.register(ToStringFunction())
         _default_registry.register(LengthFunction())

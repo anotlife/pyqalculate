@@ -14,15 +14,23 @@ import re
 import tkinter as tk
 from tkinter import ttk, messagebox
 import traceback
+from typing import TYPE_CHECKING
 
 from pyqalculate.calculator import Calculator
 from pyqalculate.types import ApproximationMode, EvaluationOptions, PrintOptions
+
+if TYPE_CHECKING:
+    from pyqalculate.math_structure import MathStructure
+
 from pyqalculate_gui.expression_edit import ExpressionEdit
 from pyqalculate_gui.keypad import KeypadWidget
 from pyqalculate_gui.result_view import ResultView
 from pyqalculate_gui.history_view import HistoryView
 from pyqalculate_gui.conversion_view import ConversionView
 from pyqalculate_gui.plot_dialog import PlotDialog
+from pyqalculate_gui.preferences_dialog import PreferencesDialog
+from pyqalculate_gui.import_csv_dialog import ImportCsvDialog
+from pyqalculate_gui.export_csv_dialog import ExportCsvDialog
 
 
 class MainWindow:
@@ -50,6 +58,17 @@ class MainWindow:
         # Plot dialog (lazy -- created once, reused)
         self._plot_dialog = PlotDialog(self._root)
 
+        # Preferences dialog (lazy -- created once, reused)
+        self._prefs_dialog = PreferencesDialog(
+            self._root, calculator=self._calc, on_apply=self._on_preferences_apply,
+        )
+
+        # CSV import/export dialogs (lazy -- created once, reused)
+        self._import_csv_dialog = ImportCsvDialog(self._root, calculator=self._calc)
+        self._export_csv_dialog = ExportCsvDialog(
+            self._root, calculator=self._calc, get_last_result=self._get_last_result_for_export,
+        )
+
         # Build UI
         self._create_menu_bar()
         self._create_main_layout()
@@ -71,6 +90,9 @@ class MainWindow:
         # File menu
         file_menu = tk.Menu(menubar, tearoff=0)
         file_menu.add_command(label="Clear All", command=self._clear_all)
+        file_menu.add_separator()
+        file_menu.add_command(label="Import CSV...", command=self._open_import_csv)
+        file_menu.add_command(label="Export CSV...", command=self._open_export_csv)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self._root.quit)
         menubar.add_cascade(label="File", menu=file_menu)
@@ -95,6 +117,12 @@ class MainWindow:
             label="Exact Mode",
             variable=self._exact_mode_var,
             command=self._on_mode_toggle,
+        )
+        mode_menu.add_separator()
+        mode_menu.add_command(
+            label="Preferences...",
+            command=self._open_preferences,
+            accelerator="Ctrl+Shift+P",
         )
         menubar.add_cascade(label="Mode", menu=mode_menu)
 
@@ -134,6 +162,7 @@ class MainWindow:
         # Global keyboard shortcuts
         self._root.bind("<Control-c>", lambda e: self._copy_result())
         self._root.bind("<Control-p>", lambda e: self._open_plot_dialog())
+        self._root.bind("<Control-Shift-P>", lambda e: self._open_preferences())
 
     # ==================================================================
     # Main layout
@@ -238,17 +267,27 @@ class MainWindow:
         # Record expression in history
         self._history_view.add_expression(expression)
 
-        # Calculate
+        # Calculate using preferences dialog settings when available
         try:
-            eo = EvaluationOptions()
-            po = PrintOptions()
+            prefs = self._prefs_dialog
+            if hasattr(prefs, "_current_eo") and prefs._current_eo is not None:
+                eo = prefs._current_eo
+            else:
+                eo = EvaluationOptions()
+            if hasattr(prefs, "_current_po") and prefs._current_po is not None:
+                po = prefs._current_po
+            else:
+                po = PrintOptions()
 
+            # Exact/approximate mode toggle (from mode menu or preferences)
             if self._exact_mode:
                 eo.approximation = ApproximationMode.EXACT
                 po.exact = True
+                po.approximate = False
             else:
                 eo.approximation = ApproximationMode.APPROXIMATE
                 po.approximate = True
+                po.exact = False
 
             result = self._calc.calculate_and_print(resolved, eo=eo, po=po)
 
@@ -374,6 +413,43 @@ class MainWindow:
         """Open the plot dialog, pre-filling with current expression if any."""
         expr = self._expr_edit.get_expression().strip()
         self._plot_dialog.show(expression=expr)
+
+    def _open_import_csv(self) -> None:
+        """Open the CSV import dialog."""
+        self._import_csv_dialog.show()
+
+    def _open_export_csv(self) -> None:
+        """Open the CSV export dialog."""
+        self._export_csv_dialog.show()
+
+    def _get_last_result_for_export(self) -> "MathStructure | None":
+        """Return the last calculation result as a MathStructure for CSV export."""
+        try:
+            last_expr = self._history_view.get_answer(0)
+            if last_expr is not None:
+                return self._calc.parse(str(last_expr))
+        except Exception:
+            pass
+        return None
+
+    def _open_preferences(self) -> None:
+        """Open the preferences dialog."""
+        self._prefs_dialog.show()
+
+    def _on_preferences_apply(self) -> None:
+        """Handle preferences being applied -- update mode display."""
+        settings = self._prefs_dialog.get_settings()
+        approx = settings.get("approximation", "exact")
+        if approx == "exact":
+            self._exact_mode = True
+            self._exact_mode_var.set(True)
+            self._mode_var.set("Exact")
+            self._mode_label.config(foreground="#1a5276")
+        else:
+            self._exact_mode = False
+            self._exact_mode_var.set(False)
+            self._mode_var.set("Approximate")
+            self._mode_label.config(foreground="#7d6608")
 
     def _copy_result(self) -> None:
         """Copy the last result to clipboard."""

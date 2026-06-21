@@ -2350,6 +2350,153 @@ class Calculator:
 
         return None
 
+    # -- CSV Import/Export --
+
+    def importCSV(
+        self,
+        filename: str,
+        first_row: int = 1,
+        headers: bool = True,
+        delimiter: str = ",",
+        to_matrix: bool = False,
+        name: str = "",
+    ) -> "MathStructure":
+        """Import a CSV file as a matrix or vector of variables.
+
+        Mirrors libqalculate's Calculator::importCSV().
+
+        Args:
+            filename: Path to the CSV file.
+            first_row: First data row (1-indexed; rows before this are skipped).
+            headers: If True, treat the first data row as column headers.
+            delimiter: Column separator character.
+            to_matrix: If True, return as a single matrix variable.
+                       If False, create separate vector variables per column.
+            name: Variable name prefix. Auto-derived from filename if empty.
+
+        Returns:
+            The imported MathStructure (matrix or vector).
+        """
+        import csv
+        from pyqalculate.math_structure import MathStructure as MS
+        from pyqalculate.number import Number
+        from pyqalculate.variable import KnownVariable
+
+        if not filename:
+            return MS.undefined()
+
+        try:
+            with open(filename, newline="", encoding="utf-8-sig") as f:
+                reader = csv.reader(f, delimiter=delimiter)
+                all_rows = list(reader)
+        except (OSError, csv.Error):
+            return MS.undefined()
+
+        if not all_rows:
+            return MS.undefined()
+
+        # Derive name from filename if not provided
+        if not name:
+            from pathlib import Path as _Path
+            name = _Path(filename).stem
+
+        # Determine data start and headers
+        data_start = max(0, first_row - 1)  # Convert to 0-indexed
+        col_headers: list[str] = []
+        if headers and data_start < len(all_rows):
+            col_headers = [c.strip() for c in all_rows[data_start]]
+            data_start += 1
+
+        data_rows = all_rows[data_start:]
+        if not data_rows:
+            return MS.undefined()
+
+        def _parse_cell(cell: str) -> MathStructure:
+            """Try to parse a cell as a number; fall back to symbolic."""
+            cell = cell.strip()
+            if not cell:
+                return MS(0)
+            try:
+                return MS(float(cell))
+            except ValueError:
+                return MS.from_symbol(cell)
+
+        if to_matrix:
+            # Create a single matrix variable
+            matrix_rows = []
+            for row in data_rows:
+                matrix_rows.append(MS.vector(*[_parse_cell(c) for c in row]))
+            mstruct = MS.matrix(matrix_rows)
+
+            if name:
+                var = KnownVariable("CSV Data", name, mstruct, title=f"Imported from {filename}")
+                self.add_variable(var)
+            return mstruct
+        else:
+            # Create separate vector variables per column
+            n_cols = max(len(r) for r in data_rows) if data_rows else 0
+            col_vectors: list[MathStructure] = []
+            for col_idx in range(n_cols):
+                elements = []
+                for row in data_rows:
+                    elements.append(_parse_cell(row[col_idx]) if col_idx < len(row) else MS(0))
+                col_vectors.append(MS.vector(*elements))
+
+            # Register each column as a variable
+            for i, vec in enumerate(col_vectors):
+                col_name = col_headers[i] if i < len(col_headers) else f"col{i+1}"
+                var_name = f"{name}_{col_name}" if name else col_name
+                var = KnownVariable("CSV Data", var_name, vec,
+                                    title=f"Column {col_name} from {filename}")
+                self.add_variable(var)
+
+            # Return the full matrix
+            return MS.matrix(col_vectors)
+
+    def exportCSV(
+        self,
+        mstruct: "MathStructure",
+        filename: str,
+        delimiter: str = ",",
+    ) -> bool:
+        """Export a MathStructure (matrix/vector) to a CSV file.
+
+        Mirrors libqalculate's Calculator::exportCSV().
+
+        Args:
+            mstruct: The MathStructure to export (matrix, vector, or number).
+            filename: Output CSV file path.
+            delimiter: Column separator character.
+
+        Returns:
+            True on success, False on failure.
+        """
+        import csv
+
+        try:
+            rows: list[list[str]] = []
+
+            if mstruct.is_matrix():
+                for row in mstruct:
+                    if row.is_vector():
+                        rows.append([str(c) for c in row])
+                    else:
+                        rows.append([str(row)])
+            elif mstruct.is_vector():
+                # Export vector as a single column
+                for elem in mstruct:
+                    rows.append([str(elem)])
+            else:
+                # Single value
+                rows.append([str(mstruct)])
+
+            with open(filename, "w", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f, delimiter=delimiter)
+                writer.writerows(rows)
+            return True
+        except (OSError, csv.Error):
+            return False
+
     def __repr__(self) -> str:
         return (
             f"Calculator(functions={len(self._functions)}, "

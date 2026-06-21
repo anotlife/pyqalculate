@@ -632,7 +632,6 @@ _SYMPY_FUNC_MAP: dict[str, Any] = {
     "tostring": _tostring_func,
     "length": _length_func,
     "concatenate": _concatenate_func,
-    "load": _load_func,
     "date": _date_func,
 }
 
