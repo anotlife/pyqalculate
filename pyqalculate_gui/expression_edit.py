@@ -200,6 +200,19 @@ class ExpressionEdit(ttk.Frame):
         self._entry.icursor(tk.END)
         self._entry.focus_set()
 
+    def insert_at_cursor(self, text: str) -> None:
+        """Insert text at the current cursor position in the entry.
+
+        Used by the virtual keypad to insert buttons at the cursor
+        rather than always appending to the end.
+        """
+        try:
+            pos = self._entry.index(tk.INSERT)
+        except tk.TclError:
+            pos = self._entry.index(tk.END)
+        self._entry.insert(pos, text)
+        self._entry.focus_set()
+
     def clear(self) -> str:
         """Clear the expression entry."""
         self._set_text("")

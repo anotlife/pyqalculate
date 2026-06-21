@@ -18,8 +18,11 @@ import traceback
 from pyqalculate.calculator import Calculator
 from pyqalculate.types import ApproximationMode, EvaluationOptions, PrintOptions
 from pyqalculate_gui.expression_edit import ExpressionEdit
+from pyqalculate_gui.keypad import KeypadWidget
 from pyqalculate_gui.result_view import ResultView
 from pyqalculate_gui.history_view import HistoryView
+from pyqalculate_gui.conversion_view import ConversionView
+from pyqalculate_gui.plot_dialog import PlotDialog
 
 
 class MainWindow:
@@ -34,8 +37,8 @@ class MainWindow:
     def __init__(self) -> None:
         self._root = tk.Tk()
         self._root.title("PyQalculate")
-        self._root.geometry("860x620")
-        self._root.minsize(600, 400)
+        self._root.geometry("860x820")
+        self._root.minsize(600, 550)
 
         # Calculator engine
         self._calc = Calculator()
@@ -43,6 +46,9 @@ class MainWindow:
 
         # Mode state
         self._exact_mode = True
+
+        # Plot dialog (lazy -- created once, reused)
+        self._plot_dialog = PlotDialog(self._root)
 
         # Build UI
         self._create_menu_bar()
@@ -100,6 +106,24 @@ class MainWindow:
             variable=self._show_history_var,
             command=self._toggle_history,
         )
+        self._show_keypad_var = tk.BooleanVar(value=True)
+        view_menu.add_checkbutton(
+            label="Show Keypad",
+            variable=self._show_keypad_var,
+            command=self._toggle_keypad,
+        )
+        self._show_conversion_var = tk.BooleanVar(value=False)
+        view_menu.add_checkbutton(
+            label="Unit Conversion",
+            variable=self._show_conversion_var,
+            command=self._toggle_conversion,
+        )
+        view_menu.add_separator()
+        view_menu.add_command(
+            label="Plot...",
+            command=self._open_plot_dialog,
+            accelerator="Ctrl+P",
+        )
         menubar.add_cascade(label="View", menu=view_menu)
 
         # Help menu
@@ -109,6 +133,7 @@ class MainWindow:
 
         # Global keyboard shortcuts
         self._root.bind("<Control-c>", lambda e: self._copy_result())
+        self._root.bind("<Control-p>", lambda e: self._open_plot_dialog())
 
     # ==================================================================
     # Main layout
@@ -119,15 +144,28 @@ class MainWindow:
         main_frame = ttk.Frame(self._root, padding=8)
         main_frame.pack(fill=tk.BOTH, expand=True)
         main_frame.columnconfigure(0, weight=1)
-        main_frame.rowconfigure(1, weight=1)  # result area expands
+        main_frame.rowconfigure(2, weight=1)  # result area expands
 
         # --- Expression input ---
         self._expr_edit = ExpressionEdit(main_frame, on_submit=self._on_submit)
-        self._expr_edit.grid(row=0, column=0, sticky="ew", pady=(0, 6))
+        self._expr_edit.grid(row=0, column=0, sticky="ew", pady=(0, 4))
+
+        # --- Virtual keypad (togglable) ---
+        self._keypad_frame = ttk.Frame(main_frame)
+        self._keypad_frame.grid(row=1, column=0, sticky="ew", pady=(0, 4))
+        self._keypad = KeypadWidget(
+            self._keypad_frame,
+            on_insert=self._on_keypad_insert,
+            on_clear=self._on_keypad_clear,
+            on_backspace=self._on_keypad_backspace,
+            on_submit=self._on_keypad_submit,
+        )
+        self._keypad.pack(fill=tk.X, expand=False)
+        self._keypad_visible = True
 
         # --- Paned window: result + history ---
         self._paned = ttk.PanedWindow(main_frame, orient=tk.HORIZONTAL)
-        self._paned.grid(row=1, column=0, sticky="nsew")
+        self._paned.grid(row=2, column=0, sticky="nsew")
 
         # Result view (left)
         self._result_view = ResultView(self._paned)
@@ -140,6 +178,16 @@ class MainWindow:
         )
         self._history_view.pack(fill=tk.BOTH, expand=True)
         self._paned.add(self._history_frame, weight=1)
+
+        # Conversion panel (togglable, initially hidden)
+        self._conversion_frame = ttk.Frame(self._paned)
+        self._conversion_view = ConversionView(
+            self._conversion_frame,
+            calculator=self._calc,
+            on_convert=self._on_conversion_result,
+        )
+        self._conversion_view.pack(fill=tk.BOTH, expand=True)
+        self._conversion_visible = False
 
     # ==================================================================
     # Status bar
@@ -266,9 +314,66 @@ class MainWindow:
         else:
             self._paned.forget(self._history_frame)
 
+    def _toggle_keypad(self) -> None:
+        """Show or hide the virtual keypad."""
+        if self._show_keypad_var.get():
+            self._keypad_frame.grid(row=1, column=0, sticky="ew", pady=(0, 4))
+            self._keypad_visible = True
+        else:
+            self._keypad_frame.grid_forget()
+            self._keypad_visible = False
+
+    def _toggle_conversion(self) -> None:
+        """Show or hide the unit conversion panel."""
+        if self._show_conversion_var.get():
+            if not self._conversion_visible:
+                self._paned.add(self._conversion_frame, weight=2)
+                self._conversion_visible = True
+        else:
+            if self._conversion_visible:
+                self._paned.forget(self._conversion_frame)
+                self._conversion_visible = False
+
+    def _on_conversion_result(self, expr: str, result: str) -> None:
+        """Handle a successful conversion from the conversion panel."""
+        self._result_view.show_result(expr, result, exact=True)
+        self._history_view.add_expression(expr)
+        self._history_view.add_result(result, exact=True)
+
+    # ==================================================================
+    # Keypad handlers
+    # ==================================================================
+
+    def _on_keypad_insert(self, text: str) -> None:
+        """Insert text from keypad at the cursor position."""
+        self._expr_edit.insert_at_cursor(text)
+
+    def _on_keypad_clear(self) -> None:
+        """Clear the expression via keypad."""
+        self._expr_edit.clear()
+
+    def _on_keypad_backspace(self) -> None:
+        """Delete character before cursor via keypad."""
+        entry_widget = self._expr_edit._entry
+        try:
+            pos = entry_widget.index(tk.INSERT)
+            if pos > 0:
+                entry_widget.delete(pos - 1)
+        except tk.TclError:
+            pass
+
+    def _on_keypad_submit(self) -> None:
+        """Submit expression via keypad equals button."""
+        self._expr_edit._do_submit()
+
     # ==================================================================
     # Actions
     # ==================================================================
+
+    def _open_plot_dialog(self) -> None:
+        """Open the plot dialog, pre-filling with current expression if any."""
+        expr = self._expr_edit.get_expression().strip()
+        self._plot_dialog.show(expression=expr)
 
     def _copy_result(self) -> None:
         """Copy the last result to clipboard."""
