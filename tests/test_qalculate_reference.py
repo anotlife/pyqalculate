@@ -251,16 +251,6 @@ def _qalculate_to_sympy_str(s: str) -> str:
     # Replace standalone "in" with "oo"
     s = re.sub(r'\bin\b', 'oo', s)
     return s
-    # Simplify (x)**(n) to x**n
-    s = re.sub(r'\((\w+)\)\*\*\((\w+)\)', r'\1**\2', s)
-    # Replace functions
-    s = s.replace('ln(', 'log(')
-    s = s.replace('arctan(', 'atan(')
-    # Replace "1 in" (1 × infinity) with "oo"
-    s = re.sub(r'\b1\s+in\b', 'oo', s)
-    # Replace standalone "in" with "oo"
-    s = re.sub(r'\bin\b', 'oo', s)
-    return s
 
 
 def _try_sympy_compare(actual: str, expected: str) -> bool | None:
@@ -626,12 +616,6 @@ def compare_results(actual: str, expected: str, expression: str = "") -> bool:
                 rel_diff = abs(a_num2 - e_num2) / abs(e_num2)
                 if rel_diff < NUMERIC_TOLERANCE:
                     return True
-
-    # 9. Absolute value comparison (handles sign convention differences)
-    if actual_num is not None and expected_num is not None and expected_num != 0:
-        rel_diff = abs(abs(actual_num) - abs(expected_num)) / abs(expected_num)
-        if rel_diff < NUMERIC_TOLERANCE:
-            return True
 
     return False
 

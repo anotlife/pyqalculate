@@ -367,7 +367,6 @@ class TestPhysicalConstants:
         # ~2953 m ≈ 2.953 km
         assert len(result) > 0
 
-    @pytest.mark.skip(reason="Physical constant + unit conversion (eV) not fully supported")
     def test_3_4_photon_energy_500nm(self, calc_global: Calculator) -> None:
         """planck * speed_of_light / (500 * nm) to eV => 2.479683969 eV"""
         po = PrintOptions(approximate=True)
@@ -1282,7 +1281,7 @@ class TestCrossCutting:
         assert result == "479001600"
 
     def test_percentage_calculation(self, calc: Calculator) -> None:
-        """200 + 15% => 230"""
+        """200 + 200*15% => 230"""
         result = calc.calculate_and_print("200 + 200*15%")
         # 200 + 30 = 230
         assert "230" in result
