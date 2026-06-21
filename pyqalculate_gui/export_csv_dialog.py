@@ -9,14 +9,22 @@ from __future__ import annotations
 
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
-from typing import TYPE_CHECKING, Callable, Optional
+from typing import Callable
 
-if TYPE_CHECKING:
-    from pyqalculate.calculator import Calculator
-    from pyqalculate.math_structure import MathStructure
+from pyqalculate_gui.calculator_service import CalculatorService
+from pyqalculate_gui.dialogs.base import ModalDialog
+from pyqalculate_gui.theme import LIGHT, Theme
 
 
-class ExportCsvDialog:
+_DELIMITER_MAP: dict[str, str] = {
+    "comma": ",",
+    "tab": "\t",
+    "semicolon": ";",
+    "space": " ",
+}
+
+
+class ExportCsvDialog(ModalDialog):
     """Modal dialog for exporting data to CSV.
 
     Fields:
@@ -28,46 +36,22 @@ class ExportCsvDialog:
 
     def __init__(
         self,
-        parent: tk.Tk | tk.Toplevel,
-        calculator: Calculator,
-        get_last_result: Optional[Callable[[], Optional[MathStructure]]] = None,
+        parent: tk.Widget,
+        theme: Theme = LIGHT,
+        calculator: CalculatorService | None = None,
+        get_last_result: Callable[[], object | None] | None = None,
     ) -> None:
-        self._parent = parent
-        self._calculator = calculator
+        super().__init__(parent, "Export CSV", size=(480, 340), theme=theme)
+        self._calc = calculator
         self._get_last_result = get_last_result
-        self._dialog: tk.Toplevel | None = None
 
-    def show(self, variable_name: str = "") -> None:
-        """Open the export CSV dialog.
-
-        Args:
-            variable_name: Pre-fill the variable name (e.g., when called
-                          from a variables dialog).
-        """
-        if self._dialog is not None and self._dialog.winfo_exists():
-            self._dialog.lift()
-            return
-
-        self._dialog = tk.Toplevel(self._parent)
-        self._dialog.title("Export CSV")
-        self._dialog.geometry("480x340")
-        self._dialog.resizable(False, False)
-        self._dialog.transient(self._parent)
-        self._dialog.grab_set()
-
-        self._build_ui(variable_name)
-        self._dialog.protocol("WM_DELETE_WINDOW", self._close)
-
-    def _build_ui(self, prefill_name: str) -> None:
+    def _build_content(self, parent: ttk.Frame) -> None:
         """Build the dialog UI."""
-        frame = ttk.Frame(self._dialog, padding=12)
-        frame.pack(fill=tk.BOTH, expand=True)
-
         # --- Data source ---
-        ttk.Label(frame, text="Source:").grid(row=0, column=0, sticky="w", pady=4)
-        source_frame = ttk.Frame(frame)
+        ttk.Label(parent, text="Source:").grid(row=0, column=0, sticky="w", pady=4)
+        source_frame = ttk.Frame(parent)
         source_frame.grid(row=0, column=1, columnspan=2, sticky="ew", pady=4)
-        frame.columnconfigure(1, weight=1)
+        parent.columnconfigure(1, weight=1)
 
         self._source_var = tk.StringVar(value="variable")
         ttk.Radiobutton(
@@ -82,26 +66,26 @@ class ExportCsvDialog:
         ).pack(anchor=tk.W)
 
         # --- Variable name ---
-        ttk.Label(frame, text="Variable:").grid(row=1, column=0, sticky="w", pady=4)
-        self._var_name_var = tk.StringVar(value=prefill_name)
-        self._var_name_entry = ttk.Entry(frame, textvariable=self._var_name_var, width=30)
+        ttk.Label(parent, text="Variable:").grid(row=1, column=0, sticky="w", pady=4)
+        self._var_name_var = tk.StringVar()
+        self._var_name_entry = ttk.Entry(parent, textvariable=self._var_name_var, width=30)
         self._var_name_entry.grid(row=1, column=1, columnspan=2, sticky="ew", pady=4)
 
         # --- File path ---
-        ttk.Label(frame, text="File:").grid(row=2, column=0, sticky="w", pady=4)
-        file_frame = ttk.Frame(frame)
+        ttk.Label(parent, text="File:").grid(row=2, column=0, sticky="w", pady=4)
+        file_frame = ttk.Frame(parent)
         file_frame.grid(row=2, column=1, columnspan=2, sticky="ew", pady=4)
 
         self._file_var = tk.StringVar()
         self._file_entry = ttk.Entry(file_frame, textvariable=self._file_var, width=35)
         self._file_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
         ttk.Button(file_frame, text="Browse...", command=self._browse_file).pack(
-            side=tk.LEFT, padx=(4, 0)
+            side=tk.LEFT, padx=(4, 0),
         )
 
         # --- Delimiter ---
-        ttk.Label(frame, text="Delimiter:").grid(row=3, column=0, sticky="w", pady=4)
-        delim_frame = ttk.Frame(frame)
+        ttk.Label(parent, text="Delimiter:").grid(row=3, column=0, sticky="w", pady=4)
+        delim_frame = ttk.Frame(parent)
         delim_frame.grid(row=3, column=1, columnspan=2, sticky="ew", pady=4)
 
         self._delimiter_var = tk.StringVar(value=",")
@@ -121,20 +105,13 @@ class ExportCsvDialog:
             ).pack(side=tk.LEFT, padx=2)
 
         self._other_delim_entry = ttk.Entry(
-            delim_frame, textvariable=self._delimiter_var, width=4, state="disabled"
+            delim_frame, textvariable=self._delimiter_var, width=4, state="disabled",
         )
         self._other_delim_entry.pack(side=tk.LEFT, padx=(8, 0))
 
-        # --- Buttons ---
-        btn_frame = ttk.Frame(frame)
-        btn_frame.grid(row=4, column=0, columnspan=3, pady=(16, 0))
-
-        ttk.Button(btn_frame, text="Export", command=self._do_export).pack(
-            side=tk.LEFT, padx=4
-        )
-        ttk.Button(btn_frame, text="Cancel", command=self._close).pack(
-            side=tk.LEFT, padx=4
-        )
+    # ------------------------------------------------------------------
+    # UI callbacks
+    # ------------------------------------------------------------------
 
     def _on_source_change(self) -> None:
         """Toggle variable name entry based on source selection."""
@@ -150,18 +127,12 @@ class ExportCsvDialog:
             self._other_delim_entry.config(state="normal")
         else:
             self._other_delim_entry.config(state="disabled")
-            delim_map = {
-                "comma": ",",
-                "tab": "\t",
-                "semicolon": ";",
-                "space": " ",
-            }
-            self._delimiter_var.set(delim_map.get(choice, ","))
+            self._delimiter_var.set(_DELIMITER_MAP.get(choice, ","))
 
     def _browse_file(self) -> None:
         """Open save-file dialog."""
         path = filedialog.asksaveasfilename(
-            parent=self._dialog,
+            parent=self._dialog,  # type: ignore[arg-type]
             title="Save CSV File",
             defaultextension=".csv",
             filetypes=[("CSV files", "*.csv"), ("All files", "*.*")],
@@ -169,26 +140,40 @@ class ExportCsvDialog:
         if path:
             self._file_var.set(path)
 
-    def _do_export(self) -> None:
+    # ------------------------------------------------------------------
+    # Override ModalDialog hooks
+    # ------------------------------------------------------------------
+
+    def _on_ok(self) -> None:
         """Validate inputs and perform the CSV export."""
         filename = self._file_var.get().strip()
         if not filename:
-            messagebox.showerror("Error", "Please specify an output file.", parent=self._dialog)  # type: ignore[arg-type]
+            messagebox.showerror(
+                "Error", "Please specify an output file.",
+                parent=self._dialog,  # type: ignore[arg-type]
+            )
             return
 
-        delimiter = self._delimiter_var.get()
-        if not delimiter:
-            delimiter = ","
+        delimiter = self._delimiter_var.get() or ","
 
         # Resolve the data source
-        mstruct: MathStructure | None = None
+        mstruct = None
 
         if self._source_var.get() == "variable":
             var_name = self._var_name_var.get().strip()
             if not var_name:
-                messagebox.showerror("Error", "Please enter a variable name.", parent=self._dialog)  # type: ignore[arg-type]
+                messagebox.showerror(
+                    "Error", "Please enter a variable name.",
+                    parent=self._dialog,  # type: ignore[arg-type]
+                )
                 return
-            var = self._calculator.get_variable(var_name)
+            if self._calc is None:
+                messagebox.showerror(
+                    "Error", "No calculator available.",
+                    parent=self._dialog,  # type: ignore[arg-type]
+                )
+                return
+            var = self._calc._calc.get_variable(var_name)
             if var is None:
                 messagebox.showerror(
                     "Error", f"Variable '{var_name}' not found.",
@@ -196,14 +181,14 @@ class ExportCsvDialog:
                 )
                 return
             from pyqalculate.variable import KnownVariable
+
             if isinstance(var, KnownVariable):
                 mstruct = var.get()
         else:
-            # Current result
             if self._get_last_result is not None:
                 mstruct = self._get_last_result()
 
-        if mstruct is None:
+        if mstruct is None or self._calc is None:
             messagebox.showerror(
                 "Error", "No data to export.",
                 parent=self._dialog,  # type: ignore[arg-type]
@@ -211,14 +196,14 @@ class ExportCsvDialog:
             return
 
         try:
-            success = self._calculator.exportCSV(mstruct, filename, delimiter=delimiter)
+            success = self._calc._calc.exportCSV(mstruct, filename, delimiter=delimiter)  # type: ignore[union-attr]
             if success:
                 messagebox.showinfo(
                     "Export Successful",
                     f"Data exported to {filename}",
                     parent=self._dialog,  # type: ignore[arg-type]
                 )
-                self._close()
+                super()._on_ok()
             else:
                 messagebox.showerror(
                     "Export Failed",
@@ -226,11 +211,7 @@ class ExportCsvDialog:
                     parent=self._dialog,  # type: ignore[arg-type]
                 )
         except Exception as e:
-            messagebox.showerror("Export Error", str(e), parent=self._dialog)  # type: ignore[arg-type]
-
-    def _close(self) -> None:
-        """Close the dialog."""
-        if self._dialog is not None:
-            self._dialog.grab_release()
-            self._dialog.destroy()
-            self._dialog = None
+            messagebox.showerror(
+                "Export Error", str(e),
+                parent=self._dialog,  # type: ignore[arg-type]
+            )
