@@ -1,23 +1,23 @@
 """Plot dialog for PyQalculate GUI.
 
 Provides a tkinter dialog for plotting mathematical expressions using
-matplotlib. Supports multiple expressions, x-range configuration, plot
-style options, zoom/pan via NavigationToolbar, grid toggle, and saving
-to PNG or SVG.
+matplotlib. Supports multiple expressions, zoom/pan via NavigationToolbar,
+and saving to PNG or SVG.
 
-Uses the existing Plotter class from pyqalculate.plot for expression
-evaluation and data generation.
+Uses the ModalDialog base class for consistent dialog lifecycle.
 """
 
 from __future__ import annotations
 
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
+
+from pyqalculate_gui.dialogs.base import ModalDialog
+from pyqalculate_gui.theme import LIGHT, Theme
 
 if TYPE_CHECKING:
-    from pyqalculate.calculator import Calculator
-
+    pass
 
 # ---------------------------------------------------------------------------
 # Color palette for multi-expression plots
@@ -28,95 +28,129 @@ _COLORS = [
 ]
 
 
-class PlotDialog:
+class PlotDialog(ModalDialog):
     """Modal plot dialog for PyQalculate.
 
     Opens a top-level window with:
     - Expression list (add / remove multiple expressions)
-    - X range controls (min / max / step count)
-    - Plot style combo (lines, points, points+lines, dots, steps)
-    - Grid toggle checkbox
     - Embedded matplotlib canvas with NavigationToolbar (zoom, pan, save)
     - Save-as button (PNG / SVG)
     """
 
-    def __init__(self, parent: tk.Tk | tk.Toplevel, calculator: Calculator | None = None) -> None:
-        self._parent = parent
-        self._calculator = calculator
-        self._dialog: tk.Toplevel | None = None
-        self._canvas = None
-        self._toolbar = None
-        self._fig = None
-        self._ax = None
-
-        # Expression list model
+    def __init__(self, parent: tk.Widget, theme: Theme = LIGHT) -> None:  # type: ignore[override]
+        super().__init__(parent, "Plot", size=(900, 680), resizable=(True, True), theme=theme)
         self._expressions: list[str] = []
+        self._canvas: Any = None
+        self._toolbar: Any = None
+        self._fig: Any = None
+        self._ax: Any = None
 
-        # Keep references for matplotlib imports (lazy)
-        self._FigureCanvasTkAgg = None
-        self._NavigationToolbar2Tk = None
+        # Lazy-imported matplotlib classes
+        self._FigureCanvasTkAgg: Any = None
+        self._NavigationToolbar2Tk: Any = None
 
     # ------------------------------------------------------------------
-    # Public API
+    # Override show() to replace OK/Cancel with Plot-specific buttons
     # ------------------------------------------------------------------
 
     def show(self, expression: str = "") -> None:
-        """Open (or raise) the plot dialog.
+        """Open the plot dialog modally.
 
         Args:
             expression: Optional expression to pre-fill.
         """
-        if self._dialog is not None and self._dialog.winfo_exists():
-            self._dialog.lift()
-            if expression:
-                self._add_expression(expression)
-            return
+        self._dialog = tk.Toplevel(self._parent)
+        self._dialog.title(self._title)
+        self._dialog.geometry(f"{self._size[0]}x{self._size[1]}")
+        self._dialog.resizable(*self._resizable)
+        self._dialog.transient(self._parent)  # type: ignore[arg-type]
+        self._dialog.grab_set()
+        self._dialog.configure(bg=self._theme.bg)
 
-        self._create_dialog()
+        # Content area
+        content = ttk.Frame(self._dialog, padding=10)
+        content.pack(fill=tk.BOTH, expand=True)
+        self._build_content(content)
+
+        # Custom button row (replace base class OK/Cancel)
+        btn_frame = ttk.Frame(self._dialog, padding=(10, 0, 10, 10))
+        btn_frame.pack(fill=tk.X)
+
+        ttk.Button(btn_frame, text="Plot", command=self._on_plot).pack(
+            side=tk.LEFT, padx=(0, 4),
+        )
+        ttk.Button(btn_frame, text="Save PNG", command=self._on_save_png).pack(
+            side=tk.LEFT, padx=(0, 4),
+        )
+        ttk.Button(btn_frame, text="Save SVG", command=self._on_save_svg).pack(
+            side=tk.LEFT, padx=(0, 4),
+        )
+        ttk.Button(btn_frame, text="Clear", command=self._on_clear).pack(
+            side=tk.LEFT, padx=(0, 4),
+        )
+        ttk.Button(btn_frame, text="Close", command=self._on_cancel).pack(
+            side=tk.RIGHT,
+        )
+
+        self._dialog.protocol("WM_DELETE_WINDOW", self._on_cancel)
+
+        # Centre on parent
+        self._dialog.update_idletasks()
+        x = (
+            self._parent.winfo_x()
+            + (self._parent.winfo_width() - self._dialog.winfo_width()) // 2
+        )
+        y = (
+            self._parent.winfo_y()
+            + (self._parent.winfo_height() - self._dialog.winfo_height()) // 2
+        )
+        self._dialog.geometry(f"+{x}+{y}")
+
+        # Pre-fill expression
         if expression:
             self._add_expression(expression)
-        else:
-            # Start with one empty entry
-            self._add_expression("")
+
+        # Lazy-import matplotlib classes
+        self._init_matplotlib()
+
+        # Block until closed
+        self._parent.wait_window(self._dialog)
 
     # ------------------------------------------------------------------
-    # Dialog construction
+    # Content building (ModalDialog contract)
     # ------------------------------------------------------------------
 
-    def _create_dialog(self) -> None:
-        """Build the full dialog UI."""
-        dlg = tk.Toplevel(self._parent)
-        dlg.title("Plot")
-        dlg.geometry("900x680")
-        dlg.minsize(700, 500)
-        dlg.transient(self._parent)
-        dlg.grab_set()
-        self._dialog = dlg
+    def _build_content(self, parent: ttk.Frame) -> None:
+        """Build the plot dialog UI."""
+        parent.columnconfigure(0, weight=0)
+        parent.columnconfigure(1, weight=1)
+        parent.rowconfigure(1, weight=1)
 
-        dlg.protocol("WM_DELETE_WINDOW", self._on_close)
-
-        # ---- Layout: left panel (controls) + right panel (canvas) ----
-        dlg.columnconfigure(1, weight=1)
-        dlg.rowconfigure(0, weight=1)
-
-        # Left panel -- controls
-        ctrl = ttk.Frame(dlg, padding=8)
-        ctrl.grid(row=0, column=0, sticky="nsew")
-
-        # Right panel -- plot canvas + toolbar
-        plot_frame = ttk.Frame(dlg)
-        plot_frame.grid(row=0, column=1, sticky="nsew", padx=(4, 0))
-        plot_frame.columnconfigure(0, weight=1)
-        plot_frame.rowconfigure(1, weight=1)
-
+        # ---- Left panel: controls ----
+        ctrl = ttk.Frame(parent, padding=4)
+        ctrl.grid(row=0, column=0, rowspan=2, sticky="nsew", padx=(0, 8))
         self._build_controls(ctrl)
-        self._build_canvas_area(plot_frame)
-        self._build_buttons(dlg)
 
-        # Import matplotlib classes lazily
-        self._init_matplotlib(plot_frame)
+        # ---- Right panel: canvas ----
+        canvas_parent = ttk.Frame(parent)
+        canvas_parent.grid(row=0, column=1, sticky="nsew")
+        canvas_parent.columnconfigure(0, weight=1)
+        canvas_parent.rowconfigure(1, weight=1)
 
-    # ---- Controls (left panel) ----
+        self._toolbar_frame = ttk.Frame(canvas_parent)
+        self._toolbar_frame.grid(row=0, column=0, sticky="ew")
+
+        self._canvas_frame = ttk.Frame(canvas_parent)
+        self._canvas_frame.grid(row=1, column=0, sticky="nsew")
+
+        # Placeholder
+        self._placeholder = ttk.Label(
+            self._canvas_frame,
+            text="Add expressions and click Plot",
+            anchor=tk.CENTER,
+            foreground=self._theme.separator_fg,
+        )
+        self._placeholder.pack(expand=True)
 
     def _build_controls(self, parent: ttk.Frame) -> None:
         """Build the left-side control panel."""
@@ -124,7 +158,7 @@ class PlotDialog:
 
         # -- Expression list --
         ttk.Label(parent, text="Expressions", font=("", 10, "bold")).grid(
-            row=row, column=0, columnspan=2, sticky="w", pady=(0, 4)
+            row=row, column=0, columnspan=2, sticky="w", pady=(0, 4),
         )
         row += 1
 
@@ -139,56 +173,62 @@ class PlotDialog:
         self._expr_listbox.config(yscrollcommand=sb.set)
         row += 1
 
-        # Add/Remove buttons
+        # Add / Remove / Edit buttons
         btn_row = ttk.Frame(parent)
         btn_row.grid(row=row, column=0, columnspan=2, sticky="ew", pady=(4, 0))
-        ttk.Button(btn_row, text="Add", width=6, command=self._on_add).pack(side=tk.LEFT, padx=(0, 4))
-        ttk.Button(btn_row, text="Remove", width=6, command=self._on_remove).pack(side=tk.LEFT, padx=(0, 4))
-        ttk.Button(btn_row, text="Edit", width=6, command=self._on_edit).pack(side=tk.LEFT)
+        ttk.Button(btn_row, text="Add", width=6, command=self._on_add).pack(
+            side=tk.LEFT, padx=(0, 4),
+        )
+        ttk.Button(btn_row, text="Remove", width=6, command=self._on_remove).pack(
+            side=tk.LEFT, padx=(0, 4),
+        )
+        ttk.Button(btn_row, text="Edit", width=6, command=self._on_edit).pack(
+            side=tk.LEFT,
+        )
         row += 1
 
         # Separator
         ttk.Separator(parent, orient=tk.HORIZONTAL).grid(
-            row=row, column=0, columnspan=2, sticky="ew", pady=8
+            row=row, column=0, columnspan=2, sticky="ew", pady=8,
         )
         row += 1
 
         # -- X Range --
         ttk.Label(parent, text="X Range", font=("", 10, "bold")).grid(
-            row=row, column=0, columnspan=2, sticky="w", pady=(0, 4)
+            row=row, column=0, columnspan=2, sticky="w", pady=(0, 4),
         )
         row += 1
 
         ttk.Label(parent, text="Min:").grid(row=row, column=0, sticky="w")
         self._x_min_var = tk.StringVar(value="-10")
         ttk.Entry(parent, textvariable=self._x_min_var, width=12).grid(
-            row=row, column=1, sticky="ew", padx=(4, 0)
+            row=row, column=1, sticky="ew", padx=(4, 0),
         )
         row += 1
 
         ttk.Label(parent, text="Max:").grid(row=row, column=0, sticky="w")
         self._x_max_var = tk.StringVar(value="10")
         ttk.Entry(parent, textvariable=self._x_max_var, width=12).grid(
-            row=row, column=1, sticky="ew", padx=(4, 0)
+            row=row, column=1, sticky="ew", padx=(4, 0),
         )
         row += 1
 
         ttk.Label(parent, text="Points:").grid(row=row, column=0, sticky="w")
         self._points_var = tk.StringVar(value="1000")
         ttk.Entry(parent, textvariable=self._points_var, width=12).grid(
-            row=row, column=1, sticky="ew", padx=(4, 0)
+            row=row, column=1, sticky="ew", padx=(4, 0),
         )
         row += 1
 
         # Separator
         ttk.Separator(parent, orient=tk.HORIZONTAL).grid(
-            row=row, column=0, columnspan=2, sticky="ew", pady=8
+            row=row, column=0, columnspan=2, sticky="ew", pady=8,
         )
         row += 1
 
         # -- Style --
         ttk.Label(parent, text="Style", font=("", 10, "bold")).grid(
-            row=row, column=0, columnspan=2, sticky="w", pady=(0, 4)
+            row=row, column=0, columnspan=2, sticky="w", pady=(0, 4),
         )
         row += 1
 
@@ -207,21 +247,21 @@ class PlotDialog:
         ttk.Label(parent, text="Line width:").grid(row=row, column=0, sticky="w")
         self._linewidth_var = tk.StringVar(value="1.5")
         ttk.Entry(parent, textvariable=self._linewidth_var, width=12).grid(
-            row=row, column=1, sticky="ew", padx=(4, 0)
+            row=row, column=1, sticky="ew", padx=(4, 0),
         )
         row += 1
 
         # Grid toggle
         self._grid_var = tk.BooleanVar(value=True)
         ttk.Checkbutton(parent, text="Show grid", variable=self._grid_var).grid(
-            row=row, column=0, columnspan=2, sticky="w", pady=(4, 0)
+            row=row, column=0, columnspan=2, sticky="w", pady=(4, 0),
         )
         row += 1
 
         # Legend toggle
         self._legend_var = tk.BooleanVar(value=True)
         ttk.Checkbutton(parent, text="Show legend", variable=self._legend_var).grid(
-            row=row, column=0, columnspan=2, sticky="w"
+            row=row, column=0, columnspan=2, sticky="w",
         )
         row += 1
 
@@ -229,60 +269,19 @@ class PlotDialog:
         ttk.Label(parent, text="Title:").grid(row=row, column=0, sticky="w", pady=(4, 0))
         self._title_var = tk.StringVar(value="")
         ttk.Entry(parent, textvariable=self._title_var, width=16).grid(
-            row=row, column=1, sticky="ew", padx=(4, 0), pady=(4, 0)
-        )
-        row += 1
-
-        # ---- Plot button (primary action) ----
-        ttk.Button(parent, text="Plot", command=self._on_plot).grid(
-            row=row, column=0, columnspan=2, sticky="ew", pady=(12, 0)
-        )
-
-    # ---- Canvas area (right panel) ----
-
-    def _build_canvas_area(self, parent: ttk.Frame) -> None:
-        """Reserve frames for the matplotlib canvas and toolbar."""
-        self._toolbar_frame = ttk.Frame(parent)
-        self._toolbar_frame.grid(row=0, column=0, sticky="ew")
-
-        self._canvas_frame = ttk.Frame(parent)
-        self._canvas_frame.grid(row=1, column=0, sticky="nsew")
-
-        # Placeholder
-        self._placeholder = ttk.Label(
-            self._canvas_frame,
-            text="Click Plot to draw",
-            anchor=tk.CENTER,
-            foreground="#999999",
-        )
-        self._placeholder.pack(expand=True)
-
-    # ---- Bottom buttons ----
-
-    def _build_buttons(self, parent: tk.Toplevel) -> None:
-        """Build the bottom button row."""
-        btn_frame = ttk.Frame(parent, padding=8)
-        btn_frame.grid(row=1, column=0, columnspan=2, sticky="ew")
-
-        ttk.Button(btn_frame, text="Save as PNG", command=self._on_save_png).pack(
-            side=tk.LEFT, padx=(0, 4)
-        )
-        ttk.Button(btn_frame, text="Save as SVG", command=self._on_save_svg).pack(
-            side=tk.LEFT, padx=(0, 4)
-        )
-        ttk.Button(btn_frame, text="Close", command=self._on_close).pack(
-            side=tk.RIGHT
+            row=row, column=1, sticky="ew", padx=(4, 0), pady=(4, 0),
         )
 
     # ------------------------------------------------------------------
     # Matplotlib integration
     # ------------------------------------------------------------------
 
-    def _init_matplotlib(self, plot_frame: ttk.Frame) -> None:
-        """Import and store matplotlib tkinter classes."""
+    def _init_matplotlib(self) -> None:
+        """Import and store matplotlib tkinter classes (lazy)."""
         try:
             from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
             from matplotlib.backends._backend_tk import NavigationToolbar2Tk
+
             self._FigureCanvasTkAgg = FigureCanvasTkAgg
             self._NavigationToolbar2Tk = NavigationToolbar2Tk
         except ImportError:
@@ -365,7 +364,7 @@ class PlotDialog:
         import matplotlib.pyplot as plt
 
         fig, ax = plt.subplots(figsize=(6, 4), dpi=100)
-        fig.patch.set_facecolor("#fafafa")
+        fig.patch.set_facecolor(self._theme.entry_bg)
 
         for i, expr in enumerate(exprs):
             y = np.array([_eval_expression(expr, xi) for xi in x_arr])
@@ -423,7 +422,6 @@ class PlotDialog:
 
     def _on_plot(self) -> None:
         """Handle Plot button click."""
-        self._sync_expressions_from_listbox()
         self._render_plot()
 
     def _on_add(self) -> None:
@@ -450,12 +448,7 @@ class PlotDialog:
             self._prompt_expression("Edit Expression", idx=idx)
 
     def _prompt_expression(self, title: str, idx: int | None = None) -> None:
-        """Show a simple dialog to enter/edit an expression.
-
-        Args:
-            title: Dialog window title.
-            idx: If provided, edit this index; otherwise add new.
-        """
+        """Show a simple dialog to enter/edit an expression."""
         if self._dialog is None:
             return
 
@@ -465,9 +458,10 @@ class PlotDialog:
         popup.transient(self._dialog)
         popup.grab_set()
         popup.resizable(False, False)
+        popup.configure(bg=self._theme.bg)
 
         ttk.Label(popup, text="Expression:").grid(
-            row=0, column=0, padx=8, pady=(12, 4), sticky="w"
+            row=0, column=0, padx=8, pady=(12, 4), sticky="w",
         )
         init_val = self._expressions[idx] if idx is not None and 0 <= idx < len(self._expressions) else ""
         var = tk.StringVar(value=init_val)
@@ -486,16 +480,11 @@ class PlotDialog:
             self._sync_listbox()
             popup.destroy()
 
-        popup.bind("<Return>", lambda e: _confirm())
+        popup.bind("<Return>", lambda _: _confirm())
 
         ttk.Button(popup, text="OK", command=_confirm, width=8).grid(
-            row=1, column=0, columnspan=2, pady=8
+            row=1, column=0, columnspan=2, pady=8,
         )
-
-    def _sync_expressions_from_listbox(self) -> None:
-        """Update internal list from listbox (in case of inline editing)."""
-        # We rely on explicit add/edit, but clear empties
-        self._expressions = [e for e in self._expressions]
 
     # ---- Save ----
 
@@ -547,10 +536,30 @@ class PlotDialog:
                     parent=self._dialog,
                 )
 
-    # ---- Close ----
+    # ---- Clear ----
 
-    def _on_close(self) -> None:
-        """Clean up and close the dialog."""
+    def _on_clear(self) -> None:
+        """Clear all expressions and the plot."""
+        self._expressions.clear()
+        self._sync_listbox()
+        if self._fig is not None:
+            import matplotlib.pyplot as plt
+
+            plt.close(self._fig)
+            self._fig = None
+            self._ax = None
+        if self._canvas is not None:
+            self._canvas.get_tk_widget().destroy()
+            self._canvas = None
+        if self._toolbar is not None:
+            self._toolbar.destroy()
+            self._toolbar = None
+        self._placeholder.pack(expand=True)
+
+    # ---- Close (override base to clean up matplotlib) ----
+
+    def _on_cancel(self) -> None:
+        """Clean up matplotlib resources and close."""
         import matplotlib.pyplot as plt
 
         if self._fig is not None:
@@ -563,6 +572,4 @@ class PlotDialog:
         if self._toolbar is not None:
             self._toolbar.destroy()
             self._toolbar = None
-        if self._dialog is not None:
-            self._dialog.destroy()
-            self._dialog = None
+        super()._on_cancel()
