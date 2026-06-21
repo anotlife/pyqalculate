@@ -1,0 +1,1620 @@
+[
+  {
+    "title": "Small Numbers",
+    "builtin_variable": [
+      {
+        "@name": "permille",
+        "title": "Per Mille",
+        "names": "r:permille,au:‰"
+      },
+      {
+        "@name": "permyriad",
+        "title": "Per Myriad",
+        "names": "r:permyriad,au:‱"
+      },
+      {
+        "@name": "%",
+        "title": "Percent",
+        "names": "a:%,r:percent"
+      }
+    ],
+    "variable": [
+      {
+        "title": "Per Cent Mille",
+        "names": "r:pcm",
+        "value": "1E-5"
+      },
+      {
+        "title": "Per Million",
+        "names": "r:ppm",
+        "value": "1E-6"
+      },
+      {
+        "title": "Per Billion",
+        "names": "r:ppb",
+        "value": "1E-9"
+      },
+      {
+        "title": "Per Trillion",
+        "names": "r:ppt",
+        "value": "1E-12"
+      },
+      {
+        "title": "Per Quadrillon",
+        "names": "r:ppq",
+        "value": "1E-15"
+      }
+    ]
+  },
+  {
+    "title": "Large Numbers",
+    "variable": [
+      {
+        "title": "Googolplex",
+        "names": "r:googolplex",
+        "value": "10^(10^100)"
+      },
+      {
+        "title": "Googol",
+        "names": "r:googol",
+        "value": "10^100"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Centillion",
+        "names": "-r:centillion",
+        "value": "1E303"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Vigintillion",
+        "names": "-r:vigintillion",
+        "value": "1E63"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Novemdecillion",
+        "names": "-r:novemdecillion",
+        "value": "1E60"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Octodecillion",
+        "names": "-r:octodecillion",
+        "value": "1E57"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Septendecillion",
+        "names": "-r:septendecillion",
+        "value": "1E54"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Sexdecillion",
+        "names": "-r:sexdecillion",
+        "value": "1E51"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Quindecillion",
+        "names": "-r:quindecillion",
+        "value": "1E48"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Quattuordecillion",
+        "names": "-r:quattuordecillion",
+        "value": "1E45"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Tredecillion",
+        "names": "-r:tredecillion",
+        "value": "1E42"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Duodecillion",
+        "names": "-r:duodecillion",
+        "value": "1E39"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Undecillion",
+        "names": "-r:undecillion",
+        "value": "1E36"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Decillion",
+        "names": "-r:decillion",
+        "value": "1E33"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Nonillion",
+        "names": "-r:nonillion",
+        "value": "1E30"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Octillion",
+        "names": "-r:octillion",
+        "value": "1E27"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Septillion",
+        "names": "-r:septillion",
+        "value": "1E24"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Sextillion",
+        "names": "-r:sextillion",
+        "value": "1E21"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Quintillion",
+        "names": "-r:quintillion",
+        "value": "1E18"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Quadrillion",
+        "names": "-r:quadrillion",
+        "value": "1E15"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Trillion",
+        "names": "-r:trillion",
+        "value": "1E12"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Billion",
+        "names": "-r:billion",
+        "value": "1E9"
+      },
+      {
+        "title": "Million",
+        "names": "r:million",
+        "value": "1E6"
+      },
+      {
+        "title": "Thousand",
+        "names": "r:thousand",
+        "value": "1E3"
+      },
+      {
+        "title": "Hundred",
+        "names": "r:hundred",
+        "value": "1E2"
+      },
+      {
+        "title": "Lakh",
+        "names": "r:lakh",
+        "value": "1E5"
+      },
+      {
+        "title": "Crore",
+        "names": "r:crore",
+        "value": "1E7"
+      }
+    ]
+  },
+  {
+    "title": "Traditional Numbers",
+    "variable": [
+      {
+        "@require_translation": "true",
+        "title": "Dozen",
+        "names": "-r:dozen,a:dz,a:doz",
+        "value": "12"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Baker's Dozen",
+        "names": "-r:bakers_dozen",
+        "value": "13"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Score",
+        "names": "-r:score",
+        "value": "20"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Long Hundred",
+        "names": "-r:long_hundred,great_hundred,twelfty",
+        "value": "120"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Gross",
+        "names": "-r:gross,a:gro",
+        "value": "144"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Long Thousand",
+        "names": "-r:long_thousand",
+        "value": "1200"
+      },
+      {
+        "@require_translation": "true",
+        "title": "Great Gross",
+        "names": "-r:great_gross",
+        "value": "1728"
+      }
+    ]
+  },
+  {
+    "title": "Physical Constants",
+    "category": [
+      {
+        "title": "Universal Constants",
+        "variable": [
+          {
+            "title": "Characteristic Impedance of Vacuum",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:characteristic_impedance,as:Z_0"
+            },
+            "value": "(2*planck*fine_structure)/(elementary_charge^2)"
+          },
+          {
+            "title": "Electric Constant (Permittivity of Free Space)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:electric_constant,asu:ε_0,vacuum_permittivity,aos:epsilon_0"
+            },
+            "value": "elementary_charge^2/(2*planck*fine_structure*c)"
+          },
+          {
+            "title": "Magnetic Constant (Permeability of Free Space)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:magnetic_constant,asu:μ_0,asou:µ_0,vacuum_permeability,aos:mu_0"
+            },
+            "value": "(2*planck*fine_structure)/(c*elementary_charge^2)"
+          },
+          {
+            "title": "Planck Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:planck,au:ℎ"
+            },
+            "value": {
+              "@unit": "J*s",
+              "#text": "6.62607015E-34"
+            }
+          },
+          {
+            "title": "Reduced Planck Constant (Dirac constant)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:planck2pi,dirac,au:ℏ,o:hbar"
+            },
+            "value": "planck/(2*pi)"
+          },
+          {
+            "title": "Newtonian Constant of Gravitation",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:newtonian_constant,a:G"
+            },
+            "value": {
+              "@uncertainty": "1.5E-15",
+              "@unit": "m^3*kg^(-1)*s^(-2)",
+              "#text": "6.67430E-11"
+            }
+          },
+          {
+            "title": "Speed of Light in Vacuum",
+            "names": {
+              "@translatable": "no",
+              "#text": "ar:c,speed_of_light"
+            },
+            "value": {
+              "@unit": "m*s^(-1)",
+              "#text": "299792458"
+            }
+          },
+          {
+            "title": "Standard Acceleration due to Gravity",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:standard_gravity,asu:g_0,asu:ɡ_0,asu:ɡ_n"
+            },
+            "value": {
+              "@unit": "m s^(-2)",
+              "#text": "9.80665"
+            }
+          },
+          {
+            "title": "Solar Mass",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:sun_mass,M_sun,solar_mass"
+            },
+            "value": {
+              "@unit": "kg",
+              "#text": "1.98892E30"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Electromagnetic Constants",
+        "variable": [
+          {
+            "title": "Bohr Magneton",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:bohr_magneton,asu:μ_B,asou:µ_B,aos:mu_B"
+            },
+            "value": "(elementary_charge*planck)/(4*electron_mass*pi)"
+          },
+          {
+            "title": "Conductance Quantum",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:conductance_quantum,as:G_0"
+            },
+            "value": "2*elementary_charge^2/planck"
+          },
+          {
+            "title": "Coulomb's Constant (Electric Force Constant)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:coulombs_constant,as:k_e"
+            },
+            "value": "(magnetic_constant*c^2)/(4pi)"
+          },
+          {
+            "title": "Elementary Charge",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:elementary_charge,as:q_e,as:e_charge"
+            },
+            "value": {
+              "@unit": "C",
+              "#text": "1.602176634E-19"
+            }
+          },
+          {
+            "title": "Inverse of Conductance Quantum",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:inverse_conductance_quantum"
+            },
+            "value": "planck/(2*elementary_charge^2)"
+          },
+          {
+            "title": "Josephson Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:josephson,as:K_J"
+            },
+            "value": "2*elementary_charge/planck"
+          },
+          {
+            "title": "Josephson Constant (conventional value)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:josephson_conventional,as:K_J90"
+            },
+            "value": {
+              "@unit": "Hz*V^(-1)",
+              "#text": "4.835979E14"
+            }
+          },
+          {
+            "title": "Magnetic Flux Quantum",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:magnetic_flux_quantum,asu:Φ_0,aos:phi_0"
+            },
+            "value": "planck/(2*elementary_charge)"
+          },
+          {
+            "title": "Nuclear Magneton",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:nuclear_magneton,asu:μ_N,asou:µ_N,aos:mu_N"
+            },
+            "value": "elementary_charge*planck2pi/(2*proton_mass)"
+          },
+          {
+            "title": "von Klitzing Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:klitzing,as:R_K"
+            },
+            "value": "planck/elementary_charge^2"
+          },
+          {
+            "title": "von Klitzing Constant (conventional value)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:klitzing_conventional,as:R_K90"
+            },
+            "value": {
+              "@unit": "ohm",
+              "#text": "25812.807"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Particle Mass in u",
+        "variable": [
+          {
+            "title": "Deuteron Mass (in u)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:deuteron_u"
+            },
+            "value": {
+              "@unit": "u",
+              "@uncertainty": "1.5E-11",
+              "#text": "2.013553212544"
+            }
+          },
+          {
+            "title": "Electron Mass (in u)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:electron_u"
+            },
+            "value": {
+              "@unit": "u",
+              "@uncertainty": "9.7E-15",
+              "#text": "5.485799090441E-4"
+            }
+          },
+          {
+            "title": "Helion Mass (in u)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:helion_u"
+            },
+            "value": {
+              "@unit": "u",
+              "@uncertainty": "7.4E-11",
+              "#text": "3.014932246932"
+            }
+          },
+          {
+            "title": "Neutron Mass (in u)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:neutron_u"
+            },
+            "value": {
+              "@unit": "u",
+              "@uncertainty": "4.0E-10",
+              "#text": "1.00866491606"
+            }
+          },
+          {
+            "title": "Proton Mass (in u)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:proton_u"
+            },
+            "value": {
+              "@unit": "u",
+              "@uncertainty": "8.3E-12",
+              "#text": "1.0072764665789"
+            }
+          },
+          {
+            "title": "Tau Mass (in u)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:tau_u"
+            },
+            "value": {
+              "@unit": "u",
+              "@uncertainty": "1.3E-4",
+              "#text": "1.90754"
+            }
+          },
+          {
+            "title": "Muon Mass (in u)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:muon_u"
+            },
+            "value": {
+              "@unit": "u",
+              "@uncertainty": "2.5E-9",
+              "#text": "0.1134289257"
+            }
+          },
+          {
+            "title": "Triton Mass (in u)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:triton_u"
+            },
+            "value": {
+              "@unit": "u",
+              "@uncertainty": "1.0E-10",
+              "#text": "3.01550071597"
+            }
+          },
+          {
+            "title": "Alpha Particle Mass (in u)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:alpha_particle_u"
+            },
+            "value": {
+              "@unit": "u",
+              "@uncertainty": "6.2E-11",
+              "#text": "4.001506179129"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Particle Mass in MeV*c^(-2)",
+        "variable": [
+          {
+            "title": "Electron Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:electron_eV"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "#text": "electron_mass*c^2/electronvolt_constant*1E-6"
+            }
+          },
+          {
+            "title": "Neutron Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:neutron_eV"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "#text": "neutron_mass*c^2/electronvolt_constant*1E-6"
+            }
+          },
+          {
+            "title": "Proton Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:proton_eV"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "#text": "proton_mass*c^2/electronvolt_constant*1E-6"
+            }
+          },
+          {
+            "title": "Tau Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:tau_eV"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "#text": "tau_mass*c^2/electronvolt_constant*1E-6"
+            }
+          },
+          {
+            "title": "Muon Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:muon_eV"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "#text": "muon_mass*c^2/electronvolt_constant*1E-6"
+            }
+          },
+          {
+            "title": "Alpha Particle Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:alpha_particle_eV"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "#text": "alpha_particle_mass*c^2/electronvolt_constant*1E-6"
+            }
+          },
+          {
+            "title": "Up Quark Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:quark_u"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "@uncertainty": "0.5",
+              "#text": "2.2"
+            }
+          },
+          {
+            "title": "Down Quark Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:quark_d"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "@uncertainty": "0.5",
+              "#text": "4.7"
+            }
+          },
+          {
+            "title": "Charm Quark Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:quark_c"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "@uncertainty": "20",
+              "#text": "1270"
+            }
+          },
+          {
+            "title": "Strange Quark Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:quark_s"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "@uncertainty": "9",
+              "#text": "95"
+            }
+          },
+          {
+            "title": "Top Quark Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:quark_t"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "@uncertainty": "300",
+              "#text": "172760"
+            }
+          },
+          {
+            "title": "Bottom Quark Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:quark_b"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "@uncertainty": "40",
+              "#text": "4180"
+            }
+          },
+          {
+            "title": "Higgs Boson Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:higgs_boson"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "@uncertainty": "110",
+              "#text": "125110"
+            }
+          },
+          {
+            "title": "W Boson Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:w_boson"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "@uncertainty": "12",
+              "#text": "80379"
+            }
+          },
+          {
+            "title": "Z Boson Mass (in MeV/c^2)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:z_boson"
+            },
+            "value": {
+              "@unit": "MeV*c_unit^(-2)",
+              "@uncertainty": "2.1",
+              "#text": "91187.6"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Particle Mass in kg",
+        "variable": [
+          {
+            "title": "Deuteron Mass",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:deuteron_mass"
+            },
+            "value": "nounit(deuteron_u)*atomic_mass_constant"
+          },
+          {
+            "title": "Electron Mass",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:electron_mass,as:m_e"
+            },
+            "value": "(2*rydberg*planck)/(c*fine_structure^2)"
+          },
+          {
+            "title": "Helion Mass",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:helion_mass,as:m_h"
+            },
+            "value": "nounit(helion_u)*atomic_mass_constant"
+          },
+          {
+            "title": "Neutron Mass",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:neutron_mass,as:m_n"
+            },
+            "value": "nounit(neutron_u)*atomic_mass_constant"
+          },
+          {
+            "title": "Proton Mass",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:proton_mass,as:m_p"
+            },
+            "value": "nounit(proton_u)*atomic_mass_constant"
+          },
+          {
+            "title": "Tau Mass",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:tau_mass,asu:m_τ,aos:m_tau"
+            },
+            "value": "nounit(tau_u)*atomic_mass_constant"
+          },
+          {
+            "title": "Muon Mass",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:muon_mass,asu:m_μ,asou:m_µ,aos:m_mu"
+            },
+            "value": "nounit(muon_u)*atomic_mass_constant"
+          },
+          {
+            "title": "Triton Mass",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:triton_mass"
+            },
+            "value": "nounit(triton_u)*atomic_mass_constant"
+          },
+          {
+            "title": "Alpha Particle Mass",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:alpha_particle_mass,asu:m_α,aos:m_alpha"
+            },
+            "value": "nounit(alpha_particle_u)*atomic_mass_constant"
+          }
+        ]
+      },
+      {
+        "title": "Compton Wavelength",
+        "variable": [
+          {
+            "title": "Compton Wavelength (electron)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:compton_wavelength,asu:λ_C,aos:lambda_C"
+            },
+            "value": "planck/(electron_mass*c)"
+          },
+          {
+            "title": "Reduced Compton Wavelength (electron)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:compton_wavelength_2pi,asu:ƛ_C"
+            },
+            "value": "planck2pi/(electron_mass*c)"
+          },
+          {
+            "title": "Muon Compton Wavelength",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:muon_compton_wavelength,asu:λ_Cμ"
+            },
+            "value": "planck/(muon_mass*c)"
+          },
+          {
+            "title": "Reduced Muon Compton Wavelength",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:muon_compton_wavelength_2pi,asu:ƛ_Cμ"
+            },
+            "value": "planck2pi/(muon_mass*c)"
+          },
+          {
+            "title": "Neutron Compton Wavelength",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:neutron_compton_wavelength,asu:λ_Cn"
+            },
+            "value": "planck/(neutron_mass*c)"
+          },
+          {
+            "title": "Reduced Neutron Compton Wavelength",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:neutron_compton_wavelength_2pi,asu:ƛ_Cn"
+            },
+            "value": "planck2pi/(neutron_mass*c)"
+          },
+          {
+            "title": "Proton Compton Wavelength",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:proton_compton_wavelength,asu:λ_Cp"
+            },
+            "value": "planck/(proton_mass*c)"
+          },
+          {
+            "title": "Reduced Proton Compton Wavelength",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:proton_compton_wavelength_2pi,asu:ƛ_Cp"
+            },
+            "value": "planck2pi/(proton_mass*c)"
+          },
+          {
+            "title": "Tau Compton Wavelength",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:tau_compton_wavelength,asu:λ_Cτ"
+            },
+            "value": "planck/(tau_mass*c)"
+          },
+          {
+            "title": "Reduced Tau Compton Wavelength",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:tau_compton_wavelength_2pi,asu:ƛ_Cτ"
+            },
+            "value": "planck2pi/(tau_mass*c)"
+          }
+        ]
+      },
+      {
+        "title": "Atomic and Nuclear Constants",
+        "variable": [
+          {
+            "title": "Bohr Radius",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:bohr_radius,as:a_0"
+            },
+            "value": "planck2pi/(fine_structure*electron_mass*c)"
+          },
+          {
+            "title": "Classical Electron Radius",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:classical_electron_radius,as:r_e"
+            },
+            "value": "elementary_charge^2/(4*pi*electric_constant*electron_mass*c^2)"
+          },
+          {
+            "title": "Fermi Coupling Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:fermi_coupling"
+            },
+            "value": {
+              "@unit": "GeV^(-2)",
+              "@uncertainty": "6E-12",
+              "#text": "1.1663787E-5"
+            }
+          },
+          {
+            "title": "Fine-Structure Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:fine_structure,au:α,ao:alpha"
+            },
+            "value": {
+              "@uncertainty": "1.13E-12",
+              "#text": "7.29735256434E-3"
+            }
+          },
+          {
+            "title": "Hartree Energy (constant)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:hartree_constant,as:Ha_constant"
+            },
+            "value": "2*rydberg*planck*c"
+          },
+          {
+            "title": "Quantum of Circulation",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:quantum_circulation"
+            },
+            "value": "planck/(2*electron_mass)"
+          },
+          {
+            "title": "Quantum of Circulation times 2",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:quantum_circulation_2"
+            },
+            "value": "quantum_circulation*2"
+          },
+          {
+            "title": "Rydberg Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:rydberg,asu:R_∞"
+            },
+            "value": {
+              "@uncertainty": "0.000012",
+              "@unit": "m^(-1)",
+              "#text": "10973731.5681569"
+            }
+          },
+          {
+            "title": "Thomson cross section",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:thomson_cross_section,asu:σ_t,aos:sigma_t"
+            },
+            "value": "(8*pi/3)*classical_electron_radius^2"
+          },
+          {
+            "title": "Weak Mixing Angle (sin²θw)",
+            "names": {
+              "@translatable": "no",
+              "#text": "weak_mixing_angle,asu:sin2θ_W,r:weinberg,aos:sin2_theta_W"
+            },
+            "value": "1-w_z_ratio^2"
+          },
+          {
+            "title": "W to Z Mass Ratio",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:w_z_ratio"
+            },
+            "value": {
+              "@uncertainty": "0.00013",
+              "#text": "0.88145"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Physico-Chemical Constants",
+        "variable": [
+          {
+            "title": "Lattice Spacing of Ideal Silicon (220)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:lattice_spacing_Si220,as:d_220"
+            },
+            "value": "lattice_parameter_Si/sqrt(8)"
+          },
+          {
+            "title": "Atomic Mass Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:atomic_mass_constant,as:m_u"
+            },
+            "value": {
+              "@units": "auto",
+              "#text": "(2*rydberg*planck)/(c*fine_structure^2*nounit(electron_u))"
+            }
+          },
+          {
+            "title": "Avogadro Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:avogadro,as:N_A"
+            },
+            "value": {
+              "@unit": "mol^(-1)",
+              "#text": "6.02214076E23"
+            }
+          },
+          {
+            "title": "Boltzmann Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:boltzmann,as:k_B"
+            },
+            "value": {
+              "@unit": "J*K^(-1)",
+              "#text": "1.380649E-23"
+            }
+          },
+          {
+            "title": "Molar Mass Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:molar_mass,as:M_u"
+            },
+            "value": "(2*planck*rydberg*avogadro)/(c*fine_structure^2*nounit(electron_u))"
+          },
+          {
+            "title": "Electronvolt (constant)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:electronvolt_constant,as:eV_constant"
+            },
+            "value": {
+              "@unit": "auto",
+              "#text": "elementary_charge/C*J"
+            }
+          },
+          {
+            "title": "Faraday Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:faraday,au:ℱ"
+            },
+            "value": "avogadro*elementary_charge"
+          },
+          {
+            "title": "First Radiation Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:first_radiation,as:c_1"
+            },
+            "value": "2*pi*planck*c^2"
+          },
+          {
+            "title": "First Radiation Constant for Spectral Radiance",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:first_radiation_sr,as:c_1L"
+            },
+            "value": "first_radiation/pi"
+          },
+          {
+            "title": "Gas Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:gas_constant,ideal_gas"
+            },
+            "value": "boltzmann*avogadro"
+          },
+          {
+            "title": "Lattice Parameter of Silicon",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:lattice_parameter_Si"
+            },
+            "value": {
+              "@unit": "m",
+              "@uncertainty": "8.9E-18",
+              "#text": "543.1020511E-12"
+            }
+          },
+          {
+            "title": "Loschmidt Constant (273.15 K, 100 kPa)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:loschmidt_100,aos:n_0100"
+            },
+            "value": {
+              "@unit": "auto",
+              "#text": "(100000*Pa)/(boltzmann*273.15*K)"
+            }
+          },
+          {
+            "title": "Loschmidt Constant (273.15 K, 101.325 kPa)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:loschmidt_atm,ros:loschmidt,aos:n_0"
+            },
+            "value": {
+              "@unit": "auto",
+              "#text": "(101325*Pa)/(boltzmann*273.15*K)"
+            }
+          },
+          {
+            "title": "Molar Planck Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:molar_planck"
+            },
+            "value": "avogadro*planck"
+          },
+          {
+            "title": "Molar Volume of Ideal Gas (273.15 K, 100 kPa)",
+            "names": {
+              "@translatable": "no",
+              "#text": "s:ideal_gas_molar_100,r:ideal_gas_molar,as:V_m"
+            },
+            "value": {
+              "@unit": "auto",
+              "#text": "(gas_constant*273.15*K)/(100000*Pa)"
+            }
+          },
+          {
+            "title": "Molar Volume of Ideal Gas (273.15 K, 101.325 kPa)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:ideal_gas_molar_atm,ros:ideal_gas_molar_101,aos:V_m101"
+            },
+            "value": {
+              "@unit": "auto",
+              "#text": "(gas_constant*273.15*K)/(101325*Pa)"
+            }
+          },
+          {
+            "title": "Sackur-Tetrode constant (1 K, 100 kPa)",
+            "names": {
+              "@translatable": "no",
+              "#text": "s:sackur_tetrode_100,r:sackur_tetrode"
+            },
+            "value": {
+              "@uncertainty": "4.7E-10",
+              "#text": "-1.15170753496"
+            }
+          },
+          {
+            "title": "Sackur-Tetrode constant (1 K, 101.325 kPa)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:sackur_tetrode_atm,ros:sackur_tetrode_101"
+            },
+            "value": {
+              "@uncertainty": "4.7E-10",
+              "#text": "-1.16487052149"
+            }
+          },
+          {
+            "title": "Second Radiation Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:second_radiation,as:c_2"
+            },
+            "value": "planck*c/boltzmann"
+          },
+          {
+            "title": "Stefan-Boltzmann Constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:stefan,au:σ,ao:sigma"
+            },
+            "value": "(2pi^5*boltzmann^4)/(15*planck^3*c^2)"
+          },
+          {
+            "title": "Wien frequency displacement law constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:wien_frequency"
+            },
+            "value": "(k_B/planck)×(lambertw(−3/e^3)+3)"
+          },
+          {
+            "title": "Wien wavelength displacement law constant",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:wien_displacement,ais:b_energy"
+            },
+            "value": "(planck×c/k_B)/(lambertw(−5/e^5)+5)"
+          }
+        ]
+      },
+      {
+        "title": "Conversion factors for energy equivalents",
+        "variable": [
+          {
+            "title": "Hertz - Inverse Meter Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:Hz_to_m"
+            },
+            "value": "1/c"
+          },
+          {
+            "title": "Hertz - Joule Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:Hz_to_J"
+            },
+            "value": "planck"
+          },
+          {
+            "title": "Hertz - Kelvin Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:Hz_to_K"
+            },
+            "value": "planck/boltzmann"
+          },
+          {
+            "title": "Hertz - Kilogram Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:Hz_to_kg"
+            },
+            "value": "planck/c^2"
+          },
+          {
+            "title": "Inverse Meter - Hertz Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:m_to_Hz"
+            },
+            "value": "c"
+          },
+          {
+            "title": "Inverse Meter - Joule Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:m_to_J"
+            },
+            "value": "planck*c"
+          },
+          {
+            "title": "Inverse Meter - Kelvin Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:m_to_K"
+            },
+            "value": "planck*c/boltzmann"
+          },
+          {
+            "title": "Inverse Meter - Kilogram Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:m_to_kg"
+            },
+            "value": "planck/c"
+          },
+          {
+            "title": "Joule - Hertz Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:J_to_Hz"
+            },
+            "value": "1/planck"
+          },
+          {
+            "title": "Joule - Inverse Meter Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:J_to_m"
+            },
+            "value": "1/(planck*c)"
+          },
+          {
+            "title": "Joule - Kelvin Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:J_to_K"
+            },
+            "value": "1/boltzmann"
+          },
+          {
+            "title": "Joule - Kilogram Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:J_to_kg"
+            },
+            "value": "1/c^2"
+          },
+          {
+            "title": "Kelvin - Hertz Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:K_to_Hz"
+            },
+            "value": "boltzmann/planck"
+          },
+          {
+            "title": "Kelvin - Inverse Meter Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:K_to_m"
+            },
+            "value": "boltzmann/(planck*c)"
+          },
+          {
+            "title": "Kelvin - Joule Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:K_to_J"
+            },
+            "value": "boltzmann"
+          },
+          {
+            "title": "Kelvin - Kilogram Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:K_to_kg"
+            },
+            "value": "boltzmann/c^2"
+          },
+          {
+            "title": "Kilogram - Hertz Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:kg_to_Hz"
+            },
+            "value": "c^2/planck"
+          },
+          {
+            "title": "Kilogram - Inverse Meter Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:kg_to_m"
+            },
+            "value": "c/planck"
+          },
+          {
+            "title": "Kilogram - Joule Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:kg_to_J"
+            },
+            "value": "c^2"
+          },
+          {
+            "title": "Kilogram - Kelvin Relationship",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:kg_to_K"
+            },
+            "value": "c^2/boltzmann"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Basic Constants",
+    "variable": [
+      {
+        "title": "Golden Ratio",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:golden,au:φ,aos:phi"
+        },
+        "value": "(1+sqrt(5))/2"
+      },
+      {
+        "title": "Omega Constant",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:omega"
+        },
+        "value": "lambertw(1)"
+      },
+      {
+        "title": "Pythagoras' Constant (sqrt 2)",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:pythagoras"
+        },
+        "value": "sqrt(2)"
+      },
+      {
+        "title": "Apery's Constant",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:apery"
+        },
+        "value": "zeta(3)"
+      },
+      {
+        "title": "Tau (2pi)",
+        "names": {
+          "@translatable": "no",
+          "#text": "au:τ,r:tau"
+        },
+        "value": "2*pi"
+      },
+      {
+        "title": "Plastic Number",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:plastic,au:ρ,aos:rho"
+        },
+        "value": "cbrt((9+sqrt(69))/18)+cbrt((9-sqrt(69))/18)"
+      }
+    ],
+    "builtin_variable": [
+      {
+        "@name": "e",
+        "title": "Base of Natural Logarithms (e)",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:e"
+        }
+      },
+      {
+        "@name": "pi",
+        "title": "Archimedes' Constant (pi)",
+        "names": {
+          "@translatable": "no",
+          "#text": "au:π,r:pi"
+        }
+      },
+      {
+        "@name": "euler",
+        "title": "Euler's Constant",
+        "names": {
+          "@translatable": "no",
+          "#text": "au:γ,r:euler"
+        }
+      },
+      {
+        "@name": "catalan",
+        "title": "Catalan's Constant",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:catalan"
+        }
+      }
+    ]
+  },
+  {
+    "title": "Special Numbers",
+    "builtin_variable": [
+      {
+        "@name": "i",
+        "title": "Imaginary i (sqrt -1)",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:i"
+        }
+      },
+      {
+        "@name": "plus_infinity",
+        "title": "Positive Infinity",
+        "names": "a:∞,r:plus_infinity,r:infinity"
+      },
+      {
+        "@name": "minus_infinity",
+        "title": "Negative Infinity",
+        "names": "r:minus_infinity"
+      },
+      {
+        "@name": "undefined",
+        "title": "Undefined",
+        "names": "r:undefined"
+      }
+    ],
+    "variable": [
+      {
+        "title": "False",
+        "names": "r:false,r:no",
+        "value": "0"
+      },
+      {
+        "title": "True",
+        "names": "r:true,r:yes",
+        "value": "1"
+      }
+    ]
+  },
+  {
+    "title": "Matrices & Vectors",
+    "variable": [
+      {
+        "title": "Pauli Matrix 0",
+        "names": "rs:pauli_0,aus:σ_0",
+        "value": "[1 0; 0 1]"
+      },
+      {
+        "title": "Pauli Matrix 1",
+        "names": "rs:pauli_1,aus:σ_1",
+        "value": "[0 1; 1 0]"
+      },
+      {
+        "title": "Pauli Matrix 2",
+        "names": "rs:pauli_2,aus:σ_2",
+        "value": "[0 -i; i 0]"
+      },
+      {
+        "title": "Pauli Matrix 3",
+        "names": "rs:pauli_3,aus:σ_3",
+        "value": "[1 0; 0 -1]"
+      }
+    ]
+  },
+  {
+    "title": "Utilities",
+    "builtin_variable": [
+      {
+        "@name": "precision",
+        "title": "Precision",
+        "names": "r:precision"
+      },
+      {
+        "@name": "uptime",
+        "title": "System Uptime",
+        "names": "r:uptime"
+      }
+    ]
+  },
+  {
+    "title": "Unknowns",
+    "unknown": [
+      {
+        "names": {
+          "@translatable": "no",
+          "#text": "r:x"
+        }
+      },
+      {
+        "names": {
+          "@translatable": "no",
+          "#text": "r:y"
+        }
+      },
+      {
+        "names": {
+          "@translatable": "no",
+          "#text": "r:z"
+        }
+      }
+    ],
+    "builtin_variable": {
+      "@name": "n",
+      "title": "n (integer)",
+      "names": {
+        "@translatable": "no",
+        "#text": "r:n"
+      }
+    }
+  },
+  {
+    "title": "Date & Time",
+    "builtin_variable": [
+      {
+        "@name": "today",
+        "title": "Today",
+        "names": "r:today"
+      },
+      {
+        "@name": "tomorrow",
+        "title": "Tomorrow",
+        "names": "r:tomorrow"
+      },
+      {
+        "@name": "yesterday",
+        "title": "Yesterday",
+        "names": "r:yesterday"
+      },
+      {
+        "@name": "now",
+        "title": "Now (date and time)",
+        "names": "r:now"
+      }
+    ]
+  }
+]

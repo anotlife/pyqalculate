@@ -1,0 +1,1 @@
+"""PyQalculate test suite."""

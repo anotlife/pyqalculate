@@ -1,0 +1,1187 @@
+[
+  {
+    "title": "Currency",
+    "builtin_unit": [
+      {
+        "@name": "EUR",
+        "title": "European Euro",
+        "names": "a-cr:EUR,au:€,euro,p:euros",
+        "countries": "Andorra, Austria, Belgium, Bulgaria, Croatia, Cyprus, Estonia, Finland, France, Germany, Greece, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Portugal, San Marino, Slovakia, Slovenia, Spain, Vatican City"
+      },
+      {
+        "@name": "USD",
+        "title": "U.S. Dollar",
+        "names": "a:$,a-cr:USD,dollar,p:dollars",
+        "countries": "United States, East Timor, Ecuador, El Salvador, Micronesia, Marshall Islands, Palau, Zimbabwe"
+      },
+      {
+        "@name": "JPY",
+        "title": "Japanese Yen",
+        "names": "a-cr:JPY,au:¥,yen",
+        "countries": "Japan"
+      },
+      {
+        "@name": "DKK",
+        "title": "Danish Krone",
+        "names": "a-cr:DKK",
+        "countries": "Denmark"
+      },
+      {
+        "@name": "GBP",
+        "title": "British Pound",
+        "names": "a-cr:GBP,au:£",
+        "countries": "United Kingdom"
+      },
+      {
+        "@name": "THB",
+        "title": "Thai Baht",
+        "names": "a-cr:THB,au:฿",
+        "countries": "Thailand"
+      },
+      {
+        "@name": "SEK",
+        "title": "Swedish Krona",
+        "names": "a-cr:SEK",
+        "countries": "Sweden"
+      },
+      {
+        "@name": "CHF",
+        "title": "Swiss Franc",
+        "names": "a-cr:CHF",
+        "countries": "Switzerland"
+      },
+      {
+        "@name": "NOK",
+        "title": "Norwegian Krone",
+        "names": "a-cr:NOK",
+        "countries": "Norway"
+      },
+      {
+        "@name": "RUB",
+        "title": "Russian Ruble",
+        "names": "a-cr:RUB,au:₽,ruble",
+        "countries": "Russia"
+      },
+      {
+        "@name": "PHP",
+        "title": "Philippine Peso",
+        "names": "a-cr:PHP,au:₱",
+        "countries": "Philippines"
+      },
+      {
+        "@name": "MYR",
+        "title": "Malaysian Ringgit",
+        "names": "acr:MYR,ac:myr",
+        "countries": "Malaysia"
+      },
+      {
+        "@name": "CNY",
+        "title": "Chinese Yuan Renminbi",
+        "names": "a-cr:CNY",
+        "countries": "China"
+      },
+      {
+        "@name": "IDR",
+        "title": "Indonesian Rupiah",
+        "names": "a-cr:IDR,rupiah",
+        "countries": "Indonesia"
+      },
+      {
+        "@name": "CZK",
+        "title": "Czech Koruna",
+        "names": "a-cr:CZK,au-c:Kč",
+        "countries": "Czech Republic"
+      },
+      {
+        "@name": "HUF",
+        "title": "Hungarian Forint",
+        "names": "forint,a-cr:HUF",
+        "countries": "Hungary"
+      },
+      {
+        "@name": "PLN",
+        "title": "Polish Zloty",
+        "names": "a-cr:PLN,au:zł,zloty",
+        "countries": "Poland"
+      },
+      {
+        "@name": "RON",
+        "title": "Romanian Leu",
+        "names": "a-cr:RON",
+        "countries": "Romania"
+      },
+      {
+        "@name": "TRY",
+        "title": "Turkish Lira",
+        "names": "a-cr:TRY,au:₺",
+        "countries": "Turkey"
+      },
+      {
+        "@name": "AUD",
+        "title": "Australian Dollar",
+        "names": "a-cr:AUD",
+        "countries": "Australia"
+      },
+      {
+        "@name": "CAD",
+        "title": "Canadian Dollar",
+        "names": "a-cr:CAD",
+        "countries": "Canada"
+      },
+      {
+        "@name": "HKD",
+        "title": "Hong Kong Dollar",
+        "names": "a-cr:HKD"
+      },
+      {
+        "@name": "NZD",
+        "title": "New Zealand Dollar",
+        "names": "a-cr:NZD",
+        "countries": "New Zealand"
+      },
+      {
+        "@name": "SGD",
+        "title": "Singapore Dollar",
+        "names": "a-cr:SGD",
+        "countries": "Singapore"
+      },
+      {
+        "@name": "KRW",
+        "title": "South Korean Won",
+        "names": "a-cr:KRW,au:₩,won",
+        "countries": "South Korea"
+      },
+      {
+        "@name": "ZAR",
+        "title": "South African Rand",
+        "names": "a-cr:ZAR",
+        "countries": "South Africa"
+      },
+      {
+        "@name": "INR",
+        "title": "Indian Rupee",
+        "names": "a-cr:INR,au:₹,rupee",
+        "countries": "India"
+      },
+      {
+        "@name": "ILS",
+        "title": "Israeli New Sheqel",
+        "names": "a-cr:ILS,au:₪,sheqel",
+        "countries": "Israel"
+      },
+      {
+        "@name": "MXN",
+        "title": "Mexican Peso",
+        "names": "a-cr:MXN",
+        "countries": "Mexico"
+      },
+      {
+        "@name": "BRL",
+        "title": "Brazilian Real",
+        "names": "a-cr:BRL",
+        "countries": "Brazil"
+      },
+      {
+        "@name": "ISK",
+        "title": "Icelandic Krónur",
+        "names": "a-cr:ISK",
+        "countries": "Iceland"
+      },
+      {
+        "@name": "BTC",
+        "title": "Bitcoin",
+        "names": "a-cr:BTC,au:₿,a:XBT,bitcoin,p:bitcoins"
+      },
+      {
+        "@name": "KES",
+        "title": "Kenyan Shilling",
+        "names": "a-cr:KES",
+        "countries": "Kenya"
+      },
+      {
+        "@name": "AFN",
+        "title": "Afghan Afghani",
+        "names": "a-cr:AFN,aio:؋",
+        "countries": "Afghanistan"
+      },
+      {
+        "@name": "ALL",
+        "title": "Albanian Lek",
+        "names": "a-cr:ALL",
+        "countries": "Albania"
+      },
+      {
+        "@name": "DZD",
+        "title": "Algerian Dinar",
+        "names": "a-cr:DZD",
+        "countries": "Algeria"
+      },
+      {
+        "@name": "AOA",
+        "title": "Angolan Kwanza",
+        "names": "a-cr:AOA",
+        "countries": "Angola"
+      },
+      {
+        "@name": "XCD",
+        "title": "Eastern Caribbean Dollar",
+        "names": "a-cr:XCD",
+        "countries": "Antigua and Barbuda, Dominica, Grenada, Montserrat, Saint Kitts and Nevis, Saint Lucia, Saint Vincent and the Grenadines, Anguilla"
+      },
+      {
+        "@name": "ARS",
+        "title": "Argentine Peso",
+        "names": "a-cr:ARS",
+        "countries": "Argentina"
+      },
+      {
+        "@name": "AMD",
+        "title": "Armenian Dram",
+        "names": "a-cr:AMD,au:֏",
+        "countries": "Armenia"
+      },
+      {
+        "@name": "AWG",
+        "title": "Aruban Florin",
+        "names": "a-cr:AWG",
+        "countries": "Aruba"
+      },
+      {
+        "@name": "ANG",
+        "title": "Netherlands Antillean Guilder",
+        "names": "a-cr:ANG",
+        "countries": "Curaçao, Sint Maarten"
+      },
+      {
+        "@name": "AZN",
+        "title": "Azerbaijani Manat",
+        "names": "a-cr:AZN,au:₼",
+        "countries": "Azerbaijan"
+      },
+      {
+        "@name": "BSD",
+        "title": "Bahamian Dollar",
+        "names": "a-cr:BSD",
+        "countries": "Bahamas"
+      },
+      {
+        "@name": "BHD",
+        "title": "Bahraini Dinar",
+        "names": "a-cr:BHD",
+        "countries": "Bahrain"
+      },
+      {
+        "@name": "BDT",
+        "title": "Bangladeshi Taka",
+        "names": "a-cr:BDT,au:৳",
+        "countries": "Bangladesh"
+      },
+      {
+        "@name": "BBD",
+        "title": "Barbadian Dollar",
+        "names": "a-cr:BBD",
+        "countries": "Barbados"
+      },
+      {
+        "@name": "BYN",
+        "title": "Belarusian Ruble",
+        "names": "a-cr:BYN",
+        "countries": "Belarus"
+      },
+      {
+        "@name": "BYR",
+        "title": "Belarusian Ruble p. (obsolete)",
+        "names": "a-cr:BYR"
+      },
+      {
+        "@name": "BZD",
+        "title": "Belize Dollar",
+        "names": "a-cr:BZD",
+        "countries": "Belize"
+      },
+      {
+        "@name": "XOF",
+        "title": "West African CFA Franc",
+        "names": "a-cr:XOF",
+        "countries": "Benin, Burkina Faso, Guinea-Bissau, Ivory Coast, Mali, Niger, Senegal, Togo"
+      },
+      {
+        "@name": "BMD",
+        "title": "Bermudian Dollar",
+        "names": "a-cr:BMD",
+        "countries": "Bermuda"
+      },
+      {
+        "@name": "BOB",
+        "title": "Bolivian Boliviano Bs",
+        "names": "a-cr:BOB",
+        "countries": "Bolivia"
+      },
+      {
+        "@name": "BAM",
+        "title": "Bosnia and Herzegovina Convertible Mark",
+        "names": "a-cr:BAM",
+        "countries": "Bosnia and Herzegovina"
+      },
+      {
+        "@name": "BWP",
+        "title": "Botswana Pula",
+        "names": "a-cr:BWP",
+        "countries": "Botswana"
+      },
+      {
+        "@name": "BND",
+        "title": "Brunei Dollar",
+        "names": "a-cr:BND",
+        "countries": "Brunei"
+      },
+      {
+        "@name": "BIF",
+        "title": "Burundian Franc",
+        "names": "a-cr:BIF",
+        "countries": "Burundi"
+      },
+      {
+        "@name": "KHR",
+        "title": "Cambodian Riel",
+        "names": "a-cr:KHR,aiu:៛",
+        "countries": "Cambodia"
+      },
+      {
+        "@name": "XAF",
+        "title": "Central African CFA Franc",
+        "names": "a-cr:XAF",
+        "countries": "Cameroon, Central African Republic, Chad, Republic of the Congo, Equatorial Guinea, Gabon"
+      },
+      {
+        "@name": "CVE",
+        "title": "Cape Verdean Escudo",
+        "names": "a-cr:CVE",
+        "countries": "Cape Verde"
+      },
+      {
+        "@name": "KYD",
+        "title": "Cayman Islands Dollar",
+        "names": "a-cr:KYD",
+        "countries": "Cayman Islands"
+      },
+      {
+        "@name": "CLP",
+        "title": "Chilean Peso",
+        "names": "a-cr:CLP",
+        "countries": "Chile"
+      },
+      {
+        "@name": "COP",
+        "title": "Colombian Peso",
+        "names": "a-cr:COP",
+        "countries": "Colombia"
+      },
+      {
+        "@name": "KMF",
+        "title": "Comorian Franc",
+        "names": "a-cr:KMF",
+        "countries": "Comoros"
+      },
+      {
+        "@name": "CDF",
+        "title": "Democratic Republic of the Congo (Congolese Franc)",
+        "names": "a-cr:CDF",
+        "countries": "Democratic Republic of the Congo"
+      },
+      {
+        "@name": "CRC",
+        "title": "Costa Rican colón",
+        "names": "a-cr:CRC,au:₡",
+        "countries": "Costa Rica"
+      },
+      {
+        "@name": "CUP",
+        "title": "Cuban Peso",
+        "names": "acr:CUP",
+        "countries": "Cuba"
+      },
+      {
+        "@name": "DJF",
+        "title": "Djiboutian Franc",
+        "names": "a-cr:DJF",
+        "countries": "Djibouti"
+      },
+      {
+        "@name": "DOP",
+        "title": "Dominican Peso",
+        "names": "a-cr:DOP",
+        "countries": "Dominican Republic"
+      },
+      {
+        "@name": "EGP",
+        "title": "Egyptian Pound",
+        "names": "a-cr:EGP",
+        "countries": "Egypt"
+      },
+      {
+        "@name": "SVC",
+        "title": "El Salvadoran Colon (obsolete)",
+        "names": "a-cr:SVC"
+      },
+      {
+        "@name": "ERN",
+        "title": "Eritrean Nafka",
+        "names": "a-cr:ERN",
+        "countries": "Eritrea"
+      },
+      {
+        "@name": "ETB",
+        "title": "Ethiopian Birr",
+        "names": "a-cr:ETB",
+        "countries": "Ethiopia"
+      },
+      {
+        "@name": "FKP",
+        "title": "Falkland Islands Pound",
+        "names": "a-cr:FKP",
+        "countries": "Falkland Islands"
+      },
+      {
+        "@name": "FJD",
+        "title": "Fijian Dollar",
+        "names": "a-cr:FJD",
+        "countries": "Fiji"
+      },
+      {
+        "@name": "XPF",
+        "title": "CFP franc",
+        "names": "a-cr:XPF",
+        "countries": "French Polynesia, New Caledonia, Wallis and Futuna"
+      },
+      {
+        "@name": "GMD",
+        "title": "Gambian Dalasi",
+        "names": "a-cr:GMD",
+        "countries": "Gambia"
+      },
+      {
+        "@name": "GEL",
+        "title": "Georgian Lari",
+        "names": "a-cr:GEL,au:₾",
+        "countries": "Georgia"
+      },
+      {
+        "@name": "GHS",
+        "title": "Ghanaian Cedi",
+        "names": "a-cr:GHS,au:₵",
+        "countries": "Ghana"
+      },
+      {
+        "@name": "GIP",
+        "title": "Gibraltar Pound",
+        "names": "a-cr:GIP",
+        "countries": "Gibraltar"
+      },
+      {
+        "@name": "GTQ",
+        "title": "Guatemalan Quetzal",
+        "names": "a-cr:GTQ",
+        "countries": "Guatemala"
+      },
+      {
+        "@name": "GGP",
+        "title": "Guernsey Pound",
+        "names": "a-cr:GGP",
+        "countries": "Guernsey"
+      },
+      {
+        "@name": "GNF",
+        "title": "Guinean Franc",
+        "names": "a-cr:GNF",
+        "countries": "Guinea"
+      },
+      {
+        "@name": "GYD",
+        "title": "Guyanese Dollar",
+        "names": "a-cr:GYD",
+        "countries": "Guyana"
+      },
+      {
+        "@name": "HTG",
+        "title": "Haitian Gourde",
+        "names": "a-cr:HTG",
+        "countries": "Haiti"
+      },
+      {
+        "@name": "HNL",
+        "title": "Honduran Lempira",
+        "names": "a-cr:HNL",
+        "countries": "Honduras"
+      },
+      {
+        "@name": "IRR",
+        "title": "Iranian Rial",
+        "names": "a-cr:IRR,aio:﷼",
+        "countries": "Iran"
+      },
+      {
+        "@name": "IQD",
+        "title": "Iraqi Dinar",
+        "names": "a-cr:IQD",
+        "countries": "Iraq"
+      },
+      {
+        "@name": "JMD",
+        "title": "Jamaican Dollar",
+        "names": "a-cr:JMD",
+        "countries": "Jamaica"
+      },
+      {
+        "@name": "JOD",
+        "title": "Jordanian Dinar",
+        "names": "a-cr:JOD",
+        "countries": "Jordan"
+      },
+      {
+        "@name": "KZT",
+        "title": "Kazakhstani Tenge",
+        "names": "a-cr:KZT,au:₸",
+        "countries": "Kazakhstan"
+      },
+      {
+        "@name": "KPW",
+        "title": "North Korean Won",
+        "names": "a-cr:KPW",
+        "countries": "North Korea"
+      },
+      {
+        "@name": "KWD",
+        "title": "Kuwaiti Dinar",
+        "names": "a-cr:KWD",
+        "countries": "Kuwait"
+      },
+      {
+        "@name": "KGS",
+        "title": "Kyrgyzstani Som",
+        "names": "acr:KGS",
+        "countries": "Kyrgyzstan"
+      },
+      {
+        "@name": "LAK",
+        "title": "Lao Kip",
+        "names": "a-cr:LAK,au:₭",
+        "countries": "Laos"
+      },
+      {
+        "@name": "LBP",
+        "title": "Lebanese Pound",
+        "names": "a-cr:LBP",
+        "countries": "Lebanon"
+      },
+      {
+        "@name": "LSL",
+        "title": "Lesotho Loti",
+        "names": "a-cr:LSL",
+        "countries": "Lesotho"
+      },
+      {
+        "@name": "LRD",
+        "title": "Liberian Dollar",
+        "names": "a-cr:LRD",
+        "countries": "Liberia"
+      },
+      {
+        "@name": "LYD",
+        "title": "Libyan Dinar",
+        "names": "a-cr:LYD",
+        "countries": "Libya"
+      },
+      {
+        "@name": "MOP",
+        "title": "Macanese Pataca",
+        "names": "a-cr:MOP",
+        "countries": "Macau"
+      },
+      {
+        "@name": "MKD",
+        "title": "Macedonian Denar",
+        "names": "a-cr:MKD",
+        "countries": "Macedonia"
+      },
+      {
+        "@name": "MGA",
+        "title": "Malagasy Ariary",
+        "names": "a-cr:MGA",
+        "countries": "Madagascar"
+      },
+      {
+        "@name": "MWK",
+        "title": "Malawian Kwacha",
+        "names": "a-cr:MWK",
+        "countries": "Malawi"
+      },
+      {
+        "@name": "MVR",
+        "title": "Maldivian Rufiyaa",
+        "names": "a-cr:MVR,aio:ރ",
+        "countries": "Maldives"
+      },
+      {
+        "@name": "MRU",
+        "title": "Mauritanian Ouguiya",
+        "names": "a-cr:MRU",
+        "countries": "Mauritania"
+      },
+      {
+        "@name": "MUR",
+        "title": "Mauritian Rupee",
+        "names": "a-cr:MUR",
+        "countries": "Mauritius"
+      },
+      {
+        "@name": "MDL",
+        "title": "Moldovan Leu",
+        "names": "a-cr:MDL",
+        "countries": "Moldova"
+      },
+      {
+        "@name": "MNT",
+        "title": "Mongolian Tögrög",
+        "names": "a-cr:MNT,au:₮",
+        "countries": "Mongolia"
+      },
+      {
+        "@name": "MAD",
+        "title": "Moroccan Dirham",
+        "names": "a-cr:MAD",
+        "countries": "Morocco"
+      },
+      {
+        "@name": "MZN",
+        "title": "Mozambican Metical",
+        "names": "a-cr:MZN",
+        "countries": "Mozambique"
+      },
+      {
+        "@name": "MMK",
+        "title": "Myanmar (Burmese Kyat)",
+        "names": "a-cr:MMK",
+        "countries": "Myanmar"
+      },
+      {
+        "@name": "NAD",
+        "title": "Namibian Dollar",
+        "names": "a-cr:NAD",
+        "countries": "Namibia"
+      },
+      {
+        "@name": "NPR",
+        "title": "Nepalese Rupee",
+        "names": "a-cr:NPR,aio:रू",
+        "countries": "Nepal"
+      },
+      {
+        "@name": "NIO",
+        "title": "Nicaraguan Córdoba",
+        "names": "a-cr:NIO",
+        "countries": "Nicaragua"
+      },
+      {
+        "@name": "NGN",
+        "title": "Nigerian Naira",
+        "names": "a-cr:NGN,au:₦",
+        "countries": "Nigeria"
+      },
+      {
+        "@name": "OMR",
+        "title": "Omani Rial",
+        "names": "a-cr:OMR",
+        "countries": "Oman"
+      },
+      {
+        "@name": "PKR",
+        "title": "Pakistani Rupee",
+        "names": "a-cr:PKR",
+        "countries": "Pakistan"
+      },
+      {
+        "@name": "PAB",
+        "title": "Panamanian Balboa",
+        "names": "a-cr:PAB",
+        "countries": "Panama"
+      },
+      {
+        "@name": "PGK",
+        "title": "Papua New Guinean Kina",
+        "names": "a-cr:PGK",
+        "countries": "Papua New Guinea"
+      },
+      {
+        "@name": "PYG",
+        "title": "Paraguayan Guaraní",
+        "names": "a-cr:PYG,au:₲",
+        "countries": "Paraguay"
+      },
+      {
+        "@name": "PEN",
+        "title": "Peruvian Sol",
+        "names": "a-cr:PEN",
+        "countries": "Peru"
+      },
+      {
+        "@name": "QAR",
+        "title": "Qatari Riyal",
+        "names": "a-cr:QAR",
+        "countries": "Qatar"
+      },
+      {
+        "@name": "RWF",
+        "title": "Rwandan Franc",
+        "names": "a-cr:RWF",
+        "countries": "Rwanda"
+      },
+      {
+        "@name": "STN",
+        "title": "São Tomé and Príncipe Dobra",
+        "names": "a-cr:STN",
+        "countries": "Sao Tome and Principe"
+      },
+      {
+        "@name": "SAR",
+        "title": "Saudi Riyal",
+        "names": "a-cr:SAR",
+        "countries": "Saudi Arabia"
+      },
+      {
+        "@name": "RSD",
+        "title": "Serbian Dinar",
+        "names": "a-cr:RSD",
+        "countries": "Serbia"
+      },
+      {
+        "@name": "SCR",
+        "title": "Seychellois Rupee",
+        "names": "a-cr:SCR",
+        "countries": "Seychelles"
+      },
+      {
+        "@name": "SLE",
+        "title": "Sierra Leonean Leone",
+        "names": "a-cr:SLE",
+        "countries": "Sierra Leone"
+      },
+      {
+        "@name": "SBD",
+        "title": "Solomon Islands Dollar",
+        "names": "a-cr:SBD",
+        "countries": "Solomon Islands"
+      },
+      {
+        "@name": "SOS",
+        "title": "Somali Shilling",
+        "names": "a-cr:SOS",
+        "countries": "Somalia"
+      },
+      {
+        "@name": "LKR",
+        "title": "Sri Lankan Rupee",
+        "names": "a-cr:LKR,aou:௹",
+        "countries": "Sri Lanka"
+      },
+      {
+        "@name": "SDG",
+        "title": "Sudanese Pound",
+        "names": "a-cr:SDG",
+        "countries": "Sudan"
+      },
+      {
+        "@name": "SRD",
+        "title": "Surinamese Dollar",
+        "names": "a-cr:SRD",
+        "countries": "Suriname"
+      },
+      {
+        "@name": "SZL",
+        "title": "Swazi Lilangeni",
+        "names": "a-cr:SZL",
+        "countries": "Eswatini"
+      },
+      {
+        "@name": "SYP",
+        "title": "Syrian Pound",
+        "names": "a-cr:SYP",
+        "countries": "Syria"
+      },
+      {
+        "@name": "TWD",
+        "title": "New Taiwan Dollar",
+        "names": "a-cr:TWD",
+        "countries": "Taiwan"
+      },
+      {
+        "@name": "TJS",
+        "title": "Tajikistani Somoni",
+        "names": "a-cr:TJS",
+        "countries": "Tajikistan"
+      },
+      {
+        "@name": "TZS",
+        "title": "Tanzanian Shilling",
+        "names": "a-cr:TZS",
+        "countries": "Tanzania"
+      },
+      {
+        "@name": "TOP",
+        "title": "Tongan Paʻanga",
+        "names": "a-cr:TOP",
+        "countries": "Tonga"
+      },
+      {
+        "@name": "TTD",
+        "title": "Trinidad and Tobago dollar",
+        "names": "a-cr:TTD",
+        "countries": "Trinidad and Tobago"
+      },
+      {
+        "@name": "TND",
+        "title": "Tunisian Dinar",
+        "names": "a-cr:TND",
+        "countries": "Tunisia"
+      },
+      {
+        "@name": "TMT",
+        "title": "Turkmenistan Manat",
+        "names": "a-cr:TMT",
+        "countries": "Turkmenistan"
+      },
+      {
+        "@name": "UGX",
+        "title": "Ugandan Shilling",
+        "names": "a-cr:UGX",
+        "countries": "Uganda"
+      },
+      {
+        "@name": "UAH",
+        "title": "Ukrainian Hryvnia",
+        "names": "a-cr:UAH,au:₴",
+        "countries": "Ukraine"
+      },
+      {
+        "@name": "AED",
+        "title": "United Arab Emirates Dirham",
+        "names": "a-cr:AED",
+        "countries": "United Arab Emirates"
+      },
+      {
+        "@name": "UYU",
+        "title": "Uruguayan Peso",
+        "names": "a-cr:UYU",
+        "countries": "Uruguay"
+      },
+      {
+        "@name": "UZS",
+        "title": "Uzbekistan Soʻm",
+        "names": "a-cr:UZS",
+        "countries": "Uzbekistan"
+      },
+      {
+        "@name": "VUV",
+        "title": "Vanuatu Vatu",
+        "names": "a-cr:VUV",
+        "countries": "Vanuatu"
+      },
+      {
+        "@name": "VES",
+        "title": "Venezuelan Bolívar",
+        "names": "a-cr:VES"
+      },
+      {
+        "@name": "VND",
+        "title": "Vietnamese Đồng",
+        "names": "a-cr:VND,au:₫",
+        "countries": "Vietnam"
+      },
+      {
+        "@name": "YER",
+        "title": "Yemeni Rial",
+        "names": "a-cr:YER",
+        "countries": "Yemen"
+      },
+      {
+        "@name": "ZMW",
+        "title": "Zambian Kwacha",
+        "names": "a-cr:ZMW",
+        "countries": "Zambia"
+      },
+      {
+        "@name": "XAG",
+        "title": "Silver (one troy ounce)",
+        "names": "a-cr:XAG"
+      },
+      {
+        "@name": "XAU",
+        "title": "Gold (one troy ounce)",
+        "names": "a-cr:XAU"
+      },
+      {
+        "@name": "XPD",
+        "title": "Palladium (one troy ounce)",
+        "names": "a-cr:XPD"
+      },
+      {
+        "@name": "XPT",
+        "title": "Platinum (one troy ounce)",
+        "names": "a-cr:XPT"
+      }
+    ],
+    "unit": [
+      {
+        "@type": "alias",
+        "title": "Euro Cent",
+        "names": "r:eurocent,p:eurocents",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/100",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Cent (USD)",
+        "names": "au:¢,r:cent,p:cents",
+        "base": {
+          "unit": "USD",
+          "relation": "1/100",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Belgian Franc (obsolete)",
+        "names": "a-cr:BEF",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/40.3399",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Croatian Kuna (obsolete)",
+        "names": "a-cr:HRK",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/7.53450",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Greek Drachma (obsolete)",
+        "names": "a-cr:GRD,au:₯",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/340.750",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "French Franc (obsolete)",
+        "names": "a-cr:FRF,au:₣",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/6.55957",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Italian Lira (obsolete)",
+        "names": "a-cr:ITL",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/1936.27",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Dutch Guilder (obsolete)",
+        "names": "a-cr:NLG",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/2.20371",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Portuguese Escudo (obsolete)",
+        "names": "a-cr:PTE",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/200.482",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Deutsche Mark (obsolete)",
+        "names": "a-cr:DEM",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/1.95583",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Spanish Peseta (obsolete)",
+        "names": "a-cr:ESP,au:₧",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/166.386",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Irish Pound (obsolete)",
+        "names": "a-cr:IEP",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/0.787564",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Luxembourg Franc (obsolete)",
+        "names": "a-cr:LUF",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/40.3399",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Austrian Schilling (obsolete)",
+        "names": "a-cr:ATS",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/13.7603",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Finnish Markka (obsolete)",
+        "names": "a-cr:FIM",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/5.94573",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Slovenian Tolar (obsolete)",
+        "names": "a-cr:SIT",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/239.640",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Cypriot Pound (obsolete)",
+        "names": "a-cr:CYP",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/0.585274",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Estonian Kroon (obsolete)",
+        "names": "a-cr:EEK",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/15.6466",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Slovak Koruna (obsolete)",
+        "names": "a-cr:SKK",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/30.1260",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Maltese Lira (obsolete)",
+        "names": "a-cr:MTL",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/0.429300",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Latvian Lats (obsolete)",
+        "names": "a-cr:LVL",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/0.702800",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Lithuanian Litas (obsolete)",
+        "names": "a-cr:LTL",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/3.45280",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Bulgarian Lev (obsolete)",
+        "names": "lev,a-cr:BGN",
+        "base": {
+          "unit": "EUR",
+          "relation": "1/1.95583",
+          "exponent": "1"
+        }
+      }
+    ]
+  }
+]

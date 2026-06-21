@@ -1,0 +1,175 @@
+[
+  {
+    "title": "Data Sets",
+    "dataset": [
+      {
+        "title": "!datasets!Elements",
+        "datafile": "elements.xml",
+        "copyright": "This data uses material from the Wikipedia, under the Creative Commons Attribution-ShareAlike License",
+        "names": "r:atom",
+        "object_argument": {
+          "title": "!datasets!Element"
+        },
+        "property": [
+          {
+            "title": "Symbol",
+            "type": "text",
+            "key": "true",
+            "names": "r:symbol"
+          },
+          {
+            "title": "!datasets!Number",
+            "type": "number",
+            "key": "true",
+            "names": "!datasets!r:number"
+          },
+          {
+            "title": "Name",
+            "type": "text",
+            "key": "true",
+            "names": "r:name"
+          },
+          {
+            "title": "Classification",
+            "description": "A number representing an element group:\n1 Alkali Metal\n2 Alkaline-Earth Metal\n3 Lanthanide\n4 Actinide\n5 Transition Metal\n6 Metal\n7 Metalloid\n8 Polyatomic Non-Metal\n9 Diatomic Non-Metal\n10 Noble Gas\n11 Unknown chemical properties",
+            "type": "number",
+            "names": "r:class",
+            "hidden": "true"
+          },
+          {
+            "title": "Atomic Mass",
+            "description": "The property uses standard atomic weight, when determined, or the mass number.",
+            "type": "number",
+            "unit": "u",
+            "approximate": "true",
+            "names": "r:mass,r:weight"
+          },
+          {
+            "title": "Boiling Point",
+            "type": "number",
+            "unit": "K",
+            "approximate": "true",
+            "names": "r:boiling"
+          },
+          {
+            "title": "Melting Point",
+            "type": "number",
+            "unit": "K",
+            "approximate": "true",
+            "names": "r:melting"
+          },
+          {
+            "title": "Density",
+            "description": "Density at STP (gases) or near room temperature",
+            "type": "number",
+            "unit": "g/cm^3",
+            "approximate": "true",
+            "names": "r:density"
+          },
+          {
+            "title": "X Position",
+            "type": "number",
+            "hidden": "true",
+            "names": "r:x_pos"
+          },
+          {
+            "title": "Y Position",
+            "type": "number",
+            "hidden": "true",
+            "names": "r:y_pos"
+          }
+        ]
+      },
+      {
+        "title": "Planets",
+        "datafile": "planets.xml",
+        "copyright": "This data uses material from the Wikipedia articles\n\n\"Earth\" (http://www.wikipedia.org/wiki/Earth),\n\"Jupiter\" (http://www.wikipedia.org/wiki/Jupiter),\n\"Mars\" (http://www.wikipedia.org/wiki/Mars),\n\"Mercury (planet)\" (http://www.wikipedia.org/wiki/Mercury_(planet)),\n\"Neptune\" (http://www.wikipedia.org/wiki/Neptune),\n\"Pluto\" (http://www.wikipedia.org/wiki/Pluto),\n\"Saturn\" (http://www.wikipedia.org/wiki/Saturn),\n\"Uranus\" (http://www.wikipedia.org/wiki/Uranus), and\n\"Venus\" (http://en.wikipedia.org/wiki/Venus), under Creative Commons Attribution-ShareAlike License",
+        "names": "r:planet",
+        "object_argument": {
+          "title": "Planet"
+        },
+        "property": [
+          {
+            "title": "Name",
+            "type": "text",
+            "key": "true",
+            "names": "r:name"
+          },
+          {
+            "title": "Orbital Period (Year)",
+            "type": "number",
+            "unit": "d",
+            "approximate": "true",
+            "names": "!datasets!r:year"
+          },
+          {
+            "title": "Average Orbital Speed",
+            "type": "number",
+            "unit": "km/s",
+            "approximate": "true",
+            "names": "r:speed"
+          },
+          {
+            "title": "Eccentricity",
+            "type": "number",
+            "approximate": "true",
+            "names": "r:eccentricity"
+          },
+          {
+            "title": "Inclination (to ecliptic)",
+            "type": "number",
+            "approximate": "true",
+            "names": "r:inclination"
+          },
+          {
+            "title": "Number of Satellites",
+            "type": "number",
+            "names": "r:satellites"
+          },
+          {
+            "title": "!datasets!Mass",
+            "type": "number",
+            "unit": "kg",
+            "approximate": "true",
+            "names": "r:mass"
+          },
+          {
+            "title": "Mean Density",
+            "type": "number",
+            "unit": "g/cm^3",
+            "approximate": "true",
+            "names": "r:density"
+          },
+          {
+            "title": "Surface Area",
+            "type": "number",
+            "unit": "km^2",
+            "approximate": "true",
+            "names": "!datasets!r:area"
+          },
+          {
+            "title": "Equatorial Gravity",
+            "type": "number",
+            "unit": "m/s^2",
+            "approximate": "true",
+            "names": "r:gravity"
+          },
+          {
+            "title": "Mean Surface Temperature",
+            "type": "number",
+            "unit": "K",
+            "approximate": "true",
+            "names": "r:temperature"
+          },
+          {
+            "title": "Mean Radius",
+            "type": "number",
+            "unit": "km",
+            "approximate": "true",
+            "names": "r:radius"
+          }
+        ]
+      }
+    ]
+  }
+]

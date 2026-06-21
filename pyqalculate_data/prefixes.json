@@ -1,0 +1,172 @@
+[
+  {
+    "@type": "decimal",
+    "names": "ar:q,r:quecto",
+    "exponent": "-30"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:r,r:ronto",
+    "exponent": "-27"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:y,r:yocto",
+    "exponent": "-24"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:z,r:zepto",
+    "exponent": "-21"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:a,r:atto",
+    "exponent": "-18"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:f,r:femto",
+    "exponent": "-15"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:p,r:pico",
+    "exponent": "-12"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:n,r:nano",
+    "exponent": "-9"
+  },
+  {
+    "@type": "decimal",
+    "names": "aur:μ,auor:µ,ar:u,r:micro",
+    "exponent": "-6"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:m,r:milli",
+    "exponent": "-3"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:c,r:centi",
+    "exponent": "-2"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:d,r:deci",
+    "exponent": "-1"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:da,r:deca",
+    "exponent": "1"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:h,r:hecto",
+    "exponent": "2"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:k,r:kilo",
+    "exponent": "3"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:M,r:mega",
+    "exponent": "6"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:G,r:giga",
+    "exponent": "9"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:T,r:tera",
+    "exponent": "12"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:P,r:peta",
+    "exponent": "15"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:E,r:exa",
+    "exponent": "18"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:Z,r:zetta",
+    "exponent": "21"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:Y,r:yotta",
+    "exponent": "24"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:R,r:ronna",
+    "exponent": "27"
+  },
+  {
+    "@type": "decimal",
+    "names": "ar:Q,r:quetta",
+    "exponent": "30"
+  },
+  {
+    "@type": "binary",
+    "names": "ar:Ki,r:kibi",
+    "exponent": "10"
+  },
+  {
+    "@type": "binary",
+    "names": "ar:Mi,r:mebi",
+    "exponent": "20"
+  },
+  {
+    "@type": "binary",
+    "names": "ar:Gi,r:gibi",
+    "exponent": "30"
+  },
+  {
+    "@type": "binary",
+    "names": "ar:Ti,r:tebi",
+    "exponent": "40"
+  },
+  {
+    "@type": "binary",
+    "names": "ar:Pi,r:pebi",
+    "exponent": "50"
+  },
+  {
+    "@type": "binary",
+    "names": "ar:Ei,r:exbi",
+    "exponent": "60"
+  },
+  {
+    "@type": "binary",
+    "names": "ar:Zi,r:zebi",
+    "exponent": "70"
+  },
+  {
+    "@type": "binary",
+    "names": "ar:Yi,r:yobi",
+    "exponent": "80"
+  },
+  {
+    "@type": "binary",
+    "names": "ar:Ri,r:robi",
+    "exponent": "90"
+  },
+  {
+    "@type": "binary",
+    "names": "ar:Qi,r:quebi",
+    "exponent": "100"
+  }
+]

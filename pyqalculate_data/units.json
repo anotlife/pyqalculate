@@ -1,0 +1,6573 @@
+[
+  {
+    "title": "!units!Length",
+    "unit": [
+      {
+        "@type": "base",
+        "system": "SI",
+        "title": "Meter",
+        "names": "ar:m,meter,p:meters,metre,p:metres",
+        "use_with_prefixes": {
+          "@max": "3",
+          "#text": "true"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Kilometer",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:km_c"
+        },
+        "part": {
+          "unit": "m",
+          "prefix": "3",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Decimeter",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:dm_c"
+        },
+        "part": {
+          "unit": "m",
+          "prefix": "-1",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Centimeter",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:cm_c"
+        },
+        "part": {
+          "unit": "m",
+          "prefix": "-2",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Millimeter",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:mm_c"
+        },
+        "part": {
+          "unit": "m",
+          "prefix": "-3",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Micrometer",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:um_c"
+        },
+        "part": {
+          "unit": "m",
+          "prefix": "-6",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Nanometer",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:nm_c"
+        },
+        "part": {
+          "unit": "m",
+          "prefix": "-9",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Micron",
+        "names": "r:micron,p:microns",
+        "base": {
+          "unit": "um_c",
+          "relation": "1",
+          "exponent": "1",
+          "mix": "-1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Nautical Mile",
+        "names": "r:nautical_mile,p:nautical_miles,a:nmi",
+        "base": {
+          "unit": "m",
+          "relation": "1852",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Ångström",
+        "names": "aru:Å,aou:Å,u:ångström,angstrom",
+        "use_with_prefixes": "true",
+        "base": {
+          "unit": "m",
+          "relation": "1E-10",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "U.S. Survey Inch",
+        "system": "US Survey",
+        "names": "as:in_US,aor:US_in,US_inch,p:US_inches",
+        "base": {
+          "unit": "m",
+          "relation": "100/3937",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Inch",
+        "system": "Imperial/US",
+        "names": "ar:in,inch,p:inches",
+        "base": {
+          "unit": "m",
+          "relation": "0.0254",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Hand",
+        "system": "Imperial/US",
+        "names": "r:hand,p:hands",
+        "base": {
+          "unit": "in",
+          "relation": "4",
+          "exponent": "1",
+          "mix": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Foot",
+        "system": "Imperial/US",
+        "names": "ar:ft,foot,p:feet",
+        "base": {
+          "unit": "hand",
+          "relation": "3",
+          "exponent": "1",
+          "mix": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "U.S. Survey Foot",
+        "system": "US Survey",
+        "names": "as:ft_US,aor:US_ft,US_foot,p:US_feet",
+        "base": {
+          "unit": "US_in",
+          "relation": "12",
+          "exponent": "1",
+          "mix": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Link",
+        "system": "Imperial/US",
+        "names": "ar:li,link,p:links",
+        "base": {
+          "unit": "in",
+          "relation": "7.92",
+          "exponent": "1",
+          "mix": "3"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Yard",
+        "system": "Imperial/US",
+        "names": "ar:yd,yard,p:yards",
+        "base": {
+          "unit": "ft",
+          "relation": "3",
+          "exponent": "1",
+          "mix": {
+            "@min": "12",
+            "#text": "1"
+          }
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Rod (pole/perch)",
+        "system": "Imperial/US",
+        "names": "ar:rd,rod,p:rods",
+        "base": {
+          "unit": "ft",
+          "relation": "16.5",
+          "exponent": "1",
+          "mix": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "U.S. Survey Rod",
+        "system": "US Survey",
+        "names": "as:rd_US,aor:US_rd,US_rod,p:US_rods",
+        "base": {
+          "unit": "US_ft",
+          "relation": "16.5",
+          "exponent": "1",
+          "mix": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Fathom",
+        "system": "Imperial/US",
+        "names": "r:fathom,p:fathoms",
+        "base": {
+          "unit": "yd",
+          "relation": "2",
+          "exponent": "1",
+          "mix": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Chain",
+        "system": "Imperial/US",
+        "names": "ar:ch,chain,p:chains",
+        "base": {
+          "unit": "li",
+          "relation": "100",
+          "exponent": "1",
+          "mix": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Furlong",
+        "system": "Imperial/US",
+        "names": "ar:fur,furlong,p:furlongs",
+        "base": {
+          "unit": "ch",
+          "relation": "10",
+          "exponent": "1",
+          "mix": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Mile",
+        "system": "Imperial/US",
+        "names": "ar:mi,mile,p:miles",
+        "base": {
+          "unit": "yd",
+          "relation": "1760",
+          "exponent": "1",
+          "mix": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "U.S. Survey Mile",
+        "system": "US Survey",
+        "names": "as:mi_US,aor:US_mi,US_mile,p:US_miles",
+        "base": {
+          "unit": "US_ft",
+          "relation": "5280",
+          "exponent": "1",
+          "mix": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Thou/mil (1/1000 in)",
+        "system": "Imperial/US",
+        "names": "r:thou,mil,po:mils",
+        "base": {
+          "unit": "in",
+          "relation": "0.001",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Astronomical Unit",
+        "names": "a-cr:au,astronomical_unit,p:astronomical_units",
+        "base": {
+          "unit": "m",
+          "relation": "149597870700",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Light Year",
+        "names": "ar:ly,lightyear,p:lightyears",
+        "base": {
+          "unit": "m",
+          "relation": "9460730472580800",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Light Second",
+        "names": "r:light_second,p:light_seconds",
+        "base": {
+          "unit": "ly",
+          "relation": "1/31557600",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Light Minute",
+        "names": "r:light_minute,p:light_minutes",
+        "base": {
+          "unit": "light_second",
+          "relation": "60",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Light Hour",
+        "names": "r:light_hour,p:light_hours",
+        "base": {
+          "unit": "light_minute",
+          "relation": "60",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Parsec",
+        "names": "ar:pc,parsec,p:parsecs",
+        "use_with_prefixes": "true",
+        "base": {
+          "unit": "AU",
+          "relation": "648000/pi",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Solar Radius (nominal)",
+        "names": "r:solar_radius,au:R_☉",
+        "base": {
+          "unit": "m",
+          "relation": "695700000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Pied du roi (French Royal Foot)",
+        "names": "r:pied_du_roi,p:pieds_du_roi",
+        "base": {
+          "unit": "m",
+          "relation": "9000/27706",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Pouce (French Royal Inch)",
+        "names": "r:pouce,p:pouces",
+        "base": {
+          "unit": "pied_du_roi",
+          "relation": "1/12",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Ligne",
+        "names": "r:ligne,p:lignes",
+        "base": {
+          "unit": "pouce",
+          "relation": "1/12",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Toise",
+        "names": "r:toise,p:toises",
+        "base": {
+          "unit": "pied_du_roi",
+          "relation": "6",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Planck Length",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:planck_length,as:l_P"
+        },
+        "system": "Planck",
+        "base": {
+          "unit": "m",
+          "relation": "sqrt(planck2pi*newtonian_constant/c^3)",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Bohr (Atomic Unit of Length)",
+        "names": {
+          "@translatable": "no",
+          "#text": "rs:bohr_unit,as:a_0unit"
+        },
+        "system": "Atomic",
+        "base": {
+          "unit": "m",
+          "relation": "bohr_radius",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Electronvolt Distance",
+        "names": {
+          "@translatable": "no",
+          "#text": "planck_c_p_eV"
+        },
+        "part": [
+          {
+            "unit": "planck_unit",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "c_unit",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "eV",
+            "prefix": "0",
+            "exponent": "-1"
+          }
+        ]
+      },
+      {
+        "@type": "composite",
+        "title": {
+          "@translatable": "no",
+          "#text": "Planck per Electron Mass Light Speed"
+        },
+        "names": {
+          "@translatable": "no",
+          "#text": "planck_p_electron_c"
+        },
+        "system": "Natural",
+        "hidden": "true",
+        "part": [
+          {
+            "unit": "planck_unit",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "electron_unit",
+            "prefix": "0",
+            "exponent": "-1"
+          },
+          {
+            "unit": "c_unit",
+            "prefix": "0",
+            "exponent": "-1"
+          }
+        ]
+      },
+      {
+        "@type": "alias",
+        "title": "Natural Unit of Length",
+        "names": {
+          "@translatable": "no",
+          "#text": "ars:l_N,aus:ƛ_unit"
+        },
+        "system": "Natural",
+        "base": {
+          "unit": "planck_p_electron_c",
+          "relation": "1",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Rack Unit",
+        "system": "Imperial/US",
+        "names": "a:U,r:rack_unit,p:rack_units,a:RU",
+        "base": {
+          "unit": "in",
+          "relation": "1.75",
+          "exponent": "1"
+        }
+      }
+    ]
+  },
+  {
+    "title": "!units!Angle",
+    "category": [
+      {
+        "title": "Plane Angle",
+        "unit": [
+          {
+            "@type": "base",
+            "system": "SI",
+            "title": "Radian",
+            "names": "ar:rad,radian,p:radians",
+            "use_with_prefixes": "false"
+          },
+          {
+            "@type": "alias",
+            "title": "Degree",
+            "names": "ar:deg,au:°,degree,p:degrees",
+            "use_with_prefixes": "false",
+            "base": {
+              "unit": "rad",
+              "relation": "pi/180",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Gradian (Gon)",
+            "names": "ar:gra,gradian,p:gradians,gon,p:gons",
+            "use_with_prefixes": "false",
+            "base": {
+              "unit": "rad",
+              "relation": "pi/200",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Arcminute",
+            "names": "ar:arcmin,arcminute,p:arcminutes",
+            "base": {
+              "unit": "deg",
+              "relation": "1/60",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Arcsecond",
+            "names": "ar:arcsec,arcsecond,p:arcseconds",
+            "base": {
+              "unit": "arcmin",
+              "relation": "1/60",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Turn",
+            "names": "a:tr,r:turn,p:turns,a:pla,a:rev,revolution,p:revolutions,a:cyc,cycle,p:cycles",
+            "base": {
+              "unit": "deg",
+              "relation": "360",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Solid Angle",
+        "unit": [
+          {
+            "@type": "composite",
+            "title": {
+              "@translatable": "no",
+              "#text": "Square Degree"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:sqdeg"
+            },
+            "part": {
+              "unit": "deg",
+              "prefix": "0",
+              "exponent": "2"
+            }
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Steradian",
+            "names": "ar:sr,steradian,p:steradians",
+            "base": {
+              "unit": "rad",
+              "relation": "1",
+              "exponent": "2"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Angular Acceleration",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Radians per Second Squared",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:rad_p_sqs"
+          },
+          "part": [
+            {
+              "unit": "rad",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "s",
+              "prefix": "0",
+              "exponent": "-2"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Angular Velocity",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Radians per Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:rad_p_s"
+            },
+            "part": [
+              {
+                "unit": "rad",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Revolutions per Minute"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:turn_p_min"
+            },
+            "part": [
+              {
+                "unit": "turn",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "min",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Revolutions per Minute (RPM)",
+            "names": "ar:rpm",
+            "base": {
+              "unit": "turn_p_min",
+              "relation": "1",
+              "exponent": "1"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "!units!Mass",
+    "unit": [
+      {
+        "@type": "base",
+        "system": "SI",
+        "title": "Gram",
+        "names": "ar:g,gram,p:grams",
+        "use_with_prefixes": {
+          "@max": "3",
+          "@default": "3",
+          "#text": "true"
+        }
+      },
+      {
+        "@type": "composite",
+        "system": "SI",
+        "title": "Kilogram",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:kg_c"
+        },
+        "part": {
+          "unit": "g",
+          "prefix": "3",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Hectogram",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:hg_c"
+        },
+        "part": {
+          "unit": "g",
+          "prefix": "2",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Metric Ton (Tonne)",
+        "names": "ar:t,tonne,p:tonnes,ton,p:tons",
+        "use_with_prefixes": {
+          "@min": "0",
+          "#text": "true"
+        },
+        "base": {
+          "unit": "g",
+          "relation": "1000000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Grain",
+        "system": "Troy",
+        "names": "ar:gr,grain,p:grains",
+        "base": {
+          "unit": "g",
+          "relation": "0.06479891",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Pennyweight",
+        "system": "Troy",
+        "names": "ar:pwt,pennyweight,p:pennyweights",
+        "base": {
+          "unit": "gr",
+          "relation": "24",
+          "exponent": "1",
+          "mix": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Ounce (troy)",
+        "system": "Troy",
+        "names": "ars:oz_t,troy_ounce,p:troy_ounces",
+        "base": {
+          "unit": "pwt",
+          "relation": "20",
+          "exponent": "1",
+          "mix": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Pound (troy)",
+        "system": "Troy",
+        "names": "ars:lb_t,troy_pound,p:troy_pounds",
+        "base": {
+          "unit": "oz_t",
+          "relation": "12",
+          "exponent": "1",
+          "mix": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Dram",
+        "system": "Imperial/US",
+        "names": "ar:dr,dram,p:drams",
+        "base": {
+          "unit": "g",
+          "relation": "1.7718451953125",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Ounce",
+        "system": "Imperial/US",
+        "names": "ar:oz,ounce,p:ounces",
+        "base": {
+          "unit": "dr",
+          "relation": "16",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Pound",
+        "system": "Imperial/US",
+        "names": "ar:lb,aou:℔,pound,p:pounds",
+        "base": {
+          "unit": "oz",
+          "relation": "16",
+          "exponent": "1",
+          "mix": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Short Hundredweight (Cental)",
+        "system": "US",
+        "names": "ar:cwt,hundredweight,cental,p:hundredweights,centals",
+        "base": {
+          "unit": "lb",
+          "relation": "100",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Long Hundredweight",
+        "system": "Imperial",
+        "names": "ar:l_cwt,long_hundredweight,p:long_hundredweights",
+        "base": {
+          "unit": "lb",
+          "relation": "112",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Short Ton",
+        "system": "US",
+        "names": "ar:s_ton,short_ton,p:short_tons",
+        "base": {
+          "unit": "lb",
+          "relation": "2000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Long Ton",
+        "system": "Imperial",
+        "names": "ar:l_ton,long_ton,p:long_tons",
+        "base": {
+          "unit": "lb",
+          "relation": "2240",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Stone",
+        "system": "Imperial",
+        "names": "r:stone,p:stones",
+        "base": {
+          "unit": "lb",
+          "relation": "14",
+          "exponent": "1",
+          "mix": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Carat",
+        "names": "r:carat,p:carats",
+        "base": {
+          "unit": "g",
+          "relation": "0.2",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Pfund",
+        "names": "r:pfund",
+        "base": {
+          "unit": "g",
+          "relation": "500",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Zentner",
+        "names": "r:zentner",
+        "base": {
+          "unit": "pfund",
+          "relation": "100",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Planck Mass",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:planck_mass,as:m_P"
+        },
+        "system": "Planck",
+        "base": {
+          "unit": "g",
+          "relation": "sqrt(planck2pi*c/newtonian_constant)*1000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Atomic/Natural Unit of Mass",
+        "names": {
+          "@translatable": "no",
+          "#text": "rs:electron_unit,as:m_eunit"
+        },
+        "system": "Atomic/Natural",
+        "base": {
+          "unit": "g",
+          "relation": "electron_mass*1000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Electronvolt Mass",
+        "names": {
+          "@translatable": "no",
+          "#text": "eV_p_sqc"
+        },
+        "part": [
+          {
+            "unit": "eV",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "c_unit",
+            "prefix": "0",
+            "exponent": "-2"
+          }
+        ]
+      },
+      {
+        "@type": "alias",
+        "title": "Atomic Mass Unit",
+        "names": "ar:u,a:AMU,atomic_mass_unit,p:atomic_mass_units",
+        "base": {
+          "unit": "g",
+          "relation": "atomic_mass_constant*1000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Dalton",
+        "names": "ar:Da,dalton,p:daltons",
+        "use_with_prefixes": "true",
+        "base": {
+          "unit": "g",
+          "relation": "atomic_mass_constant*1000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Kilodalton",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:kDa_c"
+        },
+        "part": {
+          "unit": "Da",
+          "prefix": "3",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Solar Mass",
+        "names": "r:solar_mass,au:M_☉",
+        "base": {
+          "unit": "g",
+          "relation": "1.988470(70)E33",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Slug",
+        "names": "r:slug,p:slugs",
+        "base": {
+          "unit": "g",
+          "relation": "8896443230521/609600000",
+          "exponent": "1"
+        }
+      }
+    ],
+    "category": [
+      {
+        "title": "Density",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Kilogram per Cubic Meter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:kg_p_cum"
+            },
+            "part": [
+              {
+                "unit": "g",
+                "prefix": "3",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-3"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Gram per Cubic Decimeter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:g_p_cudm"
+            },
+            "part": [
+              {
+                "unit": "g",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "-1",
+                "exponent": "-3"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Gram per Cubic Centimeter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:g_p_cucm"
+            },
+            "part": [
+              {
+                "unit": "g",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "-2",
+                "exponent": "-3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Atomic Mass",
+        "unit": {
+          "@type": "composite",
+          "title": "Gram per Mole",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:g_p_mol"
+          },
+          "part": [
+            {
+              "unit": "g",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "mol",
+              "prefix": "0",
+              "exponent": "-1"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Mass Fraction",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Kilogram per Kilogram",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:kg_p_kg"
+          },
+          "part": [
+            {
+              "unit": "g",
+              "prefix": "3",
+              "exponent": "1"
+            },
+            {
+              "unit": "g",
+              "prefix": "3",
+              "exponent": "-1"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "title": "Time",
+    "unit": [
+      {
+        "@type": "base",
+        "system": "SI",
+        "title": "Second",
+        "names": "ar:s,second,p:seconds",
+        "use_with_prefixes": {
+          "@max": "0",
+          "#text": "true"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Minute",
+        "names": "ar:min,minute,p:minutes",
+        "base": {
+          "unit": "s",
+          "relation": "60",
+          "exponent": "1",
+          "mix": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Hour",
+        "names": "ar:h,hour,p:hours,a:hr,a:hrs",
+        "base": {
+          "unit": "min",
+          "relation": "60",
+          "exponent": "1",
+          "mix": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Day",
+        "names": "ar:d,day,p:days",
+        "base": {
+          "unit": "h",
+          "relation": "24",
+          "exponent": "1",
+          "mix": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Week",
+        "names": "r:week,p:weeks",
+        "base": {
+          "unit": "d",
+          "relation": "7",
+          "exponent": "1",
+          "mix": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Fortnight",
+        "names": "r:fortnight,p:fortnights",
+        "base": {
+          "unit": "week",
+          "relation": "2",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Julian Year",
+        "names": "r:year,p:years,as:a_j,a:yr,annus",
+        "description": "Acts as calendar years when added to or subtracted from dates, but as exactly 365.25 days when converted to other units. Use the yearfrac() function, instead of subtraction, to calculate the exact number of calendar years between two dates.",
+        "base": {
+          "unit": "d",
+          "relation": "365.25",
+          "exponent": "1",
+          "mix": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Mean Gregorian Year",
+        "names": "ars:a_g,gregorian_year,p:gregorian_years",
+        "base": {
+          "unit": "d",
+          "relation": "365.2425",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Mean Tropical Year",
+        "names": "ars:a_t,tropical_year,p:tropical_years",
+        "base": {
+          "unit": "d",
+          "relation": "365.24219",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Month",
+        "names": "r:month,p:months",
+        "base": {
+          "unit": "d",
+          "relation": "30.4375",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Planck Time",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:planck_time,as:t_P"
+        },
+        "system": "Planck",
+        "base": {
+          "unit": "s",
+          "relation": "sqrt(planck2pi*newtonian_constant/c^5)",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Atomic Unit of Time",
+        "names": {
+          "@translatable": "no",
+          "#text": "planck_p_Ha"
+        },
+        "system": "Atomic",
+        "part": [
+          {
+            "unit": "planck_unit",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "Ha",
+            "prefix": "0",
+            "exponent": "-1"
+          }
+        ]
+      },
+      {
+        "@type": "composite",
+        "title": "Natural Unit of Time",
+        "names": {
+          "@translatable": "no",
+          "#text": "planck_p_electron_sqc"
+        },
+        "system": "Natural",
+        "part": [
+          {
+            "unit": "planck_unit",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "electron_unit",
+            "prefix": "0",
+            "exponent": "-1"
+          },
+          {
+            "unit": "c_unit",
+            "prefix": "0",
+            "exponent": "-2"
+          }
+        ]
+      },
+      {
+        "@type": "composite",
+        "title": "Electronvolt Time",
+        "names": {
+          "@translatable": "no",
+          "#text": "planck_p_eV"
+        },
+        "part": [
+          {
+            "unit": "planck_unit",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "eV",
+            "prefix": "0",
+            "exponent": "-1"
+          }
+        ]
+      }
+    ],
+    "category": {
+      "title": "!units!Frequency",
+      "unit": {
+        "@type": "alias",
+        "system": "SI",
+        "title": "Hertz",
+        "names": "ar:Hz,hertz",
+        "base": {
+          "unit": "s",
+          "relation": "1",
+          "exponent": "-1"
+        }
+      }
+    }
+  },
+  {
+    "title": "Electricity",
+    "category": [
+      {
+        "title": "Electric Current",
+        "unit": [
+          {
+            "@type": "base",
+            "system": "SI",
+            "title": "Ampere",
+            "names": "ar:A,ampere,p:amperes,a-c:amp"
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Abampere",
+            "names": "r:abampere,a:abA,p:abamperes,a:Bi,biot",
+            "base": {
+              "unit": "A",
+              "relation": "10",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Current Density",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Ampere per Square Meter",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:A_p_sqm"
+          },
+          "part": [
+            {
+              "unit": "A",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "-2"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Electric Charge",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Ampere Second"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:A_s"
+            },
+            "part": [
+              {
+                "unit": "A",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Coulomb",
+            "names": "ar:C,coulomb,p:coulombs",
+            "base": {
+              "unit": "A_s",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Abcoulomb",
+            "names": "r:abcoulomb,p:abcoulombs,a:abC,a:aC",
+            "base": {
+              "unit": "C",
+              "relation": "10",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Statcoulomb (Franklin)",
+            "names": "r:statcoulomb,p:statcoulombs,a:statC,franklin,a:Fr,p:franklins,a:esu",
+            "base": {
+              "unit": "C",
+              "relation": "1/2997924580",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Planck Charge",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:planck_charge,as:q_P"
+            },
+            "system": "Planck",
+            "base": {
+              "unit": "C",
+              "relation": "sqrt(4pi*electric_constant*planck2pi*c)",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Atomic Unit of Charge",
+            "names": {
+              "@translatable": "no",
+              "#text": "ars:e_unit,as:q_A"
+            },
+            "system": "Atomic",
+            "base": {
+              "unit": "C",
+              "relation": "1.602176634E-19",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Electric Charge Density",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Coulomb per Cubic Meter",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:C_p_cum"
+          },
+          "part": [
+            {
+              "unit": "C",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "-3"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Electric Dipole Moment",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Coulomb Meter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:C_m"
+            },
+            "part": [
+              {
+                "unit": "C",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "system": "CGS",
+            "title": {
+              "@translatable": "no",
+              "#text": "Statcoulomb Centimeter"
+            },
+            "hidden": "true",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:statcoulomb_cm"
+            },
+            "part": [
+              {
+                "unit": "statcoulomb",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "-2",
+                "exponent": "1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Debye",
+            "names": "ar:D,debye,p:debyes",
+            "base": {
+              "unit": "statcoulomb_cm",
+              "relation": "1E-18",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Electric Flux Density",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Coulomb per Square Meter",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:C_p_sqm"
+          },
+          "part": [
+            {
+              "unit": "C",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "-2"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Electric Potential",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Watt per Ampere"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:W_p_A"
+            },
+            "part": [
+              {
+                "unit": "W",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "A",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Volt",
+            "names": "ar:V,volt,p:volts",
+            "base": {
+              "unit": "W_p_A",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Statvolt",
+            "names": "r:statvolt,p:statvolts,a:statV",
+            "base": {
+              "unit": "V",
+              "relation": "299.792458",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Abvolt",
+            "names": "r:abvolt,p:abvolts,a:abV",
+            "base": {
+              "unit": "V",
+              "relation": "1E-8",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "title": "Atomic Unit of Electric Potential",
+            "names": {
+              "@translatable": "no",
+              "#text": "Ha_p_e"
+            },
+            "system": "Atomic",
+            "part": [
+              {
+                "unit": "Ha",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "e_unit",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Capacitance",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Coulomb per Volt"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:C_p_V"
+            },
+            "part": [
+              {
+                "unit": "C",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "V",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Farad",
+            "names": "ar:F,farad,p:farads",
+            "base": {
+              "unit": "C_p_V",
+              "relation": "1",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Electrical Elastance",
+        "unit": [
+          {
+            "@type": "composite",
+            "title": "Volt per Coulomb",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:V_p_C"
+            },
+            "part": [
+              {
+                "unit": "V",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "C",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Reciprocal Farad",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:recF"
+            },
+            "part": {
+              "unit": "F",
+              "prefix": "0",
+              "exponent": "-1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Daraf",
+            "names": "r:daraf,p:darafs",
+            "base": {
+              "unit": "recF",
+              "relation": "1",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Electric Resistance",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Volt per Ampere"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:V_p_A"
+            },
+            "part": [
+              {
+                "unit": "V",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "A",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Ohm",
+            "names": "au:Ω,r:ohm,p:ohms,auio:Ω",
+            "base": {
+              "unit": "V_p_A",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Abohm",
+            "names": "r:abohm,p:abohms,au:abΩ",
+            "base": {
+              "unit": "ohm",
+              "relation": "1E-9",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Statohm",
+            "names": "r:statohm,p:statohms,au:statΩ",
+            "base": {
+              "unit": "ohm",
+              "relation": "8.9875517873681764E11",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Electric Conductance",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Ampere per Volt"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:A_p_V"
+            },
+            "part": [
+              {
+                "unit": "A",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "V",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Siemens",
+            "names": "ar:S,siemens,auio:℧",
+            "base": {
+              "unit": "A_p_V",
+              "relation": "1",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Electric Field Strength",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Volt per Meter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:V_p_m"
+            },
+            "part": [
+              {
+                "unit": "V",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Newton per Coulomb",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:N_p_C"
+            },
+            "part": [
+              {
+                "unit": "N",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "C",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Atomic Unit of Electric Field",
+            "names": {
+              "@translatable": "no",
+              "#text": "Ha_p_e_bohr"
+            },
+            "system": "Atomic",
+            "part": [
+              {
+                "unit": "Ha",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "e_unit",
+                "prefix": "0",
+                "exponent": "-1"
+              },
+              {
+                "unit": "bohr_unit",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Permittivity",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Farad per Meter",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:F_p_m"
+          },
+          "part": [
+            {
+              "unit": "F",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "-1"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Inductance",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Weber per Ampere"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:Wb_p_A"
+            },
+            "part": [
+              {
+                "unit": "Wb",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "A",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Henry",
+            "names": "ar:H,henry,p:henrys",
+            "base": {
+              "unit": "Wb_p_A",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Abhenry",
+            "names": "r:abhenry,p:abhenrys,a:abH",
+            "base": {
+              "unit": "H",
+              "relation": "1E-9",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Permeability",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Henry per Meter",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:H_p_m"
+          },
+          "part": [
+            {
+              "unit": "H",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "-1"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "title": "Temperature",
+    "unit": [
+      {
+        "@type": "base",
+        "system": "SI",
+        "title": "Kelvin",
+        "names": "ar:K,aou:K,kelvin,p:kelvins"
+      },
+      {
+        "@type": "alias",
+        "system": "SI",
+        "title": "Degree Celsius",
+        "names": "ar:oC,au:°C,au:℃,r:celsius,p:celsius,centigrade,p:centigrades",
+        "use_with_prefixes": "false",
+        "base": {
+          "unit": "K",
+          "relation": "\\x + 273.15",
+          "inverse_relation": "\\x - 273.15",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Degree Rankine",
+        "system": "Imperial/US",
+        "names": "ar:oR,a:oRa,au:°R,au:°Ra,r:rankine",
+        "base": {
+          "unit": "K",
+          "relation": "5/9",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Degree Fahrenheit",
+        "system": "Imperial/US",
+        "names": "ar:oF,au:°F,au:℉,r:fahrenheit",
+        "base": {
+          "unit": "K",
+          "relation": "(\\x+459.67)*5/9",
+          "inverse_relation": "(\\x*9/5)-459.67",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Planck Temperature",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:planck_temperature,as:T_P"
+        },
+        "system": "Planck",
+        "base": {
+          "unit": "K",
+          "relation": "sqrt((planck2pi*c^5)/newtonian_constant)/boltzmann",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Electronvolt Temperature",
+        "names": {
+          "@translatable": "no",
+          "#text": "eV_p_kB"
+        },
+        "part": [
+          {
+            "unit": "eV",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "boltzmann_unit",
+            "prefix": "0",
+            "exponent": "-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Substance",
+    "unit": [
+      {
+        "@type": "base",
+        "system": "SI",
+        "title": "Mole",
+        "names": "ar:mol,mole,p:moles"
+      },
+      {
+        "@type": "alias",
+        "title": "Einstein (one mole of photons)",
+        "names": "r:einstein,p:einsteins",
+        "base": {
+          "unit": "mol",
+          "relation": "1",
+          "exponent": "1"
+        }
+      }
+    ],
+    "category": [
+      {
+        "title": "Molar Flux",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Mole per Square Meter Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:mol_p_sqm_p_s"
+            },
+            "part": [
+              {
+                "unit": "mol",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-2"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Micromole per Square Meter Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:micromol_p_sqm_p_s"
+            },
+            "part": [
+              {
+                "unit": "mol",
+                "prefix": "-6",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-2"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Einstein per Square Meter Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:einstein_p_sqm_p_s"
+            },
+            "part": [
+              {
+                "unit": "einstein",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-2"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Microeinstein per Square Meter Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:microeinstein_p_sqm_p_s"
+            },
+            "part": [
+              {
+                "unit": "einstein",
+                "prefix": "-6",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-2"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Substance Concentration",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Mole per Cubic Meter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:mol_p_cum"
+            },
+            "part": [
+              {
+                "unit": "mol",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-3"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Mole per Liter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:mol_p_L"
+            },
+            "part": [
+              {
+                "unit": "mol",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "L",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Mole per Cubic Decimeter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:mol_p_cudm"
+            },
+            "part": [
+              {
+                "unit": "mol",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "-1",
+                "exponent": "-3"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Molar",
+            "names": "r:molar",
+            "base": {
+              "unit": "mol_p_L",
+              "relation": "1",
+              "exponent": "1"
+            },
+            "use_with_prefixes": {
+              "@max": "-3",
+              "#text": "true"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Catalytic Activity",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Reciprocal Seconds Mole"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:recs_mol"
+            },
+            "part": [
+              {
+                "unit": "mol",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Katal",
+            "names": "ar:kat,katal,p:katals",
+            "base": {
+              "unit": "recs_mol",
+              "relation": "1",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Catalytic Concentration",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Katal per Cubic Meter",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:kat_p_cum"
+          },
+          "part": [
+            {
+              "unit": "kat",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "-3"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "title": "Light",
+    "category": [
+      {
+        "title": "Luminous Intensity",
+        "unit": {
+          "@type": "base",
+          "system": "SI",
+          "title": "Candela",
+          "names": "ar:cd,candela,p:candelas"
+        }
+      },
+      {
+        "title": "Luminance",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Candela per Square Meter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:cd_p_sqm"
+            },
+            "part": [
+              {
+                "unit": "cd",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-2"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Stilb",
+            "names": "ar:sb,stilb,p:stilbs",
+            "base": {
+              "unit": "cd_p_sqm",
+              "relation": "10000",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Lambert",
+            "names": "r:lambert,p:lamberts",
+            "base": {
+              "unit": "cd_p_sqm",
+              "relation": "10000/pi",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Foot-Lambert",
+            "names": "r:foot_lambert,p:foot_lamberts",
+            "base": {
+              "unit": "lambert",
+              "relation": "1/929.0304",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Luminous Flux",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Candela Steradian"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:cd_sr"
+            },
+            "part": [
+              {
+                "unit": "cd",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "sr",
+                "prefix": "0",
+                "exponent": "1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Lumen",
+            "names": "ar:lm,lumen,p:lumens",
+            "base": {
+              "unit": "cd_sr",
+              "relation": "1",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Illuminance",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Lumen per Square Meter"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:lm_p_sqm"
+            },
+            "part": [
+              {
+                "unit": "lm",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-2"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Lumen per Square Foot"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:lm_p_sqft"
+            },
+            "part": [
+              {
+                "unit": "lm",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "ft",
+                "prefix": "0",
+                "exponent": "-2"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Lux",
+            "names": "ar:lx,lux",
+            "base": {
+              "unit": "lm_p_sqm",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Foot-Candle",
+            "system": "Imperial/US",
+            "names": "ar:fc,foot_candle,p:foot_candles",
+            "base": {
+              "unit": "lm_p_sqft",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Phot",
+            "names": "ar:ph,phot,p:phots",
+            "base": {
+              "unit": "lx",
+              "relation": "10000",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Radiant Intensity",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Watt per Steradian",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:W_p_sr"
+          },
+          "part": [
+            {
+              "unit": "W",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "sr",
+              "prefix": "0",
+              "exponent": "-1"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Irradiance",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Watt per Square Meter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:W_p_sqm"
+            },
+            "part": [
+              {
+                "unit": "W",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-2"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "system": "CGS",
+            "title": "Erg per Square Centimeter Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:erg_p_sqcm_p_s"
+            },
+            "part": [
+              {
+                "unit": "erg",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "-2",
+                "exponent": "-2"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Radiance",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Watt per Square Meter Steradian",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:W_p_sqm_sr"
+          },
+          "part": [
+            {
+              "unit": "W",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "sr",
+              "prefix": "0",
+              "exponent": "-1"
+            },
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "-2"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "title": "Area",
+    "unit": [
+      {
+        "@type": "composite",
+        "system": "SI",
+        "title": "Square Meter",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:sqm"
+        },
+        "part": {
+          "unit": "m",
+          "prefix": "0",
+          "exponent": "2"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Square Kilometer",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:sqkm"
+        },
+        "part": {
+          "unit": "m",
+          "prefix": "3",
+          "exponent": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Are",
+        "names": "ar:a,are,p:ares",
+        "base": {
+          "unit": "m",
+          "relation": "100",
+          "exponent": "2"
+        },
+        "use_with_prefixes": {
+          "@default": "2",
+          "#text": "true"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Circular Mil",
+        "system": "US",
+        "names": "r:cmil,p:cmils",
+        "base": {
+          "unit": "mil",
+          "relation": "pi/4",
+          "exponent": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Thousand of Circular Mil",
+        "system": "US",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:kcmil,MCM"
+        },
+        "base": {
+          "unit": "cmil",
+          "relation": "1000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Hectare",
+        "names": "ar:ha,hectare,p:hectares",
+        "base": {
+          "unit": "a",
+          "relation": "100",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Decare",
+        "names": "a:da,r:decare,p:decares",
+        "base": {
+          "unit": "a",
+          "relation": "10",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Barn",
+        "names": "ar:b,barn,p:barns",
+        "base": {
+          "unit": "m",
+          "relation": "1E-28",
+          "exponent": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Rood",
+        "system": "Imperial",
+        "names": "r:rood,p:roods",
+        "base": {
+          "unit": "yd",
+          "relation": "1210",
+          "exponent": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Acre",
+        "system": "Imperial",
+        "names": "r:acre,p:acres",
+        "base": {
+          "unit": "ch",
+          "relation": "10",
+          "exponent": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Section",
+        "system": "US Survey",
+        "names": "r:section,p:sections",
+        "base": {
+          "unit": "US_mi",
+          "relation": "1",
+          "exponent": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Township",
+        "system": "US Survey",
+        "names": "r:township,p:townships",
+        "base": {
+          "unit": "section",
+          "relation": "36",
+          "exponent": "1",
+          "mix": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Square Foot",
+        "system": "Imperial/US",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:sqft"
+        },
+        "part": {
+          "unit": "ft",
+          "prefix": "0",
+          "exponent": "2"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Square Inch",
+        "system": "Imperial/US",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:sqin"
+        },
+        "part": {
+          "unit": "in",
+          "prefix": "0",
+          "exponent": "2"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Square Mile",
+        "system": "Imperial/US",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:sqmi"
+        },
+        "part": {
+          "unit": "mi",
+          "prefix": "0",
+          "exponent": "2"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Darcy",
+        "system": "CGS",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:darcy,p:darcys"
+        },
+        "base": {
+          "unit": "sqm",
+          "relation": "1/1.01325E12",
+          "exponent": "1"
+        },
+        "use_with_prefixes": {
+          "@default": "-3",
+          "#text": "true"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Millidarcy",
+        "system": "CGS",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:millidarcy"
+        },
+        "part": {
+          "unit": "darcy",
+          "prefix": "-3",
+          "exponent": "1"
+        }
+      }
+    ]
+  },
+  {
+    "title": "Volume",
+    "unit": [
+      {
+        "@type": "composite",
+        "system": "SI",
+        "title": "Cubic Meter",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:cum"
+        },
+        "part": {
+          "unit": "m",
+          "prefix": "0",
+          "exponent": "3"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Liter",
+        "names": "ar:L,ar:l,aou:ℓ,liter,p:liters,litre,p:litres",
+        "use_with_prefixes": {
+          "@max": "0",
+          "#text": "true"
+        },
+        "base": {
+          "unit": "m",
+          "relation": "0.001",
+          "exponent": "3"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Milliliter",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:ml_c"
+        },
+        "part": {
+          "unit": "L",
+          "prefix": "-3",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Centiliter",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:cl_c"
+        },
+        "part": {
+          "unit": "L",
+          "prefix": "-2",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Deciliter",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:dl_c"
+        },
+        "part": {
+          "unit": "L",
+          "prefix": "-1",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Cubic Inch",
+        "system": "Imperial/US",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:cuin"
+        },
+        "part": {
+          "unit": "in",
+          "prefix": "0",
+          "exponent": "3"
+        }
+      },
+      {
+        "@type": "composite",
+        "system": "SI",
+        "title": "Cubic Centimeter",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:cucm"
+        },
+        "part": {
+          "unit": "m",
+          "prefix": "-2",
+          "exponent": "3"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Cubic Centimeter (cc)",
+        "names": "a-r:cc,ao-r:CC",
+        "base": {
+          "unit": "cucm",
+          "relation": "1",
+          "exponent": "1"
+        }
+      }
+    ],
+    "category": [
+      {
+        "title": "Fuel Economy",
+        "unit": [
+          {
+            "@type": "composite",
+            "title": "Liter per Kilometer",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:l_p_km"
+            },
+            "part": [
+              {
+                "unit": "L",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "3",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Kilometer per Liter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:km_p_l"
+            },
+            "part": [
+              {
+                "unit": "m",
+                "prefix": "3",
+                "exponent": "1"
+              },
+              {
+                "unit": "L",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Miles per Gallon"
+            },
+            "system": "US",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:mile_p_gal"
+            },
+            "part": [
+              {
+                "unit": "mi",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "gal",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Miles per Gallon",
+            "system": "US",
+            "names": "a-cr:mpg",
+            "base": {
+              "unit": "mile_p_gal",
+              "relation": "1",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Cooking",
+        "unit": [
+          {
+            "@type": "alias",
+            "title": "Teaspoon",
+            "names": "r:teaspoon,a:tsp,p:teaspoons",
+            "base": {
+              "unit": "L",
+              "relation": "0.005",
+              "exponent": "1",
+              "mix": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Dessertspoon",
+            "names": "r:dessertspoon,p:dessertspoons",
+            "base": {
+              "unit": "teaspoon",
+              "relation": "2",
+              "exponent": "1",
+              "mix": "2"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Tablespoon",
+            "names": "r:tablespoon,a:tbsp,p:tablespoons",
+            "base": {
+              "unit": "teaspoon",
+              "relation": "3",
+              "exponent": "1",
+              "mix": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Teaspoon",
+            "system": "US",
+            "names": "r:US_teaspoon,as:tsp_US,p:US_teaspoons",
+            "base": {
+              "unit": "fl_oz",
+              "relation": "1/6",
+              "exponent": "1",
+              "mix": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Dessertspoon",
+            "system": "US",
+            "names": "r:US_dessertspoon,p:US_dessertspoons",
+            "base": {
+              "unit": "US_teaspoon",
+              "relation": "2",
+              "exponent": "1",
+              "mix": "2"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Tablespoon",
+            "system": "US",
+            "names": "r:US_tablespoon,as:tbsp_US,p:US_tablespoons",
+            "base": {
+              "unit": "US_teaspoon",
+              "relation": "3",
+              "exponent": "1",
+              "mix": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Cup (U.S. Legal)",
+            "names": "r-c:cup,p-c:cups",
+            "base": {
+              "unit": "L",
+              "relation": "0.24",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Cup",
+            "system": "US",
+            "names": "ras:cup_US,US_cup,p:US_cups",
+            "base": {
+              "unit": "US_tablespoon",
+              "relation": "16",
+              "exponent": "1",
+              "mix": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Imperial Capacity",
+        "unit": [
+          {
+            "@type": "alias",
+            "title": "Imperial Fluid Ounce",
+            "system": "Imperial",
+            "names": "as:fl_oz_UK,aor:UK_fl_oz,imperial_fluid_ounce,p:imperial_fluid_ounces",
+            "base": {
+              "unit": "L",
+              "relation": "0.0284130625",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Imperial Gill",
+            "system": "Imperial",
+            "names": "as:gi_UK,aor:UK_gi,imperial_gill,p:imperial_gills",
+            "base": {
+              "unit": "UK_fl_oz",
+              "relation": "5",
+              "exponent": "1",
+              "mix": "2"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Imperial Pint",
+            "system": "Imperial",
+            "names": "as:pt_UK,aor:UK_pt,imperial_pint,p:imperial_pints",
+            "base": {
+              "unit": "UK_gi",
+              "relation": "4",
+              "exponent": "1",
+              "mix": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Imperial Quart",
+            "system": "Imperial",
+            "names": "as:qt_UK,aor:UK_qt,imperial_quart,p:imperial_quarts",
+            "base": {
+              "unit": "UK_pt",
+              "relation": "2",
+              "exponent": "1",
+              "mix": "2"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Imperial Gallon",
+            "system": "Imperial",
+            "names": "as:gal_UK,aor:UK_gal,imperial_gallon,p:imperial_gallons",
+            "base": {
+              "unit": "UK_qt",
+              "relation": "4",
+              "exponent": "1",
+              "mix": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Imperial Minim",
+            "system": "Imperial",
+            "names": "r:imperial_minim,p:imperial_minims",
+            "base": {
+              "unit": "UK_fl_oz",
+              "relation": "1/480",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Imperial Fluid Scruple",
+            "system": "Imperial",
+            "names": "r:imperial_fluid_scruple,p:imperial_fluid_scruples,ro:imperial_fluid_scuple",
+            "base": {
+              "unit": "imperial_minim",
+              "relation": "20",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Imperial Fluid Drachm",
+            "system": "Imperial",
+            "names": "as:fl_dr_UK,aor:UK_fl_dr,imperial_fluid_drachm,p:imperial_fluid_drachms",
+            "base": {
+              "unit": "imperial_fluid_scruple",
+              "relation": "3",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Imperial Bushel",
+            "system": "Imperial",
+            "names": "as:bu_UK,aor:UK_bu,imperial_bushel,p:imperial_bushels",
+            "base": {
+              "unit": "UK_gal",
+              "relation": "8",
+              "exponent": "1",
+              "mix": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "U.S. Capacity",
+        "unit": [
+          {
+            "@type": "alias",
+            "title": "U.S. Fluid Ounce",
+            "system": "US",
+            "names": "ar:fl_oz,fluid_ounce,p:fluid_ounces",
+            "base": {
+              "unit": "in",
+              "relation": "231/128",
+              "exponent": "3"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Gill",
+            "system": "US",
+            "names": "ar:gi,gill,p:gills",
+            "base": {
+              "unit": "fl_oz",
+              "relation": "4",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Liquid Pint",
+            "system": "US",
+            "names": "ar:liq_pt,liquid_pint,p:liquid_pints",
+            "base": {
+              "unit": "gi",
+              "relation": "4",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Liquid Quart",
+            "system": "US",
+            "names": "ar:liq_qt,liquid_quart,p:liquid_quarts",
+            "base": {
+              "unit": "liq_pt",
+              "relation": "2",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Minim",
+            "system": "US",
+            "names": "r:minim,p:minims",
+            "base": {
+              "unit": "fl_oz",
+              "relation": "1/480",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Fluid Drachm",
+            "system": "US",
+            "names": "ar:fl_dr,fluid_drachm,p:fluid_drachms",
+            "base": {
+              "unit": "minim",
+              "relation": "60",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Dry Pint",
+            "system": "US",
+            "names": "ar:dry_pt,dry_pint,p:dry_pints",
+            "base": {
+              "unit": "in",
+              "relation": "33.6003125",
+              "exponent": "3"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Dry Quart",
+            "system": "US",
+            "names": "ar:dry_qt,dry_quart,p:dry_quarts",
+            "base": {
+              "unit": "dry_pt",
+              "relation": "2",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Peck",
+            "system": "US",
+            "names": "ar:pk,peck,p:pecks",
+            "base": {
+              "unit": "dry_qt",
+              "relation": "8",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Bushel",
+            "system": "US",
+            "names": "ar:bu,bushel,p:bushels",
+            "base": {
+              "unit": "pk",
+              "relation": "4",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Gallon",
+            "system": "US",
+            "names": "ar:gal,gallon,p:gallons",
+            "base": {
+              "unit": "liq_qt",
+              "relation": "4",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "U.S. Barrel (oil)",
+            "system": "US",
+            "names": "ar:bbl,barrel,p:barrels",
+            "base": {
+              "unit": "gal",
+              "relation": "42",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "title": "Acre-Foot",
+            "system": "US",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:acre_ft"
+            },
+            "part": [
+              {
+                "unit": "acre",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "ft",
+                "prefix": "0",
+                "exponent": "1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Specific Volume",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Cubic Meter per Kilogram",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:cum_p_kg"
+          },
+          "part": [
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "3"
+            },
+            {
+              "unit": "g",
+              "prefix": "3",
+              "exponent": "-1"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Volumetric Flow Rate",
+        "unit": [
+          {
+            "@type": "composite",
+            "title": "Liter per Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:l_p_s"
+            },
+            "part": [
+              {
+                "unit": "L",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Liter per Minute",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:l_p_min"
+            },
+            "part": [
+              {
+                "unit": "L",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "min",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Liter per Hour",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:l_p_h"
+            },
+            "part": [
+              {
+                "unit": "L",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "h",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Cubic Meter per Second",
+            "system": "SI",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:cum_p_s"
+            },
+            "part": [
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "3"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Cubic Centimeter per Minute",
+            "system": "SI",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:cucm_p_min"
+            },
+            "part": [
+              {
+                "unit": "m",
+                "prefix": "-2",
+                "exponent": "3"
+              },
+              {
+                "unit": "min",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Cumecs"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:cumec,p:cumecs"
+            },
+            "base": {
+              "unit": "cum_p_s",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Sverdrup",
+            "names": "r:sverdrup",
+            "base": {
+              "unit": "cum_p_s",
+              "relation": "1000000",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "title": "Cubic Foot per Minute",
+            "system": "Imperial/US",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:cuf_p_min"
+            },
+            "part": [
+              {
+                "unit": "ft",
+                "prefix": "0",
+                "exponent": "3"
+              },
+              {
+                "unit": "min",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Cubic Foot per Minute (CFM)",
+            "system": "Imperial/US",
+            "names": "a-cr:cfm",
+            "base": {
+              "unit": "cuf_p_min",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "title": "Cubic Foot per Second",
+            "system": "Imperial/US",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:cuf_p_s"
+            },
+            "part": [
+              {
+                "unit": "ft",
+                "prefix": "0",
+                "exponent": "3"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Cubic Foot per Second (CFS)",
+            "system": "Imperial/US",
+            "names": "a-cr:cfs",
+            "base": {
+              "unit": "cuf_p_s",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Gallons per Minute"
+            },
+            "system": "US",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:gal_p_min"
+            },
+            "part": [
+              {
+                "unit": "gal",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "min",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Gallons per Minute (U.S.)",
+            "system": "US",
+            "names": "a-cr:gpm",
+            "base": {
+              "unit": "gal_p_min",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Gallons per Hour"
+            },
+            "system": "US",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:gal_p_h"
+            },
+            "part": [
+              {
+                "unit": "gal",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "h",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Gallons per Hour (U.S.)",
+            "system": "US",
+            "names": "a-cr:gph",
+            "base": {
+              "unit": "gal_p_h",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "title": "Gallons per Second (U.S.)",
+            "system": "US",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:gal_p_s"
+            },
+            "part": [
+              {
+                "unit": "gal",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": {
+              "@translatable": "no",
+              "#text": "Acre-Foot per Day"
+            },
+            "system": "US",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:acre_ft_p_d"
+            },
+            "part": [
+              {
+                "unit": "acre",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "ft",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "d",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Speed",
+    "unit": [
+      {
+        "@type": "composite",
+        "system": "SI",
+        "title": "Meter per Second",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:m_p_s"
+        },
+        "part": [
+          {
+            "unit": "m",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "s",
+            "prefix": "0",
+            "exponent": "-1"
+          }
+        ]
+      },
+      {
+        "@type": "composite",
+        "title": "Kilometer per Hour",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:km_p_h"
+        },
+        "part": [
+          {
+            "unit": "m",
+            "prefix": "3",
+            "exponent": "1"
+          },
+          {
+            "unit": "h",
+            "prefix": "0",
+            "exponent": "-1"
+          }
+        ]
+      },
+      {
+        "@type": "alias",
+        "title": "Kilometer per Hour (kph)",
+        "hidden": "true",
+        "names": "a-c-r:kph,a-c-r:kmph",
+        "base": {
+          "unit": "km_p_h",
+          "relation": "1",
+          "exponent": "1",
+          "mix": "-1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Nautical Mile per Hour",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:nautical_mile_p_h"
+        },
+        "part": [
+          {
+            "unit": "nautical_mile",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "h",
+            "prefix": "0",
+            "exponent": "-1"
+          }
+        ]
+      },
+      {
+        "@type": "alias",
+        "title": "Knot",
+        "names": "r:knot,p:knots",
+        "base": {
+          "unit": "nautical_mile_p_h",
+          "relation": "1",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "hidden": "true",
+        "title": {
+          "@translatable": "no",
+          "#text": "Miles per Hour"
+        },
+        "system": "Imperial/US",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:mile_p_h"
+        },
+        "part": [
+          {
+            "unit": "mi",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "h",
+            "prefix": "0",
+            "exponent": "-1"
+          }
+        ]
+      },
+      {
+        "@type": "alias",
+        "title": "Miles per Hour",
+        "system": "Imperial/US",
+        "names": "a-cr:mph",
+        "base": {
+          "unit": "mile_p_h",
+          "relation": "1",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Minutes per Kilometer",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:min_p_km"
+        },
+        "part": [
+          {
+            "unit": "min",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "m",
+            "prefix": "3",
+            "exponent": "-1"
+          }
+        ]
+      },
+      {
+        "@type": "composite",
+        "title": "Minutes per Mile",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:min_p_mile"
+        },
+        "part": [
+          {
+            "unit": "min",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "mi",
+            "prefix": "0",
+            "exponent": "-1"
+          }
+        ]
+      },
+      {
+        "@type": "alias",
+        "title": "Speed of Light (Natural Unit of Velocity)",
+        "names": {
+          "@translatable": "no",
+          "#text": "ars:c_unit"
+        },
+        "base": {
+          "unit": "m_p_s",
+          "relation": "299792458",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Atomic Unit of Velocity",
+        "names": {
+          "@translatable": "no",
+          "#text": "bohr_Ha_p_planck"
+        },
+        "system": "Atomic",
+        "part": [
+          {
+            "unit": "bohr_unit",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "Ha",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "planck_unit",
+            "prefix": "0",
+            "exponent": "-1"
+          }
+        ]
+      }
+    ],
+    "category": {
+      "title": "Acceleration",
+      "unit": [
+        {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Meter per Second Squared",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:m_p_sqs"
+          },
+          "part": [
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "s",
+              "prefix": "0",
+              "exponent": "-2"
+            }
+          ]
+        },
+        {
+          "@type": "alias",
+          "system": "CGS",
+          "title": "Galileo",
+          "names": "ar:Gal,galileo,p:galileos",
+          "base": {
+            "unit": "m_p_sqs",
+            "relation": "1/100",
+            "exponent": "1"
+          },
+          "use_with_prefixes": "true"
+        },
+        {
+          "@type": "alias",
+          "title": "Standard Gravity (unit)",
+          "names": "is:standard_gravity_unit,r:gee,p:gees",
+          "base": {
+            "unit": "m_p_sqs",
+            "relation": "9.80665",
+            "exponent": "1"
+          }
+        }
+      ],
+      "category": {
+        "title": "Acceleration Change",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Meter per Second Cubed (Jerk)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:m_p_scu"
+            },
+            "part": [
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-3"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Standard Gravity per Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:gee_p_s"
+            },
+            "part": [
+              {
+                "unit": "gee",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Meter per Second to the Fourth (Snap)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:m_p_sfourth"
+            },
+            "part": [
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-4"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Meter per Second to the Fifth (Crackle)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:m_p_sfifth"
+            },
+            "part": [
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-5"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Meter per Second to the Sixth (Pop)",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:m_p_ssixth"
+            },
+            "part": [
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-6"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "title": "Magnetism",
+    "category": [
+      {
+        "title": "Wave Number",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Reciprocal Meter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:recm"
+            },
+            "part": {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "-1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Kayser",
+            "names": "r:kayser,p:kaysers",
+            "base": {
+              "unit": "recm",
+              "relation": "100",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Magnetic Field Strength",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Ampere per Meter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:A_p_m"
+            },
+            "part": [
+              {
+                "unit": "A",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Oersted",
+            "names": "ar:Oe,oersted,p:oersteds",
+            "base": {
+              "unit": "A_p_m",
+              "relation": "1000/(4*pi)",
+              "exponent": "1"
+            },
+            "use_with_prefixes": "true"
+          }
+        ]
+      },
+      {
+        "title": "Magnetic Flux",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Volt Seconds"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:V_s"
+            },
+            "part": [
+              {
+                "unit": "V",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Weber",
+            "names": "ar:Wb,weber,p:webers",
+            "base": {
+              "unit": "V_s",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Maxwell",
+            "names": "ar:Mx,maxwell,p:maxwells",
+            "base": {
+              "unit": "Wb",
+              "relation": "1E-8",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Magnetic Flux Density",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Weber per Square Meter"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:Wb_p_sqm"
+            },
+            "part": [
+              {
+                "unit": "Wb",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-2"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Tesla",
+            "names": "ar:T,tesla,p:teslas",
+            "base": {
+              "unit": "Wb_p_sqm",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Gauss",
+            "names": "r:gauss",
+            "base": {
+              "unit": "T",
+              "relation": "0.0001",
+              "exponent": "1"
+            },
+            "use_with_prefixes": "true"
+          },
+          {
+            "@type": "composite",
+            "title": "Atomic Unit of Magnetic Flux Density",
+            "names": {
+              "@translatable": "no",
+              "#text": "planck_p_e_sqbohr"
+            },
+            "system": "Atomic",
+            "part": [
+              {
+                "unit": "planck_unit",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "e_unit",
+                "prefix": "0",
+                "exponent": "-1"
+              },
+              {
+                "unit": "bohr_unit",
+                "prefix": "0",
+                "exponent": "-2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Magnetic Dipole Moment",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Ampere Square Meter",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:A_sqm"
+            },
+            "part": [
+              {
+                "unit": "A",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "2"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Atomic Unit of Magnetic Dipole Moment",
+            "names": {
+              "@translatable": "no",
+              "#text": "e_planck_p_electron"
+            },
+            "system": "Atomic",
+            "part": [
+              {
+                "unit": "e_unit",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "planck_unit",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "electron_unit",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Force",
+    "unit": [
+      {
+        "@type": "composite",
+        "hidden": "true",
+        "title": {
+          "@translatable": "no",
+          "#text": "Meter Kilogram per Second Squared"
+        },
+        "names": {
+          "@translatable": "no",
+          "#text": "r:m_kg_p_sqs"
+        },
+        "part": [
+          {
+            "unit": "m",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "g",
+            "prefix": "3",
+            "exponent": "1"
+          },
+          {
+            "unit": "s",
+            "prefix": "0",
+            "exponent": "-2"
+          }
+        ]
+      },
+      {
+        "@type": "alias",
+        "system": "SI",
+        "title": "Newton",
+        "names": "ar:N,newton,p:newtons",
+        "base": {
+          "unit": "m_kg_p_sqs",
+          "relation": "1",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "system": "CGS",
+        "title": "Dyne",
+        "names": "ar:dyn,dyne,p:dynes",
+        "base": {
+          "unit": "N",
+          "relation": "1E-5",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "system": "Imperial",
+        "title": "Pound-force",
+        "names": "ar:lbf,pound_force",
+        "base": {
+          "unit": "N",
+          "relation": "4.4482216152605",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "system": "Imperial",
+        "title": "Ounce-force",
+        "names": "ar:ozf,ounce_force",
+        "base": {
+          "unit": "lbf",
+          "relation": "0.0625",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "hidden": "true",
+        "title": {
+          "@translatable": "no",
+          "#text": "Pound Foot per Second Squared"
+        },
+        "names": {
+          "@translatable": "no",
+          "#text": "r:lb_ft_p_sqs"
+        },
+        "part": [
+          {
+            "unit": "lb",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "ft",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "s",
+            "prefix": "0",
+            "exponent": "-2"
+          }
+        ]
+      },
+      {
+        "@type": "alias",
+        "system": "Imperial",
+        "title": "Poundal",
+        "names": "r:poundal,p:poundals,a:pdl",
+        "base": {
+          "unit": "lb_ft_p_sqs",
+          "relation": "1",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Pond (Gram-Force)",
+        "names": "r:pond,p:ponds,a:gf",
+        "use_with_prefixes": "true",
+        "base": {
+          "unit": "N",
+          "relation": "0.00980665",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Kilopond (Kilogram-Force)",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:kpond_c"
+        },
+        "part": {
+          "unit": "pond",
+          "prefix": "3",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Atomic Unit of Force",
+        "names": {
+          "@translatable": "no",
+          "#text": "Ha_p_bohr"
+        },
+        "system": "Atomic",
+        "part": [
+          {
+            "unit": "Ha",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "bohr_unit",
+            "prefix": "0",
+            "exponent": "-1"
+          }
+        ]
+      }
+    ],
+    "category": [
+      {
+        "title": "Moment of Force",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Newton Meter",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:N_m"
+          },
+          "part": [
+            {
+              "unit": "N",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "1"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Momentum",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Kilogram Meter per Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:kg_m_p_s"
+            },
+            "part": [
+              {
+                "unit": "g",
+                "prefix": "3",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Electronvolt Momentum",
+            "names": {
+              "@translatable": "no",
+              "#text": "eV_p_c"
+            },
+            "part": [
+              {
+                "unit": "eV",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "c_unit",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Natural Unit of Momentum",
+            "names": {
+              "@translatable": "no",
+              "#text": "electron_c"
+            },
+            "system": "Natural",
+            "part": [
+              {
+                "unit": "electron_unit",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "c_unit",
+                "prefix": "0",
+                "exponent": "1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Atomic Unit of Momentum",
+            "names": {
+              "@translatable": "no",
+              "#text": "planck_p_bohr"
+            },
+            "system": "Atomic",
+            "part": [
+              {
+                "unit": "planck_unit",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "bohr_unit",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Pressure",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Newton per Square Meter"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:N_p_sqm"
+            },
+            "part": [
+              {
+                "unit": "N",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "-2"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": {
+              "@translatable": "no",
+              "#text": "Pound-force per Square Inch"
+            },
+            "system": "Imperial/US",
+            "hidden": "true",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:lbf_p_sqin"
+            },
+            "part": [
+              {
+                "unit": "lbf",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "in",
+                "prefix": "0",
+                "exponent": "-2"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Pascal",
+            "names": "ar:Pa,pascal,p:pascals",
+            "base": {
+              "unit": "N_p_sqm",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "title": "Kilogram-force per Square Centimetre",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:kpond_p_sqcm"
+            },
+            "part": [
+              {
+                "unit": "pond",
+                "prefix": "3",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "-2",
+                "exponent": "-2"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Pound-force per Square Inch (psi)",
+            "system": "Imperial/US",
+            "names": "a-cr:psi",
+            "base": {
+              "unit": "lbf_p_sqin",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Kilopound-force per Square Inch (ksi)",
+            "system": "Imperial/US",
+            "names": "a-cr:ksi",
+            "base": {
+              "unit": "psi",
+              "relation": "1000",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Bar",
+            "names": "r:bar,p:bars",
+            "use_with_prefixes": "true",
+            "base": {
+              "unit": "Pa",
+              "relation": "100000",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Atmosphere",
+            "names": "ar:atm,atmosphere,p:atmospheres",
+            "base": {
+              "unit": "Pa",
+              "relation": "101325",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Torr",
+            "names": "ar:Torr,torr,p:torrs",
+            "base": {
+              "unit": "atm",
+              "relation": "1/760",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Meter of Mercury",
+            "names": "ar:mHg",
+            "hidden": "true",
+            "base": {
+              "unit": "atm",
+              "relation": "1000/760",
+              "exponent": "1"
+            },
+            "use_with_prefixes": {
+              "@default": "-3",
+              "#text": "true"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Millimeter of Mercury",
+            "names": "ar:mmHg",
+            "base": {
+              "unit": "mHg",
+              "relation": "0.001",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Inch of Mercury",
+            "names": "ar:inHg",
+            "base": {
+              "unit": "mmHg",
+              "relation": "25.4",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "title": "Millitorr",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:mTorr_c"
+            },
+            "part": {
+              "unit": "Torr",
+              "prefix": "-3",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "system": "CGS",
+            "title": {
+              "@translatable": "no",
+              "#text": "Dyne per Square Centimetre"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:dyn_p_sqcm"
+            },
+            "hidden": "true",
+            "part": [
+              {
+                "unit": "dyn",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "m",
+                "prefix": "-2",
+                "exponent": "-2"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Barye",
+            "names": "ar:Ba,barye",
+            "base": {
+              "unit": "dyn_p_sqcm",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Meter of Water",
+            "names": "ar:mWC,a:mwg,au:mH₂O",
+            "base": {
+              "unit": "Pa",
+              "relation": "9806.65",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "title": "Millimeter of Water",
+            "names": {
+              "@translatable": "no",
+              "#text": "mmWC_c"
+            },
+            "part": {
+              "unit": "mWC",
+              "prefix": "-3",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "title": "Centimeter of Water",
+            "names": {
+              "@translatable": "no",
+              "#text": "cmWC_c"
+            },
+            "part": {
+              "unit": "mWC",
+              "prefix": "-2",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Inch of Water",
+            "names": "ar:inWC,a:iwg,au:inH₂O",
+            "base": {
+              "unit": "mWC",
+              "relation": "0.0254",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Dynamic Viscosity",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Pascal Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:Pa_s"
+            },
+            "part": [
+              {
+                "unit": "Pa",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Poise",
+            "names": "ar:P,poise,p:poises",
+            "base": {
+              "unit": "Pa_s",
+              "relation": "0.1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "system": "CGS",
+            "title": "Centipoise",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:cP_c"
+            },
+            "part": {
+              "unit": "P",
+              "prefix": "-2",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Kinematic Viscosity",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Square Meter per Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:sqm_p_s"
+            },
+            "part": [
+              {
+                "unit": "m",
+                "prefix": "0",
+                "exponent": "2"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Stokes",
+            "names": "ar:St,stokes",
+            "base": {
+              "unit": "sqm_p_s",
+              "relation": "0.0001",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "system": "CGS",
+            "title": "Centistokes",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:cSt_c"
+            },
+            "part": {
+              "unit": "St",
+              "prefix": "-2",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Surface Tension",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Newton per Meter",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:N_p_m"
+          },
+          "part": [
+            {
+              "unit": "N",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "-1"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "title": "Energy",
+    "unit": [
+      {
+        "@type": "alias",
+        "system": "SI",
+        "title": "Joule",
+        "names": "ar:J,joule,p:joules",
+        "base": {
+          "unit": "N_m",
+          "relation": "1",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Kilojoule",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:kJ_c"
+        },
+        "part": {
+          "unit": "J",
+          "prefix": "3",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Watt Hour",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:W_h"
+        },
+        "part": [
+          {
+            "unit": "W",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "h",
+            "prefix": "0",
+            "exponent": "1"
+          }
+        ]
+      },
+      {
+        "@type": "composite",
+        "title": "Kilowatt Hour",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:kW_h"
+        },
+        "part": [
+          {
+            "unit": "W",
+            "prefix": "3",
+            "exponent": "1"
+          },
+          {
+            "unit": "h",
+            "prefix": "0",
+            "exponent": "1"
+          }
+        ]
+      },
+      {
+        "@type": "alias",
+        "title": "Calorie (international table)",
+        "names": "ars:cal_IT",
+        "base": {
+          "unit": "J",
+          "relation": "4.1868",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Calorie (thermochemical)",
+        "names": "airs:cal_th,a:cal,c:calorie,cp:calories",
+        "base": {
+          "unit": "J",
+          "relation": "4.184",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Kilocalorie",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:kcal_c"
+        },
+        "part": {
+          "unit": "cal_th",
+          "prefix": "3",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Calorie (capital C)",
+        "names": "cr:Calorie,cp:Calories",
+        "base": {
+          "unit": "cal_th",
+          "relation": "1000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Gram of TNT",
+        "names": "a-cr:gTNT,gramTNT",
+        "base": {
+          "unit": "cal_th",
+          "relation": "1000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Ton of TNT",
+        "names": "a-cr:tTNT,tonTNT",
+        "base": {
+          "unit": "gTNT",
+          "relation": "1000000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Calorie (15 degrees Celsius)",
+        "names": "ars:cal_fifteen",
+        "base": {
+          "unit": "J",
+          "relation": {
+            "@uncertainty": "0.0005",
+            "#text": "4.1855"
+          },
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Calorie (mean)",
+        "names": "ars:cal_mean",
+        "base": {
+          "unit": "J",
+          "relation": {
+            "@approximate": "true",
+            "#text": "4.19002"
+          },
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "hidden": "true",
+        "title": "Calorie (IUNS)",
+        "names": "ars:cal_IUNS",
+        "base": {
+          "unit": "J",
+          "relation": "4.182",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "British Thermal Unit (IT)",
+        "names": "ar:Btu",
+        "base": {
+          "unit": "cal_IT",
+          "relation": "45359237/180000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Therm (IT)",
+        "names": "r:therm,p:therms,a:thm",
+        "base": {
+          "unit": "Btu",
+          "relation": "100000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Therm (ISO)",
+        "names": "r:therm_ISO,p:therms_ISO,a:thm_ISO",
+        "base": {
+          "unit": "J",
+          "relation": "105506000",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Therm (U.S.)",
+        "names": "r:therm_US,p:therms_US,a:thm_US",
+        "base": {
+          "unit": "J",
+          "relation": "105480400",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Thermie",
+        "names": "r:thermie,p:thermies,a:th",
+        "base": {
+          "unit": "cal_IT",
+          "relation": "1E6",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Electronvolt",
+        "names": "ar:eV,electronvolt,p:electronvolts",
+        "use_with_prefixes": "true",
+        "base": {
+          "unit": "J",
+          "relation": "1.602176634E-19",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "system": "CGS",
+        "title": "Erg",
+        "names": "r:erg,p:ergs",
+        "base": {
+          "unit": "J",
+          "relation": "1E-7",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Foe",
+        "names": "r:foe,p:foes",
+        "base": {
+          "unit": "erg",
+          "relation": "1E51",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "system": "Imperial",
+        "title": "Foot-Pound Force",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:ft_lbf"
+        },
+        "part": [
+          {
+            "unit": "ft",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "lbf",
+            "prefix": "0",
+            "exponent": "1"
+          }
+        ]
+      },
+      {
+        "@type": "alias",
+        "title": "Hartree (Atomic Unit of Energy)",
+        "names": {
+          "@translatable": "no",
+          "#text": "ar:Ha,as:E_h,hartree"
+        },
+        "system": "Atomic",
+        "base": {
+          "unit": "J",
+          "relation": "2*rydberg*planck*c",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Rydberg (unit)",
+        "names": {
+          "@translatable": "no",
+          "#text": "ar:Ry,s:rydberg_unit"
+        },
+        "base": {
+          "unit": "Ha",
+          "relation": "0.5",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Natural Unit of Energy",
+        "names": {
+          "@translatable": "no",
+          "#text": "electron_sqc"
+        },
+        "system": "Natural",
+        "part": [
+          {
+            "unit": "electron_unit",
+            "prefix": "0",
+            "exponent": "1"
+          },
+          {
+            "unit": "c_unit",
+            "prefix": "0",
+            "exponent": "2"
+          }
+        ]
+      }
+    ],
+    "category": [
+      {
+        "title": "Specific Energy",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Joule per Kilogram",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:J_p_kg"
+            },
+            "part": [
+              {
+                "unit": "J",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "g",
+                "prefix": "3",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "title": "Kilocalerie per Gram",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:kcal_p_g"
+            },
+            "part": [
+              {
+                "unit": "cal_th",
+                "prefix": "3",
+                "exponent": "1"
+              },
+              {
+                "unit": "g",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Power",
+        "unit": [
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Joule per Second"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:J_p_s"
+            },
+            "part": [
+              {
+                "unit": "J",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Watt",
+            "names": "ar:W,watt,p:watts",
+            "base": {
+              "unit": "J_p_s",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Horse Power",
+            "names": "ar:hp,horsepower,p:horsepowers",
+            "base": {
+              "unit": "W",
+              "relation": "745.699987158227022",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Pferdestärke",
+            "names": "ar:PS,u:pferdestärke",
+            "base": {
+              "unit": "W",
+              "relation": "735.49875",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Decibel Milliwatt",
+            "names": "ar:dBm",
+            "base": {
+              "unit": "W",
+              "relation": "10^((\\x-30)/10)",
+              "inverse_relation": "10*log(\\x,10)+30",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Decibel Watt",
+            "names": "ar:dBW",
+            "base": {
+              "unit": "W",
+              "relation": "10^(\\x/10)",
+              "inverse_relation": "10*log(\\x,10)",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "system": "CGS",
+            "title": "Erg per Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:erg_p_s"
+            },
+            "part": [
+              {
+                "unit": "erg",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Solar Luminosity (nominal)",
+            "names": "r:solar_luminosity,au:L_☉",
+            "base": {
+              "unit": "W",
+              "relation": "3.828E26",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "hidden": "true",
+            "title": {
+              "@translatable": "no",
+              "#text": "Btu per Hour"
+            },
+            "names": {
+              "@translatable": "no",
+              "#text": "r:Btu_p_h"
+            },
+            "part": [
+              {
+                "unit": "Btu",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "h",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Ton of Refrigeration",
+            "names": "r:ton_refrigaration,ac:TOR",
+            "base": {
+              "unit": "Btu_p_h",
+              "relation": "12000",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Entropy",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Joule per Kelvin",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:J_p_K"
+            },
+            "part": [
+              {
+                "unit": "J",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "K",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Boltzmann (unit)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:boltzmann_unit,as:k_Bunit"
+            },
+            "base": {
+              "unit": "J_p_K",
+              "relation": "1.380649E-23",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Specific Entropy",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Joule per Kilogram Kelvin",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:J_p_kg_K"
+          },
+          "part": [
+            {
+              "unit": "J",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "g",
+              "prefix": "3",
+              "exponent": "-1"
+            },
+            {
+              "unit": "K",
+              "prefix": "0",
+              "exponent": "-1"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Thermal Conductivity",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Watt per Meter Kelvin",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:W_p_m_K"
+          },
+          "part": [
+            {
+              "unit": "W",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "-1"
+            },
+            {
+              "unit": "K",
+              "prefix": "0",
+              "exponent": "-1"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Energy Density",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Joule per Cubic Meter",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:J_p_cum"
+          },
+          "part": [
+            {
+              "unit": "J",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "m",
+              "prefix": "0",
+              "exponent": "-3"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Molar Energy",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Joule per Mole",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:J_p_mol"
+          },
+          "part": [
+            {
+              "unit": "J",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "mol",
+              "prefix": "0",
+              "exponent": "-1"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Molar Entropy",
+        "unit": {
+          "@type": "composite",
+          "system": "SI",
+          "title": "Joule per Mole Kelvin",
+          "names": {
+            "@translatable": "no",
+            "#text": "r:J_p_mol_K"
+          },
+          "part": [
+            {
+              "unit": "J",
+              "prefix": "0",
+              "exponent": "1"
+            },
+            {
+              "unit": "mol",
+              "prefix": "0",
+              "exponent": "-1"
+            },
+            {
+              "unit": "K",
+              "prefix": "0",
+              "exponent": "-1"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Action",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Joule Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:J_s"
+            },
+            "part": [
+              {
+                "unit": "J",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Reduced Planck (Atomic/Natural Unit of Action)",
+            "names": {
+              "@translatable": "no",
+              "#text": "rs:planck_unit,aus:ℏ_unit"
+            },
+            "system": "Atomic/Natural",
+            "base": {
+              "unit": "J_s",
+              "relation": "3.313035075E-34/pi",
+              "exponent": "1"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Radioactivity",
+    "unit": [
+      {
+        "@type": "alias",
+        "system": "SI",
+        "title": "Becquerel",
+        "names": "ar:Bq,becquerel,p:becquerels",
+        "base": {
+          "unit": "s",
+          "relation": "1",
+          "exponent": "-1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Curie",
+        "names": "ar:Ci,curie,p:curies",
+        "base": {
+          "unit": "Bq",
+          "relation": "3.7E10",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Rutherford",
+        "names": "ar:Rd,rutherford,p:rutherfords",
+        "base": {
+          "unit": "Bq",
+          "relation": "1E6",
+          "exponent": "1"
+        }
+      }
+    ],
+    "category": [
+      {
+        "title": "Absorbed Dose",
+        "unit": [
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Gray",
+            "names": "ar:Gy,gray,p:grays",
+            "base": {
+              "unit": "J_p_kg",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "title": "Rad",
+            "names": "rs:rad_radioactivity",
+            "base": {
+              "unit": "Gy",
+              "relation": "1/100",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "title": "Erg per Gram",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:erg_p_g"
+            },
+            "part": [
+              {
+                "unit": "erg",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "g",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Dose Equivalent",
+        "unit": [
+          {
+            "@type": "alias",
+            "system": "SI",
+            "title": "Sievert",
+            "names": "ar:Sv,sievert,p:sieverts",
+            "base": {
+              "unit": "J_p_kg",
+              "relation": "1",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "alias",
+            "system": "CGS",
+            "title": "Roentgen Equivalent Man (Rem)",
+            "names": "ros:rem_radioactivity,a:rem",
+            "base": {
+              "unit": "Sv",
+              "relation": "1/100",
+              "exponent": "1"
+            }
+          },
+          {
+            "@type": "composite",
+            "system": "CGS",
+            "title": "Millirem",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:mrem_c"
+            },
+            "part": {
+              "unit": "rem_radioactivity",
+              "prefix": "-3",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Exposure",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Coulomb per Kilogram",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:C_p_kg"
+            },
+            "part": [
+              {
+                "unit": "C",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "g",
+                "prefix": "3",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "alias",
+            "title": "Roentgen",
+            "names": "ar:R,roentgen,röntgen,p:roentgens,p:röntgens",
+            "base": {
+              "unit": "C_p_kg",
+              "relation": "0.000258",
+              "exponent": "1"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Absorbed Dose Rate",
+        "unit": [
+          {
+            "@type": "composite",
+            "system": "SI",
+            "title": "Gray per Second",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:Gy_p_s"
+            },
+            "part": [
+              {
+                "unit": "Gy",
+                "prefix": "0",
+                "exponent": "1"
+              },
+              {
+                "unit": "s",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          },
+          {
+            "@type": "composite",
+            "system": "CGS",
+            "title": "Millirem per Hour",
+            "names": {
+              "@translatable": "no",
+              "#text": "r:mrem_p_h"
+            },
+            "part": [
+              {
+                "unit": "rem_radioactivity",
+                "prefix": "-3",
+                "exponent": "1"
+              },
+              {
+                "unit": "h",
+                "prefix": "0",
+                "exponent": "-1"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Ratio",
+    "unit": [
+      {
+        "@type": "base",
+        "title": "Neper",
+        "names": "ar:Np,neper,p:nepers"
+      },
+      {
+        "@type": "alias",
+        "title": "Bel",
+        "names": "r:bel,p:bels",
+        "base": {
+          "unit": "Np",
+          "relation": "0.5*ln(10)",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Decibel",
+        "names": "ar:dB,decibel,p:decibels",
+        "base": {
+          "unit": "bel",
+          "relation": "0.1",
+          "exponent": "1"
+        }
+      }
+    ]
+  },
+  {
+    "title": "Information",
+    "unit": [
+      {
+        "@type": "base",
+        "title": "Bit (Binary Digit)",
+        "names": "r:bit,p:bits,shannon,p:shannons,c:Sh,binary_digit,p:binary_digits",
+        "use_with_prefixes": {
+          "@min": "0",
+          "#text": "true"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Nat",
+        "names": "r:nat,p:nats",
+        "base": {
+          "unit": "bit",
+          "relation": "log2(e)",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Trit (Ternary Digit)",
+        "names": "r:trit,p:trits,trinary_digit,p:trinary_digits,ternary_digit,p:ternary_digits",
+        "base": {
+          "unit": "bit",
+          "relation": "log2(3)",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Octal Digit",
+        "names": "r:octal_digit,p:octal_digits",
+        "base": {
+          "unit": "bit",
+          "relation": "3",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Hartley (Decimal Digit)",
+        "names": "r:hartley,p:hartleys,a:Hart,dit,p:dits,decimal_digit,p:decimal_digits",
+        "base": {
+          "unit": "bit",
+          "relation": "log2(10)",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Byte (8-bit)",
+        "names": "r:byte,a:B,p:bytes,octet,p:octets,a:o",
+        "use_with_prefixes": {
+          "@min": "0",
+          "#text": "true"
+        },
+        "base": {
+          "unit": "bit",
+          "relation": "8",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Nibble (Hexadecimal Digit)",
+        "names": "r:nibble,p:nibbles,nybble,p:nybbles,semioctet,p:semioctets,hex_digit,p:hex_digits,hexadecimal_digit,p:hexadecimal_digits",
+        "base": {
+          "unit": "bit",
+          "relation": "4",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Tribble",
+        "names": "r:tribble,p:tribbles",
+        "base": {
+          "unit": "nibble",
+          "relation": "3",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Nonet",
+        "names": "r:nonet,p:nonets",
+        "base": {
+          "unit": "bit",
+          "relation": "9",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Declet",
+        "names": "r:declet,p:declets",
+        "base": {
+          "unit": "bit",
+          "relation": "10",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Word (16-bit)",
+        "names": "r:word,p:words",
+        "base": {
+          "unit": "bit",
+          "relation": "16",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Kilobyte",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:kbyte_c"
+        },
+        "part": {
+          "unit": "byte",
+          "prefix": "3",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Megabyte",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Mbyte_c"
+        },
+        "part": {
+          "unit": "byte",
+          "prefix": "6",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Gigabyte",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Gbyte_c"
+        },
+        "part": {
+          "unit": "byte",
+          "prefix": "9",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Terabyte",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Tbyte_c"
+        },
+        "part": {
+          "unit": "byte",
+          "prefix": "12",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Petabyte",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Pbyte_c"
+        },
+        "part": {
+          "unit": "byte",
+          "prefix": "15",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Exabyte",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Ebyte_c"
+        },
+        "part": {
+          "unit": "byte",
+          "prefix": "18",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Kibibyte",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Kibyte_c"
+        },
+        "part": {
+          "unit": "byte",
+          "prefix": {
+            "@type": "binary",
+            "#text": "10"
+          },
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Mebibyte",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Mibyte_c"
+        },
+        "part": {
+          "unit": "byte",
+          "prefix": {
+            "@type": "binary",
+            "#text": "20"
+          },
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Gibibyte",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Gibyte_c"
+        },
+        "part": {
+          "unit": "byte",
+          "prefix": {
+            "@type": "binary",
+            "#text": "30"
+          },
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Tebibyte",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Tibyte_c"
+        },
+        "part": {
+          "unit": "byte",
+          "prefix": {
+            "@type": "binary",
+            "#text": "40"
+          },
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Kilobit",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:kbit_c"
+        },
+        "part": {
+          "unit": "bit",
+          "prefix": "3",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Megabit",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Mbit_c"
+        },
+        "part": {
+          "unit": "bit",
+          "prefix": "6",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Gigabit",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Gbit_c"
+        },
+        "part": {
+          "unit": "bit",
+          "prefix": "9",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Terabit",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Tbit_c"
+        },
+        "part": {
+          "unit": "bit",
+          "prefix": "12",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Petabit",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Pbit_c"
+        },
+        "part": {
+          "unit": "bit",
+          "prefix": "15",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Kibibit",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Kibit_c"
+        },
+        "part": {
+          "unit": "bit",
+          "prefix": {
+            "@type": "binary",
+            "#text": "10"
+          },
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Mebibit",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Mibit_c"
+        },
+        "part": {
+          "unit": "bit",
+          "prefix": {
+            "@type": "binary",
+            "#text": "20"
+          },
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "composite",
+        "title": "Gibibit",
+        "names": {
+          "@translatable": "no",
+          "#text": "r:Gibit_c"
+        },
+        "part": {
+          "unit": "bit",
+          "prefix": {
+            "@type": "binary",
+            "#text": "30"
+          },
+          "exponent": "1"
+        }
+      }
+    ]
+  },
+  {
+    "title": "Typography",
+    "unit": [
+      {
+        "@type": "alias",
+        "title": "PostScript Point (DTP)",
+        "description": "The PostScript point, or desktop publishing point, is the screen-independent typographic unit commonly used in computer software and for digital printing. It is known as the big point (bp) in TeX.",
+        "names": "ar:pt,a:pts,point,p:points,as:bp_tex,ao:tex_bp",
+        "base": {
+          "unit": "in",
+          "relation": "1/72",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "TeX Point",
+        "names": "r:tex_point,as:pt_TeX,ao:tex_pt,p:tex_points",
+        "base": {
+          "unit": "in",
+          "relation": "1/72.27",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "TeX Scaled Point",
+        "names": "r:tex_scaled_point,as:sp_TeX,ao:tex_sp,p:tex_scaled_points",
+        "base": {
+          "unit": "tex_point",
+          "relation": "1/65536",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "PostScript Pica",
+        "names": "r:pica,p:picas",
+        "base": {
+          "unit": "pt",
+          "relation": "12",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Twip",
+        "names": "r:twip,p:twips",
+        "base": {
+          "unit": "pt",
+          "relation": "1/20",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Agate",
+        "names": "r:agate,p:agates",
+        "base": {
+          "unit": "pt",
+          "relation": "5.5",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Johnson Pica",
+        "names": "johnson_pica,ro:ata_pica,po:ata_picas",
+        "base": {
+          "unit": "in",
+          "relation": "0.166",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "American Point",
+        "names": "US_point,ro:ata_point,as:pt_US,ao:ata_pt,p:US_points,po:ata_points",
+        "base": {
+          "unit": "ata_pica",
+          "relation": "1/12",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "New Didot Point",
+        "names": "r:new_didot",
+        "base": {
+          "unit": "m",
+          "relation": "0.000375",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Didot Point",
+        "names": "r:didot,a:dd",
+        "base": {
+          "unit": "pouce",
+          "relation": "1/72",
+          "exponent": "1"
+        }
+      },
+      {
+        "@type": "alias",
+        "title": "Cicero",
+        "names": "r:cicero",
+        "base": {
+          "unit": "didot",
+          "relation": "12",
+          "exponent": "1"
+        }
+      }
+    ]
+  }
+]
