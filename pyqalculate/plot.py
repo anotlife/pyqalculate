@@ -27,7 +27,7 @@ _SAFE_MATH_NS = {
     "asin": math.asin, "acos": math.acos, "atan": math.atan,
     "atan2": math.atan2,
     "sinh": math.sinh, "cosh": math.cosh, "tanh": math.tanh,
-    "exp": math.exp, "log": math.log, "log2": math.log2, "log10": math.log10,
+    "exp": math.exp, "log": math.log, "ln": math.log, "log2": math.log2, "log10": math.log10,
     "sqrt": math.sqrt, "cbrt": lambda x: math.copysign(abs(x) ** (1/3), x),
     "pi": math.pi, "e": math.e, "tau": math.tau,
     "abs": abs, "sign": lambda x: (x > 0) - (x < 0),
@@ -313,9 +313,11 @@ class Plotter:
         import matplotlib.pyplot as plt
 
         if filename:
-            fig.savefig(filename, dpi=150, bbox_inches="tight")
-            plt.close(fig)
-            return filename
+            try:
+                fig.savefig(filename, dpi=150, bbox_inches="tight")
+                return filename
+            finally:
+                plt.close(fig)
         else:
             plt.show()
             plt.close(fig)

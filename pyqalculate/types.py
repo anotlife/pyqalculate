@@ -752,7 +752,7 @@ class PlotParameters:
     filename: str = ""
     filetype: PlotFileType = PlotFileType.AUTO
     font: str = ""
-    color: bool = True
+    color: str = "blue"
     auto_y_min: bool = True
     auto_x_min: bool = True
     auto_y_max: bool = True
