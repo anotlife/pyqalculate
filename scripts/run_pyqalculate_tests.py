@@ -196,9 +196,9 @@ def _normalize_e_constants(s: str) -> str:
 
 
 def _normalize_multiplication(s: str) -> str:
-    """Normalize multiplication: 0.5 * x -> x/2, remove * between number and var."""
-    # 0.5 * expr -> expr / 2
-    s = re.sub(r'0\.5\s*\*\s*', '', s)
+    """Normalize multiplication: 0.5 * x -> (x)/2, remove * between number and var."""
+    # 0.5 * expr -> (expr)/2
+    s = re.sub(r'0\.5\s*\*\s*([^+]+)', r'(\1)/2', s)
     # Remove spaces around *
     s = re.sub(r'\s*\*\s*', '*', s)
     return s
@@ -436,7 +436,7 @@ def main():
             if match_type == MatchType.OK:
                 print("[OK]")
             elif match_type == MatchType.FORMAT:
-                print("[DIFF] (format)")
+                print("[FORMAT]")
                 print(f"    Original:    {expr.original_result}")
                 print(f"    PyQalculate: {pyq_result}")
             elif match_type == MatchType.ERROR:
