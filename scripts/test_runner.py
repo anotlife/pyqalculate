@@ -13,7 +13,7 @@ import sys
 from datetime import datetime
 
 
-def run_command(cmd, output_file, label):
+def run_command(cmd, output_file, label, cwd=None):
     """Run a command with LIVE streaming output, also saving to file."""
     import re
     print(f'  Running {label}...')
@@ -25,7 +25,7 @@ def run_command(cmd, output_file, label):
             text=True,
             encoding='utf-8',
             errors='replace',
-            cwd=os.path.dirname(os.path.abspath(__file__)),
+            cwd=cwd or os.path.dirname(os.path.abspath(__file__)),
             bufsize=1,  # line-buffered
         )
 
@@ -67,36 +67,42 @@ def main():
     print('=' * 50)
     print()
 
-    output_dir = 'test_results'
+    # Determine paths
+    scripts_dir = os.path.dirname(os.path.abspath(__file__))
+    project_dir = os.path.dirname(scripts_dir)
+    output_dir = os.path.join(project_dir, 'test_results')
     os.makedirs(output_dir, exist_ok=True)
-    print(f'Results directory: {output_dir}/')
+    print(f'Results directory: {output_dir}')
     print()
 
     python = sys.executable
     results = {}
 
-    # 1. Unit tests (pytest)
+    # 1. Unit tests (pytest) — must run from project root to find tests/
     print('[1/3] Unit tests (pytest)...')
     results['unit'] = run_command(
         [python, '-m', 'pytest', 'tests', '-v', '--tb=short'],
         os.path.join(output_dir, 'unit_tests.txt'),
         'Unit Tests',
+        cwd=project_dir,
     )
 
-    # 2. Comparison tests
+    # 2. Comparison tests — runs from scripts dir (has its own paths)
     print('[2/3] Comparison tests...')
     results['comparison'] = run_command(
         [python, 'run_pyqalculate_tests.py'],
         os.path.join(output_dir, 'comparison.txt'),
         'Comparison Tests',
+        cwd=scripts_dir,
     )
 
-    # 3. Plot tests
+    # 3. Plot tests — runs from scripts dir
     print('[3/3] Plot tests...')
     results['plot'] = run_command(
         [python, 'run_plot_tests.py'],
         os.path.join(output_dir, 'plot_tests.txt'),
         'Plot Tests',
+        cwd=scripts_dir,
     )
 
     # Summary

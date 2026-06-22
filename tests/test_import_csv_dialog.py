@@ -248,7 +248,7 @@ def test_on_ok_import_error_shows_messagebox() -> None:
     root.withdraw()
     try:
         mock_calc = MagicMock()
-        mock_calc._calc.importCSV.side_effect = RuntimeError("bad csv")
+        mock_calc.import_csv.side_effect = RuntimeError("bad csv")
         dlg, _ = _build_dialog(root, calculator=mock_calc)
         dlg._file_var.set("/some/file.csv")
         dlg._name_var.set("myvar")

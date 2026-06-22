@@ -5,7 +5,7 @@ from datetime import datetime
 
 sys.stdout.reconfigure(encoding='utf-8')  # type: ignore[attr-defined]
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from pyqalculate.calculator import Calculator
 
@@ -13,7 +13,8 @@ def main():
     calc = Calculator()
     calc.load_definitions()
 
-    output_dir = 'test_results'
+    # Output to project root's test_results/
+    output_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'test_results')
     os.makedirs(output_dir, exist_ok=True)
 
     print(f'# 绘图测试 - {datetime.now()}\n')
