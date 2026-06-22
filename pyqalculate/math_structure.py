@@ -592,13 +592,11 @@ _SYMPY_FUNC_MAP: dict[str, Any] = {
     # Calculus — diff/integrate/limit are NOT here so their registered
     # BuiltinFunction.calculate() methods are used (they handle variable
     # auto-detection, +C for indefinite integrals, etc.)
-    "sum": _summation2,
-    "product": _product2,
+    # "factor", "expand", "coeff", "degree" are also excluded so their
+    # registered BuiltinFunction.calculate() methods are used directly.
+    # Putting them here causes sp.simplify() to re-expand factored results.
+    # "sum" and "product" are excluded to allow 3-arg auto-variable detection.
     "solve": _solve2,
-    "factor": _factor,
-    "expand": _expand,
-    "coeff": _coeff,
-    "degree": _degree,
     # Base Conversion
     "bin": _bin_func,
     "oct": _oct_func,

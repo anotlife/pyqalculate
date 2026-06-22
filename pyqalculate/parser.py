@@ -78,6 +78,8 @@ class TT(Enum):
     RPAREN = auto()
     LBRACKET = auto()
     RBRACKET = auto()
+    LBRACE = auto()       # { (vector literal)
+    RBRACE = auto()       # }
     COMMA = auto()
     SEMICOLON = auto()
     ASSIGN = auto()       # :=
@@ -259,7 +261,8 @@ class _Tokenizer:
                 "|": TT.PIPE, "<": TT.LT, ">": TT.GT, "~": TT.TILDE,
                 "=": TT.EQ, ".": TT.DOT,
                 "(": TT.LPAREN, ")": TT.RPAREN, "[": TT.LBRACKET,
-                "]": TT.RBRACKET, ",": TT.COMMA, ";": TT.SEMICOLON,
+                "]": TT.RBRACKET, "{": TT.LBRACE, "}": TT.RBRACE,
+                ",": TT.COMMA, ";": TT.SEMICOLON,
             }
             if ch == "\u00b1":  # ±
                 tokens.append(Token(TT.PLUSMINUS, "\u00b1", self.pos))
@@ -825,6 +828,10 @@ class Parser:
         if tok.type == TT.LBRACKET:
             return self._parse_bracket(tokens, pos, po)
 
+        # -- Brace  { ... }  (vector literal) --
+        if tok.type == TT.LBRACE:
+            return self._parse_brace(tokens, pos, po)
+
         # -- Identifier / function call --
         if tok.type == TT.IDENT:
             return self._parse_ident_or_func(tokens, pos, po)
@@ -910,6 +917,50 @@ class Parser:
         else:
             m = MathStructure.matrix(rows)
 
+        return self._maybe_implicit_mul(m, tokens, pos, po)
+
+    def _parse_brace(self, tokens: list[Token], pos: int, po: ParseOptions) -> tuple[MathStructure, int]:
+        """Parse { ... } as vector literal (comma-separated elements)."""
+        pos += 1  # skip {
+        elems: list[MathStructure] = []
+
+        po_inner = ParseOptions(
+            variables_enabled=po.variables_enabled,
+            functions_enabled=po.functions_enabled,
+            unknowns_enabled=po.unknowns_enabled,
+            units_enabled=po.units_enabled,
+            rpn=po.rpn,
+            base=po.base,
+            limit_implicit_multiplication=True,
+            read_precision=po.read_precision,
+            dot_as_separator=po.dot_as_separator,
+            comma_as_separator=po.comma_as_separator,
+            brackets_as_parentheses=po.brackets_as_parentheses,
+            angle_unit=po.angle_unit,
+            preserve_format=po.preserve_format,
+            parsing_mode=po.parsing_mode,
+            twos_complement=po.twos_complement,
+            hexadecimal_twos_complement=po.hexadecimal_twos_complement,
+            binary_bits=po.binary_bits,
+        )
+
+        while not self._match(tokens, pos, TT.RBRACE) and not self._match(tokens, pos, TT.EOF):
+            elem, pos = self._parse_assignment(tokens, pos, po_inner)
+            elems.append(elem)
+            tok = self._tok(tokens, pos)
+            if tok.type == TT.COMMA:
+                pos += 1
+            elif tok.type == TT.RBRACE:
+                break
+            elif tok.type in (TT.NUMBER, TT.LPAREN, TT.LBRACKET, TT.LBRACE, TT.IDENT, TT.MINUS, TT.PLUS):
+                continue
+            else:
+                break
+
+        if self._match(tokens, pos, TT.RBRACE):
+            pos += 1
+
+        m = MathStructure.vector(*elems)
         return self._maybe_implicit_mul(m, tokens, pos, po)
 
     # ------------------------------------------------------------------

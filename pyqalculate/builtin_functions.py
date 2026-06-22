@@ -1838,50 +1838,81 @@ class LimitFunction(MathFunction):
 
 
 class SumFunction(MathFunction):
-    """Sum: sum(expr, var, lo, hi)."""
+    """Sum: sum(expr, var, lo, hi) or sum(expr, lo, hi) with auto-detected variable."""
     def __init__(self):
-        super().__init__("sum", 4, 4, "Calculus", "Summation")
+        super().__init__("sum", 3, 4, "Calculus", "Summation")
         self.set_argument_definition(0, SymbolicArgument("expression"))
-        self.set_argument_definition(1, SymbolicArgument("variable"))
-        self.set_argument_definition(2, NumberArgument("lower"))
-        self.set_argument_definition(3, NumberArgument("upper"))
+        self.set_argument_definition(1, SymbolicArgument("variable_or_lower"))
+        self.set_argument_definition(2, SymbolicArgument("lower_or_upper"))
+        self.set_argument_definition(3, SymbolicArgument("upper", does_test=False))
     def id(self) -> int: return FUNCTION_ID_SUM
     def calculate(self, vargs, eo=None):
         import sympy as sp
         from pyqalculate.math_structure import MathStructure
         try:
             expr = vargs[0].to_sympy()
-            var = vargs[1].to_sympy()
-            if not isinstance(var, sp.Symbol):
-                var = sp.Symbol(str(vargs[1]))
-            lo = vargs[2].to_sympy()
-            hi = vargs[3].to_sympy()
-            return MathStructure.from_sympy(sp.summation(expr, (var, lo, hi)))
+            if len(vargs) == 3:
+                # 3-arg form: sum(expr, lo, hi) — auto-detect variable
+                lo = vargs[1].to_sympy()
+                hi = vargs[2].to_sympy()
+                free = expr.free_symbols
+                if len(free) == 1:
+                    var = free.pop()
+                elif len(free) > 1:
+                    # Prefer 'n' if present, otherwise pick first alphabetically
+                    n_sym = sp.Symbol('n')
+                    var = n_sym if n_sym in free else sorted(free, key=str)[0]
+                else:
+                    return _undef()
+            else:
+                # 4-arg form: sum(expr, var, lo, hi)
+                var = vargs[1].to_sympy()
+                if not isinstance(var, sp.Symbol):
+                    var = sp.Symbol(str(vargs[1]))
+                lo = vargs[2].to_sympy()
+                hi = vargs[3].to_sympy()
+            result = sp.summation(expr, (var, lo, hi))
+            # Simplify the result (e.g., cos²+sin²=1 sums)
+            result = sp.simplify(result)
+            return MathStructure.from_sympy(result)
         except Exception:
             return _undef()
     def copy(self): return SumFunction()
 
 
 class ProductFunction(MathFunction):
-    """Product: product(expr, var, lo, hi)."""
+    """Product: product(expr, var, lo, hi) or product(expr, lo, hi) with auto-detected variable."""
     def __init__(self):
-        super().__init__("product", 4, 4, "Calculus", "Product")
+        super().__init__("product", 3, 4, "Calculus", "Product")
         self.set_argument_definition(0, SymbolicArgument("expression"))
-        self.set_argument_definition(1, SymbolicArgument("variable"))
-        self.set_argument_definition(2, NumberArgument("lower"))
-        self.set_argument_definition(3, NumberArgument("upper"))
+        self.set_argument_definition(1, SymbolicArgument("variable_or_lower"))
+        self.set_argument_definition(2, SymbolicArgument("lower_or_upper"))
+        self.set_argument_definition(3, SymbolicArgument("upper", does_test=False))
     def id(self) -> int: return FUNCTION_ID_PRODUCT
     def calculate(self, vargs, eo=None):
         import sympy as sp
         from pyqalculate.math_structure import MathStructure
         try:
             expr = vargs[0].to_sympy()
-            var = vargs[1].to_sympy()
-            if not isinstance(var, sp.Symbol):
-                var = sp.Symbol(str(vargs[1]))
-            lo = vargs[2].to_sympy()
-            hi = vargs[3].to_sympy()
-            return MathStructure.from_sympy(sp.product(expr, (var, lo, hi)))
+            if len(vargs) == 3:
+                lo = vargs[1].to_sympy()
+                hi = vargs[2].to_sympy()
+                free = expr.free_symbols
+                if len(free) == 1:
+                    var = free.pop()
+                elif len(free) > 1:
+                    n_sym = sp.Symbol('n')
+                    var = n_sym if n_sym in free else sorted(free, key=str)[0]
+                else:
+                    return _undef()
+            else:
+                var = vargs[1].to_sympy()
+                if not isinstance(var, sp.Symbol):
+                    var = sp.Symbol(str(vargs[1]))
+                lo = vargs[2].to_sympy()
+                hi = vargs[3].to_sympy()
+            result = sp.product(expr, (var, lo, hi))
+            return MathStructure.from_sympy(result)
         except Exception:
             return _undef()
     def copy(self): return ProductFunction()
