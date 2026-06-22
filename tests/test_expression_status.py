@@ -139,10 +139,10 @@ class TestShowWarning:
         bar.show_warning("Low precision")
         assert bar._left_label.cget("text") == "Low precision"
 
-    def test_uses_blue_color(self) -> None:
+    def test_uses_warning_color(self) -> None:
         bar = _bar()
         bar.show_warning("warn")
-        assert bar._left_label.cget("fg") == "#0000FF"
+        assert bar._left_label.cget("fg") == LIGHT.warning_fg
 
 
 # --- show_autocalc_result ---

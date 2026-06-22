@@ -23,10 +23,12 @@ from pyqalculate_gui.event_bus import (
     OPEN_PREFERENCES,
     PREFERENCE_APPLIED,
     RESULT_DISPLAYED,
+    TOGGLE_CONVERSION,
     TOGGLE_HISTORY,
     TOGGLE_KEYPAD,
     EventBus,
 )
+from pyqalculate_gui.conversion_view import ConversionView
 from pyqalculate_gui.expression_edit import ExpressionEdit
 from pyqalculate_gui.expression_status import ExpressionStatusBar
 from pyqalculate_gui.history_view import HistoryView
@@ -136,6 +138,12 @@ class App:
         )
         self._paned.add(self._history_view, weight=1)
 
+        self._conversion_view = ConversionView(
+            self._paned, theme=self._theme, event_bus=self._event_bus,
+            calculator=self._calculator,
+        )
+        self._paned.add(self._conversion_view, weight=1)
+
         # Expression status bar (below expression)
         self._expr_status = ExpressionStatusBar(
             main, theme=self._theme, event_bus=self._event_bus,
@@ -191,6 +199,7 @@ class App:
         bus.subscribe(PREFERENCE_APPLIED, self._on_preference_applied)
         bus.subscribe(TOGGLE_KEYPAD, self._on_toggle_keypad)
         bus.subscribe(TOGGLE_HISTORY, self._on_toggle_history)
+        bus.subscribe(TOGGLE_CONVERSION, self._on_toggle_conversion)
         bus.subscribe(RESULT_DISPLAYED, self._on_result_displayed)
         bus.subscribe("open_manage_functions", lambda: self._open_manage_functions())
 
@@ -330,6 +339,7 @@ class App:
             self._status_bar,
             self._keypad,
             self._history_view,
+            self._conversion_view,
             self._expr_status,
             self._expr_edit,
             self._result_view,
@@ -360,6 +370,13 @@ class App:
             self._paned.forget(self._history_view)
         except tk.TclError:
             self._paned.add(self._history_view, weight=1)
+
+    def _on_toggle_conversion(self) -> None:
+        """Show or hide the conversion pane inside the PanedWindow."""
+        try:
+            self._paned.forget(self._conversion_view)
+        except tk.TclError:
+            self._paned.add(self._conversion_view, weight=1)
 
     # ------------------------------------------------------------------
     # Handlers — keyboard shortcut actions

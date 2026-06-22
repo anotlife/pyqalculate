@@ -137,12 +137,7 @@ class ExpressionEdit(ttk.Frame):
             self._entry.delete("1.0", tk.END)
             self._entry.insert("1.0", self._current_text)
 
-    def activate_completion(self) -> None:
-        """Activate the first completion suggestion.
 
-        Stub for future completion popup integration.
-        """
-        # TODO: integrate with completion popup when available
 
     # ------------------------------------------------------------------
     # Public API for external widget integration

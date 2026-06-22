@@ -28,6 +28,7 @@ class Theme:
     result_fg: str
     result_approx_fg: str
     error_fg: str
+    warning_fg: str
     separator_fg: str
     info_fg: str
 
@@ -55,6 +56,7 @@ LIGHT = Theme(
     result_fg="#1a5276",
     result_approx_fg="#7d6608",
     error_fg="#c0392b",
+    warning_fg="#e67e22",
     separator_fg="#95a5a6",
     info_fg="#27ae60",
     expression_font=("Consolas", 11),
@@ -78,6 +80,7 @@ DARK = Theme(
     result_fg="#569cd6",
     result_approx_fg="#ce9178",
     error_fg="#f44747",
+    warning_fg="#e5c07b",
     separator_fg="#808080",
     info_fg="#4ec9b0",
     expression_font=("Consolas", 11),

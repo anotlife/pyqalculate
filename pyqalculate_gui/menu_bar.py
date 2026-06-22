@@ -8,6 +8,8 @@ from tkinter import messagebox
 from pyqalculate_gui.event_bus import (
     CLEAR_ALL,
     COPY_RESULT,
+    EXPORT_CSV,
+    IMPORT_CSV,
     OPEN_NUMBER_BASES,
     OPEN_PLOT,
     OPEN_PREFERENCES,
@@ -54,8 +56,8 @@ class MenuBar:
             label="Clear All", command=self._emit(CLEAR_ALL), accelerator="Ctrl+L"
         )
         menu.add_separator()
-        menu.add_command(label="Import CSV...", command=lambda: None)
-        menu.add_command(label="Export CSV...", command=lambda: None)
+        menu.add_command(label="Import CSV...", command=self._emit(IMPORT_CSV))
+        menu.add_command(label="Export CSV...", command=self._emit(EXPORT_CSV))
         menu.add_separator()
         menu.add_command(label="Exit", command=self._parent.quit)
 

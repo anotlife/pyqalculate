@@ -123,7 +123,7 @@ class ExpressionStatusBar(ttk.Frame):
 
     def show_warning(self, warning: str) -> None:
         """Show warning message in left label."""
-        self._left_label.config(text=warning, fg="#0000FF")
+        self._left_label.config(text=warning, fg=self._theme.warning_fg)
         self._status_text_source = STATUS_TEXT_ERROR
 
     def show_autocalc_result(self, result: str, exact: bool = True) -> None:

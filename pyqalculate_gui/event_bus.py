@@ -19,6 +19,8 @@ TOGGLE_HISTORY = "toggle_history"
 TOGGLE_KEYPAD = "toggle_keypad"
 TOGGLE_CONVERSION = "toggle_conversion"
 COPY_RESULT = "copy_result"
+IMPORT_CSV = "import_csv"
+EXPORT_CSV = "export_csv"
 
 
 class EventBus:
