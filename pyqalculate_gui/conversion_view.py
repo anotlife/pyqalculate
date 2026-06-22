@@ -152,14 +152,15 @@ class ConversionView(ttk.Frame):
 
         ttk.Label(conv, text="From:").grid(row=0, column=2, sticky="w", padx=(0, 4))
         self._from_var = tk.StringVar(value="(select a unit)")
-        ttk.Label(
+        self._from_label = ttk.Label(
             conv,
             textvariable=self._from_var,
             font=self._theme.info_font,
             foreground=self._theme.result_fg,
             width=18,
             anchor="w",
-        ).grid(row=0, column=3, sticky="w")
+        )
+        self._from_label.grid(row=0, column=3, sticky="w")
 
         # row 1 – target unit + convert
         ttk.Label(conv, text="To:").grid(
@@ -184,23 +185,25 @@ class ConversionView(ttk.Frame):
         result_frame.columnconfigure(0, weight=1)
 
         self._result_var = tk.StringVar()
-        ttk.Label(
+        self._result_label = ttk.Label(
             result_frame,
             textvariable=self._result_var,
             font=self._theme.result_font,
             foreground=self._theme.result_fg,
             anchor="w",
             wraplength=500,
-        ).grid(row=0, column=0, sticky="ew")
+        )
+        self._result_label.grid(row=0, column=0, sticky="ew")
 
         self._error_var = tk.StringVar()
-        ttk.Label(
+        self._error_label = ttk.Label(
             result_frame,
             textvariable=self._error_var,
             font=self._theme.info_font,
             foreground=self._theme.error_fg,
             anchor="w",
-        ).grid(row=1, column=0, sticky="ew")
+        )
+        self._error_label.grid(row=1, column=0, sticky="ew")
 
         btn_row = ttk.Frame(result_frame)
         btn_row.grid(row=2, column=0, sticky="e", pady=(4, 0))
@@ -210,12 +213,13 @@ class ConversionView(ttk.Frame):
 
         # status line
         self._status_var = tk.StringVar()
-        ttk.Label(
+        self._status_label = ttk.Label(
             conv,
             textvariable=self._status_var,
             foreground=self._theme.separator_fg,
             font=self._theme.info_font,
-        ).grid(row=3, column=0, columnspan=4, sticky="w", pady=(4, 0))
+        )
+        self._status_label.grid(row=3, column=0, columnspan=4, sticky="w", pady=(4, 0))
 
     # ==================================================================
     # Category tree population
@@ -439,3 +443,16 @@ class ConversionView(ttk.Frame):
                     if isinstance(sub, ttk.Entry) and sub.cget("textvariable") == str(self._to_var):
                         sub.focus_set()
                         return
+
+    def set_theme(self, theme: Theme) -> None:
+        """Update the widget's theme."""
+        self._theme = theme
+        self._unit_listbox.config(
+            font=theme.info_font,
+            bg=theme.bg,
+            fg=theme.fg,
+        )
+        self._from_label.config(font=theme.info_font, foreground=theme.result_fg)
+        self._result_label.config(font=theme.result_font, foreground=theme.result_fg)
+        self._error_label.config(font=theme.info_font, foreground=theme.error_fg)
+        self._status_label.config(font=theme.info_font, foreground=theme.separator_fg)

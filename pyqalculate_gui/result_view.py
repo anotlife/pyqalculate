@@ -155,3 +155,22 @@ class ResultView(ttk.Frame):
         self._text.insert(tk.END, "\n")
         self._text.config(state=tk.DISABLED)
         self._text.see(tk.END)
+
+    def set_theme(self, theme: Theme) -> None:
+        """Update the widget's theme."""
+        self._theme = theme
+        self._text.config(
+            font=theme.result_font,
+            bg=theme.bg,
+            fg=theme.fg,
+        )
+        self._text.tag_configure("expression", foreground=theme.expression_fg)
+        self._text.tag_configure(
+            "result", foreground=theme.result_fg, font=theme.result_font,
+        )
+        self._text.tag_configure("approx", foreground=theme.result_approx_fg)
+        self._text.tag_configure("error", foreground=theme.error_fg)
+        self._text.tag_configure("separator", foreground=theme.separator_fg)
+        self._text.tag_configure(
+            "info", foreground=theme.info_fg, font=theme.info_font,
+        )

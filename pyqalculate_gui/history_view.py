@@ -156,3 +156,13 @@ class HistoryView(ttk.Frame):
         """Clear all history."""
         self._entries.clear()
         self._listbox.delete(0, tk.END)
+
+    def set_theme(self, theme: Theme) -> None:
+        """Update the widget's theme."""
+        self._theme = theme
+        self._listbox.config(
+            font=theme.info_font,
+            bg=theme.bg,
+            fg=theme.fg,
+            selectbackground=theme.select_bg,
+        )

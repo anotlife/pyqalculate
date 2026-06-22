@@ -30,14 +30,16 @@ class StatusBar(ttk.Frame):
         self._stats_var = tk.StringVar(
             value="Functions: 0 | Units: 0 | Variables: 0"
         )
-        ttk.Label(
+        self._stats_label = ttk.Label(
             self, textvariable=self._stats_var, font=self._theme.info_font
-        ).pack(side=tk.LEFT, padx=10)
+        )
+        self._stats_label.pack(side=tk.LEFT, padx=10)
 
         self._mode_var = tk.StringVar(value="Approximate")
-        ttk.Label(
+        self._mode_label = ttk.Label(
             self, textvariable=self._mode_var, font=self._theme.info_font
-        ).pack(side=tk.RIGHT, padx=10)
+        )
+        self._mode_label.pack(side=tk.RIGHT, padx=10)
 
     def _on_mode_changed(self, exact: bool) -> None:
         """Handle mode change."""
@@ -52,3 +54,9 @@ class StatusBar(ttk.Frame):
     def set_mode(self, exact: bool) -> None:
         """Set mode display."""
         self._mode_var.set("Exact" if exact else "Approximate")
+
+    def set_theme(self, theme: Theme) -> None:
+        """Update the widget's theme."""
+        self._theme = theme
+        self._stats_label.config(font=theme.info_font)
+        self._mode_label.config(font=theme.info_font)

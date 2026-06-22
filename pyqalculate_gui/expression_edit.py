@@ -170,3 +170,14 @@ class ExpressionEdit(ttk.Frame):
     def get_text_widget(self) -> tk.Text:
         """Get the underlying text widget (for advanced integration)."""
         return self._entry
+
+    def set_theme(self, theme: Theme) -> None:
+        """Update the widget's theme."""
+        self._theme = theme
+        self._entry.config(
+            font=theme.expression_font,
+            bg=theme.entry_bg,
+            fg=theme.expression_fg,
+            insertbackground=theme.fg,
+            selectbackground=theme.select_bg,
+        )

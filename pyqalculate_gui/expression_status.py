@@ -181,3 +181,9 @@ class ExpressionStatusBar(ttk.Frame):
 
         # Update label
         self._right_label.config(text="  ".join(indicators))
+
+    def set_theme(self, theme: Theme) -> None:
+        """Update the widget's theme."""
+        self._theme = theme
+        self._left_label.config(font=theme.info_font, bg=theme.bg, fg=theme.fg)
+        self._right_label.config(font=theme.info_font, bg=theme.bg, fg=theme.fg)

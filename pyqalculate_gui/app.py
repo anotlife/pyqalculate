@@ -17,7 +17,9 @@ from pyqalculate_gui.event_bus import (
     CLEAR_ALL,
     COPY_RESULT,
     EXPRESSION_SUBMITTED,
+    EXPORT_CSV,
     HISTORY_RECALLED,
+    IMPORT_CSV,
     OPEN_NUMBER_BASES,
     OPEN_PLOT,
     OPEN_PREFERENCES,
@@ -201,6 +203,8 @@ class App:
         bus.subscribe(TOGGLE_HISTORY, self._on_toggle_history)
         bus.subscribe(TOGGLE_CONVERSION, self._on_toggle_conversion)
         bus.subscribe(RESULT_DISPLAYED, self._on_result_displayed)
+        bus.subscribe(IMPORT_CSV, self._on_import_csv)
+        bus.subscribe(EXPORT_CSV, self._on_export_csv)
         bus.subscribe("open_manage_functions", lambda: self._open_manage_functions())
 
     # ------------------------------------------------------------------
@@ -322,6 +326,25 @@ class App:
         if result:
             self._root.clipboard_clear()
             self._root.clipboard_append(result)
+
+    def _on_import_csv(self) -> None:
+        """Show the import CSV dialog."""
+        from pyqalculate_gui.import_csv_dialog import ImportCsvDialog
+
+        ImportCsvDialog(
+            self._root, theme=self._theme, calculator=self._calculator,
+        ).show()
+
+    def _on_export_csv(self) -> None:
+        """Show the export CSV dialog."""
+        from pyqalculate_gui.export_csv_dialog import ExportCsvDialog
+
+        ExportCsvDialog(
+            self._root,
+            theme=self._theme,
+            calculator=self._calculator,
+            get_last_result=self._result_view.get_last_result,
+        ).show()
 
     def _on_history_recalled(self, expression: str) -> None:
         """Put a recalled expression back into the edit widget."""
