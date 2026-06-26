@@ -1,0 +1,80 @@
+PyQalculate Demo: 定积分.txt
+============================================================
+
+
+# ===== 定积分测试 =====
+# 来源: tmp/定积分测试.md
+# 共 12 题
+# ----- 含绝对值 (2题) -----
+# 定积分测试.Q7: 在 x=pi/2 处分段
+# answer: pi^2/2 + 2*pi - 4
+
+>> integrate(x^2 * abs(cos(x)), x, 0, pi)
+  - 4 + 1/2 * (pi)^(2) + 2 * pi
+# 定积分测试.Q9: 在 x=1 处分段
+# answer: pi/2 + ln(2+sqrt(3))
+
+>> integrate(1/sqrt(abs(x^2 - x)), x, 1/2, 3/2)
+  1/2 * pi + 2 * acosh(1/2 * sqrt(6))
+# ----- 无穷限 (1题) -----
+# 定积分测试.Q8: 化简指数后 arctan 计算
+# answer: e^(-2) * (pi/2 - arctan(e^(-1)))
+
+>> integrate(1/(exp(x+1) + exp(3-x)), x, 0, inf)
+  (1/2 * i * (2 + -1/2 * pi * i) + 1/2 * i * (2 + ln(e + i)) + -1/2 * i * (2 + 1/2 * pi * i) + -1/2 * i * (2 + ln(e - i))) * exp(-2)
+# ----- 含参数 (1题) -----
+# 定积分测试.Q12: 倒代换 t=1/x 利用对称性，答案与 a 无关，恒为 pi/4
+# 注意: 用 a 而非 alpha（alpha 被识别为精细结构常数）
+# answer: pi/4
+
+>> integrate(1/((1 + x^2)*(1 + x^a)), x, 0, inf)
+  Integral(1/((x**2 + 1)*(x**a + 1)), (x, 0, oo))
+# ----- 特殊函数 (1题) -----
+# 定积分测试.Q11: 经典题，区间再现公式
+# answer: -(pi/2)*ln 2
+
+>> integrate(ln(sin(x)), x, 0, pi/2)
+  -1/2 * pi * ln(2)
+# ----- 对称性与区间再现 (3题) -----
+# 定积分测试.Q1: 拆项，第二部分用 int_0^a f(x)dx = int_0^a f(a-x)dx
+# answer: pi/2
+
+>> integrate((x + sin(x))/(1 + cos(x)), x, 0, pi/2)
+  1/2 * pi
+# 定积分测试.Q2: 令 x=pi/4 - t，利用对称性
+# answer: (pi/8)*ln 2
+
+>> integrate(ln(1 + tan(x)), x, 0, pi/4)
+  1/8 * pi * ln(2)
+# 定积分测试.Q6: 利用 int_0^pi x*f(sin x)dx 对称公式
+# answer: pi/2
+
+>> integrate(x * sqrt(cos(x)^2 - cos(x)^4), x, 0, pi)
+  1/2 * pi
+# ----- 三角恒等式化简 (3题) -----
+# 定积分测试.Q3: 令 x=a*sin(theta)，化为三角积分
+# answer: pi/4
+
+>> integrate(1/(x + sqrt(a^2 - x^2)), x, 0, a)
+  1/4 * pi
+# 定积分测试.Q4: 1-sin2x = (sinx - cosx)^2
+# answer: 2*(sqrt(2) - 1)
+
+>> integrate(sqrt(1 - sin(2*x)), x, 0, pi/2)
+  - 2 + 2 * sqrt(2)
+# 定积分测试.Q5: 分子分母同除 cos^2 x，令 t=tan x
+# answer: pi/(2*sqrt(2))
+
+>> integrate(1/(1 + cos(x)^2), x, 0, pi/2)
+  1/4 * pi * sqrt(2)
+# ----- 含变上限积分的极限 (1题) -----
+# 定积分测试.Q10: 洛必达（含变上限积分）
+# answer: pi^2/4
+
+>> limit(integrate(arctan(t)^2, t, 0, x)/sqrt(x^2 + 1), x, inf)
+  0
+
+============================================================
+Total commands: 12
+Plots generated: 0
+Errors: 0

@@ -51,6 +51,7 @@ class Calculator:
 
     def __init__(self) -> None:
         self._precision = DEFAULT_PRECISION
+        self._precision_is_set = False  # True when user explicitly calls set_precision()
         self._parser = Parser(self)
         self._functions: dict[str, MathFunction] = {}
         self._variables: dict[str, Variable] = {}
@@ -71,6 +72,7 @@ class Calculator:
     def set_precision(self, precision: int) -> None:
         """Set the precision for calculations."""
         self._precision = max(1, precision)
+        self._precision_is_set = True
 
     # -- Definition management --
 
@@ -926,6 +928,12 @@ class Calculator:
         if eo is None:
             eo = EvaluationOptions()
 
+        # Propagate calculator precision to print options so that symbolic
+        # results (e.g. tanh(40), sqrt(2)) are evaluated numerically.
+        # Only when the user explicitly called set precision.
+        if po.precision == 0 and self._precision_is_set:
+            po.precision = self._precision
+
         # Adjust evaluation mode from print options
         if po.exact:
             eo.approximation = ApproximationMode.EXACT
@@ -945,6 +953,9 @@ class Calculator:
         """Format and print a MathStructure."""
         if po is None:
             po = PrintOptions()
+        # Propagate calculator precision to print options
+        if po.precision == 0 and self._precision_is_set:
+            po.precision = self._precision
         return mstruct.print(po)
 
     # -- Localization --

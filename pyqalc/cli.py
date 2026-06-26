@@ -390,6 +390,7 @@ def _handle_set_command(
         try:
             n = int(value)
             calc.set_precision(n)
+            po.precision = n
             return f"precision = {n}"
         except ValueError:
             return "Error: precision must be an integer"

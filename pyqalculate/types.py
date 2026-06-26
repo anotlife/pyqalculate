@@ -673,6 +673,7 @@ class PrintOptions:
     rounding: RoundingMode = RoundingMode.HALF_AWAY_FROM_ZERO
     exact: bool = False
     approximate: bool = False
+    precision: int = 0  # When > 0, evalf symbolic results to this many significant digits
 
 
 # ---------------------------------------------------------------------------

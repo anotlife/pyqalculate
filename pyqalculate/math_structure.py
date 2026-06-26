@@ -2201,9 +2201,28 @@ class MathStructure:
         return clone
 
     def print(self, po: PrintOptions | None = None) -> str:
-        """Return a string representation."""
+        """Return a string representation.
+
+        When ``po.precision`` is set (> 0) and this structure is not already
+        a plain number, attempts to evaluate the expression numerically to
+        *precision* significant digits via SymPy's ``evalf()``.  This
+        converts symbolic results like ``tanh(40)``, ``sqrt(2)``,
+        ``sin(1)`` into their numeric equivalents — but only when the
+        expression contains no free symbols (i.e. no unresolved variables).
+        """
         if po is None:
             po = PrintOptions()
+        # When precision is set and result is not already a number,
+        # attempt numeric evaluation of symbolic expressions.
+        if po.precision > 0 and not self.is_number():
+            try:
+                sympy_expr = self.to_sympy()
+                if sympy_expr is not None and not sympy_expr.free_symbols:
+                    numeric_expr = sp.N(sympy_expr, po.precision)
+                    numeric_ms = MathStructure.from_sympy(numeric_expr)
+                    return numeric_ms._print_internal(po)
+            except Exception:
+                pass  # Fall through to normal printing
         return self._print_internal(po)
 
     def _print_internal(self, po: PrintOptions) -> str:
@@ -2348,9 +2367,10 @@ class MathStructure:
             return str(int(val))
         if po.max_decimals >= 0:
             return f"{val:.{po.max_decimals}f}"
-        # Round to 8 significant digits to eliminate floating-point noise
-        # (e.g., 1.5239999999999998 → 1.524)
-        s = f"{val:.8g}"
+        # Use precision from print options when set, otherwise default to 8
+        # significant digits to eliminate floating-point noise
+        sig_digits = po.precision if po.precision > 0 else 8
+        s = f"{val:.{sig_digits}g}"
         # Strip trailing zeros after decimal point for cleanliness
         if '.' in s and 'e' not in s.lower():
             s = s.rstrip('0').rstrip('.')
