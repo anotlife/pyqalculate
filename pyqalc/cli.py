@@ -163,6 +163,7 @@ def _make_completer(calc: Calculator) -> list[str]:
         "set", "save", "delete", "assume", "base", "mode",
         "help", "quit", "exit", "factorize", "simplify",
         "functions", "constants",
+        "plot", "plot3d", "plot_implicit", "subplot",
     ])
     return words
 
@@ -207,6 +208,10 @@ def _get_completion_description(word: str, calc: Calculator) -> str:
         "simplify": "Simplify last result",
         "functions": "List all functions",
         "constants": "List all constants",
+        "plot": "Plot expression (interactive or save to file)",
+        "plot3d": "3D surface plot (not yet implemented)",
+        "plot_implicit": "Plot implicit equation f(x,y)=0",
+        "subplot": "Combine multiple plots in a grid layout",
     }
     return cmd_descs.get(word, "")
 
@@ -254,48 +259,72 @@ Special commands:
   help [function]          Show help for a function (e.g. help sin)
   functions                List all available functions
   constants                List all physical constants
+  plot(expr)               Plot expression in interactive window
+  plot_implicit(expr)      Plot implicit equation f(x,y)=0
+  subplot(r,c,plots...)    Combine plots: subplot(1,2,plot(sin(x)),plot(cos(x)))
   quit / exit              Exit the program
 """
 
 
 def _handle_help_function(func_name: str, calc: Calculator) -> str | None:
-    """Show help for a specific function."""
+    """Show help for a specific function, variable, or unit."""
+    # Try function first
     func = calc.get_function(func_name)
-    if func is None:
-        return f"Error: unknown function '{func_name}'"
+    if func is not None:
+        lines = []
+        lines.append(f"  {func.name()} - {func.title()}")
+        lines.append(f"  Category: {func.category()}")
 
-    lines = []
-    lines.append(f"  {func.name()} - {func.title()}")
-    lines.append(f"  Category: {func.category()}")
-
-    # Build argument signature
-    min_a = func.min_args()
-    max_a = func.max_args()
-    arg_parts = []
-    for i in range(max_a if max_a > 0 else min_a):
-        arg_def = func.get_argument_definition(i)
-        if arg_def:
-            arg_name = arg_def.name() or f"arg{i+1}"
-            arg_type = arg_def.print_short()
-            if i >= min_a:
-                arg_parts.append(f"[{arg_name}:{arg_type}]")
+        # Build argument signature
+        min_a = func.min_args()
+        max_a = func.max_args()
+        arg_parts = []
+        for i in range(max_a if max_a > 0 else min_a):
+            arg_def = func.get_argument_definition(i)
+            if arg_def:
+                arg_name = arg_def.name() or f"arg{i+1}"
+                arg_type = arg_def.print_short()
+                if i >= min_a:
+                    arg_parts.append(f"[{arg_name}:{arg_type}]")
+                else:
+                    arg_parts.append(f"{arg_name}:{arg_type}")
             else:
-                arg_parts.append(f"{arg_name}:{arg_type}")
+                arg_parts.append(f"arg{i+1}")
+
+        if arg_parts:
+            lines.append(f"  Syntax: {func.name()}({', '.join(arg_parts)})")
         else:
-            arg_parts.append(f"arg{i+1}")
+            lines.append(f"  Syntax: {func.name()}()")
 
-    if arg_parts:
-        lines.append(f"  Syntax: {func.name()}({', '.join(arg_parts)})")
-    else:
-        lines.append(f"  Syntax: {func.name()}()")
+        if func.description():
+            lines.append(f"  Description: {func.description()}")
 
-    if func.description():
-        lines.append(f"  Description: {func.description()}")
+        if func.example():
+            lines.append(f"  Example: {func.example()}")
 
-    if func.example():
-        lines.append(f"  Example: {func.example()}")
+        return "\n".join(lines)
 
-    return "\n".join(lines)
+    # Try variable
+    var = calc.get_variable(func_name)
+    if var is not None:
+        lines = []
+        lines.append(f"  {var.name()} - {var.title()}")
+        lines.append(f"  Category: {var.category()}")
+        if var.description():
+            lines.append(f"  Description: {var.description()}")
+        return "\n".join(lines)
+
+    # Try unit
+    unit = calc.get_unit(func_name)
+    if unit is not None:
+        lines = []
+        lines.append(f"  {unit.name()} - {unit.title()}")
+        lines.append(f"  Category: {unit.category()}")
+        if unit.description():
+            lines.append(f"  Description: {unit.description()}")
+        return "\n".join(lines)
+
+    return f"Error: unknown function/unit '{func_name}'"
 
 
 def _list_functions_by_category(calc: Calculator) -> str:
@@ -517,6 +546,166 @@ def _handle_mode_command(
     return f"Error: unknown mode '{mode}'"
 
 
+def _handle_plot_command(args: list[str], full_line: str) -> None:
+    """Handle: plot(expr) or plot(expr, file.png)"""
+    import re
+    from pyqalculate.plot import Plotter
+    # Parse: plot(expr) or plot(expr, filename.png)
+    m = re.match(r'^plot\((.+)\)$', full_line.strip())
+    if not m:
+        print("Usage: plot(expression) — opens interactive window")
+        return
+    inner = m.group(1)
+    # Check if last arg is a filename
+    parts = inner.rsplit(',', 1)
+    if len(parts) == 2 and parts[1].strip().endswith('.png'):
+        expr = parts[0].strip()
+        filename = parts[1].strip()
+    else:
+        expr = inner.strip()
+        filename = ""
+    try:
+        plotter = Plotter()
+        result = plotter.plot(expr, filename=filename)
+        if result:
+            print(f"  Saved: {result}")
+        else:
+            print("  Plot window closed.")
+    except Exception as e:
+        print(f"  Plot error: {e}")
+
+
+def _handle_plot3d_command(args: list[str]) -> None:
+    """Handle: plot3d(expr, x_min, x_max, y_min, y_max) — 3D surface plot"""
+    print("  3D plotting not yet implemented. Use plot() for 2D.")
+
+
+def _handle_plot_implicit_command(args: list[str]) -> None:
+    """Handle: plot_implicit(expr) or plot_implicit(expr, file.png)"""
+    import re
+    from pyqalculate.plot import Plotter
+    # Build the original line from args
+    line = "plot_implicit(" + " ".join(args) + ")"
+    m = re.match(r'^plot_implicit\((.+)\)$', line.strip())
+    if not m:
+        print("Usage: plot_implicit(expression) — opens interactive window")
+        return
+    inner = m.group(1)
+    parts = inner.rsplit(',', 1)
+    if len(parts) == 2 and parts[1].strip().endswith('.png'):
+        expr = parts[0].strip()
+        filename = parts[1].strip()
+    else:
+        expr = inner.strip()
+        filename = ""
+    try:
+        plotter = Plotter()
+        result = plotter.plot_implicit(expr, filename=filename)
+        if result:
+            print(f"  Saved: {result}")
+        else:
+            print("  Plot window closed.")
+    except Exception as e:
+        print(f"  Plot error: {e}")
+
+
+def _handle_subplot_command(full_line: str) -> None:
+    """Handle: subplot(rows, cols, plot(...), plot_implicit(...), ...)"""
+    import re
+    from pyqalculate.plot import Plotter
+
+    # Parse: subplot(rows, cols, spec1, spec2, ...)
+    m = re.match(r"^subplot\((.+)\)$", full_line.strip(), re.DOTALL)
+    if not m:
+        print("Usage: subplot(rows, cols, plot(expr), plot_implicit(expr), ...)")
+        return
+
+    inner = m.group(1)
+    # Split by top-level commas (not inside parentheses)
+    parts: list[str] = []
+    depth = 0
+    current = ""
+    for ch in inner:
+        if ch == "(":
+            depth += 1
+            current += ch
+        elif ch == ")":
+            depth -= 1
+            current += ch
+        elif ch == "," and depth == 0:
+            parts.append(current.strip())
+            current = ""
+        else:
+            current += ch
+    if current.strip():
+        parts.append(current.strip())
+
+    if len(parts) < 3:
+        print("Usage: subplot(rows, cols, plot(expr), ...)")
+        return
+
+    try:
+        rows = int(parts[0])
+        cols = int(parts[1])
+    except ValueError:
+        print("  Error: rows and cols must be integers")
+        return
+
+    subplot_specs: list[dict] = []
+    for spec_str in parts[2:]:
+        spec_str = spec_str.strip()
+        # Determine type
+        if spec_str.startswith("plot(") and spec_str.endswith(")"):
+            inner_arg = spec_str[5:-1]
+            # Check for filename at end
+            fname_parts = inner_arg.rsplit(",", 1)
+            if len(fname_parts) == 2 and fname_parts[1].strip().endswith(".png"):
+                expr = fname_parts[0].strip()
+            else:
+                expr = inner_arg.strip()
+            subplot_specs.append({"type": "plot", "args": {"expression": expr}})
+
+        elif spec_str.startswith("plot_parametric(") and spec_str.endswith(")"):
+            inner_arg = spec_str[16:-1]
+            pparts = inner_arg.split(",")
+            if len(pparts) >= 2:
+                subplot_specs.append({
+                    "type": "parametric",
+                    "args": {
+                        "x_expr": pparts[0].strip(),
+                        "y_expr": pparts[1].strip(),
+                    },
+                })
+
+        elif spec_str.startswith("plot_implicit(") and spec_str.endswith(")"):
+            inner_arg = spec_str[14:-1]
+            fname_parts = inner_arg.rsplit(",", 1)
+            if len(fname_parts) == 2 and fname_parts[1].strip().endswith(".png"):
+                expr = fname_parts[0].strip()
+            else:
+                expr = inner_arg.strip()
+            subplot_specs.append(
+                {"type": "implicit", "args": {"expression": expr}}
+            )
+
+        else:
+            print(f"  Warning: unrecognized subplot spec: {spec_str}")
+
+    if not subplot_specs:
+        print("  Error: no valid subplot specifications")
+        return
+
+    try:
+        plotter = Plotter()
+        result = plotter.plot_subplot(subplot_specs, rows=rows, cols=cols)
+        if result:
+            print(f"  Saved: {result}")
+        else:
+            print("  Plot window closed.")
+    except Exception as e:
+        print(f"  Subplot error: {e}")
+
+
 # ---------------------------------------------------------------------------
 # Core evaluation
 # ---------------------------------------------------------------------------
@@ -643,6 +832,23 @@ def interactive_mode(
             msg = _handle_mode_command(cmd_args, po, eo)
             if msg:
                 print(msg)
+            continue
+
+        # ---- Plot commands ------------------------------------------------
+        if cmd == "plot":
+            _handle_plot_command(cmd_args, line)
+            continue
+
+        if cmd == "plot3d":
+            _handle_plot3d_command(cmd_args)
+            continue
+
+        if cmd == "plot_implicit":
+            _handle_plot_implicit_command(cmd_args)
+            continue
+
+        if cmd == "subplot":
+            _handle_subplot_command(line)
             continue
 
         if cmd == "factorize" and last_result is not None:

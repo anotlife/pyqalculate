@@ -11,9 +11,9 @@
 |------|------|-----|------|
 | `pi` | `π` | 3.14159265358979... | variables.json:1398 |
 | `e` | — | 2.71828182845905... | variables.json:1400 |
-| `euler` | `γ` | 0.57721566490153... | variables.json:1402 |
-| `catalan` | — | 0.91596559417722... | variables.json:1404 |
-| `golden` | `φ`, `phi` | (1+sqrt(5))/2 | variables.json:1406 |
+| `euler` | `γ` | ⚠️ 返回符号名 `euler`，需用 `euler + 0` 或 `float(euler)` 获取数值 0.57721566490153... | variables.json:1402 |
+| `catalan` | — | ⚠️ 返回符号名 `catalan`，需用 `catalan + 0` 或 `float(catalan)` 获取数值 0.91596559417722... | variables.json:1404 |
+| `golden` | `φ`, `phi` | ⚠️ 返回符号名 `golden`，需用 `golden + 0` 或 `float(golden)` 获取数值 (1+sqrt(5))/2 | variables.json:1406 |
 | `omega` | — | lambertw(1) | variables.json:1408 |
 | `pythagoras` | — | sqrt(2) | variables.json:1410 |
 | `apery` | — | zeta(3) | variables.json:1412 |
@@ -77,7 +77,7 @@
 | `c` | `speed_of_light` | 299792458 m/s | 光速 |
 | `planck` | `h` | 6.62607015e-34 J·s | 普朗克常数 |
 | `planck2pi` | `ℏ`, `hbar` | 1.054571817e-34 J·s | 约化普朗克常数 |
-| `newtonian_constant` | `G` | 6.6743e-11 m³/(kg·s²) | 万有引力常数 |
+| `newtonian_constant` | `G` | ⚠️ 返回符号名 `newtonian_constant`，需用 `float(newtonian_constant)` 获取数值 6.6743e-11 m³/(kg·s²) | 万有引力常数 |
 | `standard_gravity` | `g_0` | 9.80665 m/s² | 标准重力加速度 |
 | `characteristic_impedance` | `Z_0` | 376.730313668 Ω | 特征阻抗 |
 | `electric_constant` | `ε_0` | 8.8541878128e-12 F/m | 真空介电常数 |

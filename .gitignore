@@ -60,3 +60,7 @@ Thumbs.db
 demo_output/
 scripts/demo_output/
 test_results/
+
+# Temp / generated
+tmp/
+demo/

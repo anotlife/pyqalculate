@@ -509,8 +509,11 @@ _SYMPY_FUNC_MAP: dict[str, Any] = {
     "cos": sp.cos,
     "tan": sp.tan,
     "asin": sp.asin,
+    "arcsin": sp.asin,
     "acos": sp.acos,
+    "arccos": sp.acos,
     "atan": sp.atan,
+    "arctan": sp.atan,
     "atan2": _atan2,
     "sinh": sp.sinh,
     "cosh": sp.cosh,
@@ -1109,16 +1112,18 @@ class MathStructure:
             return cls.comparison(
                 cls.from_sympy(expr.lhs), cls.from_sympy(expr.rhs), ComparisonType.EQUALS_GREATER)
 
-        # Derivative — represent as diff(y, x) with variable names only
+        # Derivative — represent as diff(y, x[, n])
         if isinstance(expr, sp.Derivative):
             m = cls(struct_type=StructureType.FUNCTION)
             m._symbol = "diff"
             # expr.args is (func, (var, order), (var2, order2), ...)
-            # We only want the function and the variable names
             children = [cls.from_sympy(expr.args[0])]
             for deriv_arg in expr.args[1:]:
                 if isinstance(deriv_arg, sp.Tuple) and len(deriv_arg) == 2:
-                    children.append(cls.from_sympy(deriv_arg[0]))  # just the variable
+                    children.append(cls.from_sympy(deriv_arg[0]))  # variable
+                    order = deriv_arg[1]
+                    if order != 1:
+                        children.append(cls.from_sympy(order))  # order when > 1
                 else:
                     children.append(cls.from_sympy(deriv_arg))
             m._children = children
@@ -2152,6 +2157,21 @@ class MathStructure:
         if sympy_expr is None:
             return MathStructure.undefined()
 
+        # Preserve symbolic derivatives for ODE context — when the expression
+        # does not depend on the variable of differentiation (e.g., y w.r.t. x),
+        # sp.simplify would wrongly evaluate to 0. Only preserve when none of
+        # the differentiation variables appear in the expression's free symbols.
+        if isinstance(sympy_expr, sp.Derivative):
+            expr_free = sympy_expr.args[0].free_symbols
+            deriv_vars = set()
+            for arg in sympy_expr.args[1:]:
+                if isinstance(arg, sp.Tuple):
+                    deriv_vars.add(arg[0])
+                else:
+                    deriv_vars.add(arg)
+            if not deriv_vars & expr_free:
+                return MathStructure.from_sympy(sympy_expr)
+
         try:
             if eo.approximation == ApproximationMode.APPROXIMATE:
                 result_expr = sp.N(sympy_expr, 15)
@@ -2319,6 +2339,11 @@ class MathStructure:
 
     def _format_float(self, val: float, po: PrintOptions) -> str:
         """Format a float value respecting print options."""
+        import math
+        if math.isinf(val):
+            return "inf" if val > 0 else "-inf"
+        if math.isnan(val):
+            return "NaN"
         if val == int(val) and abs(val) < 1e15:
             return str(int(val))
         if po.max_decimals >= 0:

@@ -16,7 +16,7 @@ PyQalculate 是 [libqalculate](https://github.com/Qalculate/libqalculate) 的纯
 | 3 | [start.bat 启动器](03-start-bat.md) | 所有菜单模式说明（CLI/GUI/测试/演示） |
 | 4 | [命令行界面 (CLI)](04-cli.md) | 命令参数、REPL 元命令、Tab 补全 |
 | 4a | [表达式语法](04a-expressions.md) | 运算符优先级、所有语法模式 |
-| 4b | [内置函数](04b-functions.md) | 127+ 函数分类、参数、示例 |
+| 4b | [内置函数](04b-functions.md) | 157 函数分类、参数、示例 |
 | 4c | [常量与变量](04c-constants.md) | 物理常量、数学常量、预定义变量 |
 | 4d | [CLI 命令示例](04d-examples.md) | 真实 CLI 输出、所有命令演示 |
 | 5 | [图形界面 (GUI)](05-gui.md) | 窗口布局、快捷键、主题、对话框 |
@@ -25,6 +25,7 @@ PyQalculate 是 [libqalculate](https://github.com/Qalculate/libqalculate) 的纯
 | 8 | [单位与常量](08-units.md) | 500+ 单位、前缀、物理常量、数据集 |
 | 9 | [绘图系统](09-plotting.md) | 函数绘图、参数方程、隐函数 |
 | 10 | [测试套件](10-testing.md) | 测试组织、运行方式、对比测试 |
+| — | [术语表与索引](glossary.md) | 函数、常量、命令快速查找 |
 
 ---
 

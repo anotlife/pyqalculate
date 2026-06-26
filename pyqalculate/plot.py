@@ -417,6 +417,115 @@ class Plotter:
 
         return self._save_or_show(fig, filename)
 
+    def plot_subplot(
+        self,
+        subplot_specs: list[dict],
+        rows: int = 1,
+        cols: int = 1,
+        filename: str = "",
+    ) -> str:
+        """Plot multiple subplots in a single figure.
+
+        Args:
+            subplot_specs: List of dicts, each with keys:
+                - ``'type'``: ``'plot'``, ``'parametric'``, or ``'implicit'``
+                - ``'args'``: dict of args for that plot type
+            rows: Number of subplot rows.
+            cols: Number of subplot columns.
+            filename: If provided, save to this file.
+
+        Returns:
+            Path to saved file, or empty string if displayed interactively.
+        """
+        try:
+            import matplotlib
+            if filename:
+                matplotlib.use("Agg")
+            import matplotlib.pyplot as plt
+            import numpy as np
+        except ImportError:
+            raise ImportError("matplotlib is required for plotting.")
+
+        fig, axes = plt.subplots(rows, cols, figsize=(5 * cols, 4 * rows))
+        # Flatten axes to 1D for easy indexing
+        if rows == 1 and cols == 1:
+            axes_flat = [axes]
+        else:
+            axes_flat = list(axes.flat) if hasattr(axes, "flat") else [axes]
+
+        for i, spec in enumerate(subplot_specs):
+            if i >= len(axes_flat):
+                break
+            ax = axes_flat[i]
+            plot_type = spec.get("type", "plot")
+            args = spec.get("args", {})
+
+            if plot_type == "plot":
+                expr = args.get("expression", "")
+                x_min = args.get("x_min", -10.0)
+                x_max = args.get("x_max", 10.0)
+                num_points = args.get("num_points", 1000)
+                x = np.linspace(x_min, x_max, num_points)
+                y = np.array([_eval_expression(expr, xi) for xi in x])
+                ax.plot(x, y, linewidth=1.5, label=expr)
+                ax.set_xlabel("x")
+                ax.set_ylabel(expr)
+                ax.legend()
+                ax.grid(True, alpha=0.3)
+
+            elif plot_type == "parametric":
+                x_expr = args.get("x_expr", "")
+                y_expr = args.get("y_expr", "")
+                t_min = args.get("t_min", 0.0)
+                t_max = args.get("t_max", 6.283185307179586)
+                num_points = args.get("num_points", 1000)
+                t = np.linspace(t_min, t_max, num_points)
+                x_vals = np.array(
+                    [_eval_expression(x_expr, ti, var="t") for ti in t]
+                )
+                y_vals = np.array(
+                    [_eval_expression(y_expr, ti, var="t") for ti in t]
+                )
+                ax.plot(x_vals, y_vals, linewidth=1.5)
+                ax.set_aspect("equal")
+                ax.set_xlabel("x")
+                ax.set_ylabel("y")
+                ax.grid(True, alpha=0.3)
+                ax.set_title(f"x={x_expr}, y={y_expr}")
+
+            elif plot_type == "implicit":
+                expr_str = args.get("expression", "")
+                x_range = args.get("x_range", (-5.0, 5.0))
+                y_range = args.get("y_range", (-5.0, 5.0))
+                resolution = args.get("resolution", 200)
+                x = np.linspace(x_range[0], x_range[1], resolution)
+                y = np.linspace(y_range[0], y_range[1], resolution)
+                X, Y = np.meshgrid(x, y)
+                Z = np.zeros_like(X)
+                for ii in range(resolution):
+                    for jj in range(resolution):
+                        ns = {
+                            **_SAFE_MATH_NS,
+                            "x": X[ii, jj],
+                            "y": Y[ii, jj],
+                        }
+                        e = expr_str.replace("^", "**")
+                        try:
+                            Z[ii, jj] = float(
+                                eval(e, {"__builtins__": {}}, ns)
+                            )
+                        except Exception:
+                            Z[ii, jj] = float("nan")
+                ax.contour(X, Y, Z, levels=[0], colors="blue", linewidths=2)
+                ax.set_aspect("equal")
+                ax.set_xlabel("x")
+                ax.set_ylabel("y")
+                ax.grid(True, alpha=0.3)
+                ax.set_title(f"{expr_str} = 0")
+
+        plt.tight_layout()
+        return self._save_or_show(fig, filename)
+
     @staticmethod
     def _save_or_show(fig, filename: str) -> str:
         """Save figure to file or show interactively."""

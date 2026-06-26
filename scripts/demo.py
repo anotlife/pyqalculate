@@ -1,12 +1,12 @@
 """PyQalculate Demo - Calculator API-based command runner.
 
-Reads commands from scripts/demo_commands.txt, executes each via the
-Calculator API (for stateful settings), and writes consolidated output
-to scripts/demo_output/.
+Scans demo/*.txt files, lets the user select one, then executes each
+command via the Calculator API (for stateful settings).  Output goes
+to demo/{name}/{name}_output.txt and plots to demo/{name}/.
 
-Meta-commands (set, help, mode) are handled programmatically via the
-CLI's handler functions. Math expressions use calculate_and_print().
-Plot commands use the Plotter API.
+Meta-commands (set, help, mode, base) are handled programmatically via
+the CLI's handler functions.  Math expressions use calculate_and_print().
+Plot commands use the Plotter API and save to file (no interactive windows).
 """
 
 from __future__ import annotations
@@ -38,10 +38,47 @@ from pyqalc.cli import (
 
 _SCRIPT_DIR = Path(__file__).resolve().parent
 _PROJECT_DIR = _SCRIPT_DIR.parent
-_COMMANDS_FILE = _SCRIPT_DIR / "demo_commands.txt"
-_OUTPUT_DIR = _SCRIPT_DIR / "demo_output"
-_PLOT_DIR = _OUTPUT_DIR / "plots"
-_RESULTS_FILE = _OUTPUT_DIR / "demo_results.txt"
+_DEMO_DIR = _PROJECT_DIR / "demo"
+
+
+# ---------------------------------------------------------------------------
+# Demo file scanning & selection
+# ---------------------------------------------------------------------------
+
+
+def scan_demo_files() -> list[tuple[str, Path]]:
+    """Scan demo/*.txt and return sorted list of (stem, path) tuples."""
+    if not _DEMO_DIR.is_dir():
+        print(f"Error: demo directory not found: {_DEMO_DIR}")
+        sys.exit(1)
+
+    files = sorted(_DEMO_DIR.glob("*.txt"), key=lambda p: p.name)
+    if not files:
+        print(f"Error: no .txt files found in {_DEMO_DIR}")
+        sys.exit(1)
+
+    return [(f.stem, f) for f in files]
+
+
+def show_selection_menu(files: list[tuple[str, Path]]) -> int:
+    """Display numbered list and return the selected index (0-based)."""
+    print("Demo files:")
+    for i, (name, _) in enumerate(files, start=1):
+        print(f"  [{i}] {name}.txt")
+    print()
+
+    while True:
+        try:
+            raw = input(f"Select demo (1-{len(files)}): ").strip()
+            choice = int(raw)
+            if 1 <= choice <= len(files):
+                return choice - 1
+            print(f"  Please enter a number between 1 and {len(files)}.")
+        except ValueError:
+            print("  Invalid input. Please enter a number.")
+        except (EOFError, KeyboardInterrupt):
+            print("\nCancelled.")
+            sys.exit(0)
 
 
 # ---------------------------------------------------------------------------
@@ -73,11 +110,11 @@ _RE_PARAMETRIC = re.compile(
 _RE_IMPLICIT = re.compile(r"^plot_implicit\((.+?),\s*(\S+\.png)\)$")
 
 
-def _run_plot(expr: str, filename: str, out: TextIO) -> None:
+def _run_plot(expr: str, filename: str, plot_dir: Path, out: TextIO) -> None:
     """Plot a standard y=f(x) expression."""
     from pyqalculate.plot import Plotter
 
-    path = str(_PLOT_DIR / filename)
+    path = str(plot_dir / filename)
     plotter = Plotter()
     result = plotter.plot(expr, filename=path)
     size = os.path.getsize(result) if result and os.path.exists(result) else 0
@@ -85,11 +122,13 @@ def _run_plot(expr: str, filename: str, out: TextIO) -> None:
     print(f"  [PLOT] {filename} ({size} bytes)")
 
 
-def _run_parametric(x_expr: str, y_expr: str, filename: str, out: TextIO) -> None:
+def _run_parametric(
+    x_expr: str, y_expr: str, filename: str, plot_dir: Path, out: TextIO
+) -> None:
     """Plot a parametric curve x(t), y(t)."""
     from pyqalculate.plot import Plotter
 
-    path = str(_PLOT_DIR / filename)
+    path = str(plot_dir / filename)
     plotter = Plotter()
     result = plotter.plot_parametric(x_expr, y_expr, filename=path)
     size = os.path.getsize(result) if result and os.path.exists(result) else 0
@@ -97,11 +136,11 @@ def _run_parametric(x_expr: str, y_expr: str, filename: str, out: TextIO) -> Non
     print(f"  [PARAMETRIC] {filename} ({size} bytes)")
 
 
-def _run_implicit(expr: str, filename: str, out: TextIO) -> None:
+def _run_implicit(expr: str, filename: str, plot_dir: Path, out: TextIO) -> None:
     """Plot an implicit equation f(x,y) = 0."""
     from pyqalculate.plot import Plotter
 
-    path = str(_PLOT_DIR / filename)
+    path = str(plot_dir / filename)
     plotter = Plotter()
     result = plotter.plot_implicit(expr, filename=path)
     size = os.path.getsize(result) if result and os.path.exists(result) else 0
@@ -224,21 +263,19 @@ def _run_expression(
 
 
 # ---------------------------------------------------------------------------
-# Main
+# Demo runner
 # ---------------------------------------------------------------------------
 
 
-def main() -> None:
-    # Ensure output directories exist
-    _OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    _PLOT_DIR.mkdir(parents=True, exist_ok=True)
+def run_demo(file_path: Path) -> None:
+    """Execute all commands in the selected demo file."""
+    name = file_path.stem
+    output_dir = _DEMO_DIR / name
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Read commands
-    if not _COMMANDS_FILE.exists():
-        print(f"Error: commands file not found: {_COMMANDS_FILE}")
-        sys.exit(1)
+    results_file = output_dir / f"{name}_output.txt"
 
-    lines = _COMMANDS_FILE.read_text(encoding="utf-8").splitlines()
+    lines = file_path.read_text(encoding="utf-8").splitlines()
 
     # Initialize Calculator with definitions
     calc = Calculator()
@@ -256,8 +293,12 @@ def main() -> None:
     plots = 0
     errors = 0
 
-    with open(_RESULTS_FILE, "w", encoding="utf-8") as out:
-        out.write("PyQalculate Demo Results\n")
+    print(f"\nRunning demo: {name}.txt")
+    print(f"Output: {results_file}")
+    print("=" * 60)
+
+    with open(results_file, "w", encoding="utf-8") as out:
+        out.write(f"PyQalculate Demo: {name}.txt\n")
         out.write("=" * 60 + "\n\n")
 
         for raw_line in lines:
@@ -292,7 +333,7 @@ def main() -> None:
             m = _RE_PLOT.match(line)
             if m:
                 try:
-                    _run_plot(m.group(1), m.group(2), out)
+                    _run_plot(m.group(1), m.group(2), output_dir, out)
                     plots += 1
                 except Exception as e:
                     out.write(f"  [PLOT ERROR] {e}\n")
@@ -304,7 +345,9 @@ def main() -> None:
             m = _RE_PARAMETRIC.match(line)
             if m:
                 try:
-                    _run_parametric(m.group(1), m.group(2), m.group(3), out)
+                    _run_parametric(
+                        m.group(1), m.group(2), m.group(3), output_dir, out
+                    )
                     plots += 1
                 except Exception as e:
                     out.write(f"  [PARAMETRIC ERROR] {e}\n")
@@ -316,7 +359,7 @@ def main() -> None:
             m = _RE_IMPLICIT.match(line)
             if m:
                 try:
-                    _run_implicit(m.group(1), m.group(2), out)
+                    _run_implicit(m.group(1), m.group(2), output_dir, out)
                     plots += 1
                 except Exception as e:
                     out.write(f"  [IMPLICIT ERROR] {e}\n")
@@ -334,8 +377,21 @@ def main() -> None:
 
     print(f"\n{'=' * 60}")
     print(f"Done! {total} commands, {plots} plots, {errors} errors")
-    print(f"Results: {_RESULTS_FILE}")
-    print(f"Plots:   {_PLOT_DIR}")
+    print(f"Results: {results_file}")
+    if plots:
+        print(f"Plots:   {output_dir}")
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+
+def main() -> None:
+    files = scan_demo_files()
+    idx = show_selection_menu(files)
+    name, path = files[idx]
+    run_demo(path)
 
 
 if __name__ == "__main__":

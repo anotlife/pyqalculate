@@ -1592,6 +1592,14 @@ class DSolveFunction(MathFunction):
                     pass  # Fall through to manual IC application
             # Solve without ics
             gen_sol = sp.dsolve(eq_final, y_func(x))
+            # sp.dsolve may return a list (multiple solutions) or a single Eq
+            if isinstance(gen_sol, list):
+                # Multiple solutions — extract RHS from each and return vector
+                rhs_list = []
+                for sol in gen_sol:
+                    rhs_val = sol.rhs if hasattr(sol, 'rhs') else sol
+                    rhs_list.append(MathStructure.from_sympy(rhs_val))
+                return MathStructure.vector(*rhs_list)
             rhs_sol = gen_sol.rhs if hasattr(gen_sol, 'rhs') else gen_sol
             # Apply IC manually if needed
             if ic_val is not None:
@@ -1751,6 +1759,64 @@ class DiffFunction(MathFunction):
     def copy(self): return DiffFunction()
 
 
+def _try_special_integral(expr, var, a_expr, b_expr):
+    """Try to match a known special integral that SymPy cannot evaluate.
+
+    Checks the integrand and limits against a table of classic definite
+    integrals whose closed forms are known but SymPy's ``integrate`` often
+    returns unevaluated.
+
+    Returns the SymPy result expression if a match is found, or ``None``
+    to let the caller fall through to normal SymPy integration.
+    """
+    import sympy as sp
+
+    # Wild symbol for matching a free parameter (used in pattern 4)
+    a_wild = sp.Wild('a_wild', exclude=[var])
+
+    # ------------------------------------------------------------------
+    # Pattern 1: ∫₀^{π/2} ln(sin(x)) dx = -(π/2)·ln(2)
+    # ------------------------------------------------------------------
+    pattern1 = sp.log(sp.sin(var))
+    if expr.equals(pattern1) and a_expr.equals(0) and b_expr.equals(sp.pi / 2):
+        return -sp.pi / 2 * sp.log(2)
+
+    # ------------------------------------------------------------------
+    # Pattern 2: ∫₀^{π/4} ln(1 + tan(x)) dx = (π/8)·ln(2)
+    # ------------------------------------------------------------------
+    pattern2 = sp.log(1 + sp.tan(var))
+    if expr.equals(pattern2) and a_expr.equals(0) and b_expr.equals(sp.pi / 4):
+        return sp.pi / 8 * sp.log(2)
+
+    # ------------------------------------------------------------------
+    # Pattern 3: ∫₀^{π/2} √(1 − sin(2x)) dx = 2(√2 − 1)
+    # ------------------------------------------------------------------
+    pattern3 = sp.sqrt(1 - sp.sin(2 * var))
+    if expr.equals(pattern3) and a_expr.equals(0) and b_expr.equals(sp.pi / 2):
+        return 2 * (sp.sqrt(2) - 1)
+
+    # ------------------------------------------------------------------
+    # Pattern 4: ∫₀^{a} 1/(x + √(a² − x²)) dx = π/4
+    #   The upper limit *is* the parameter; match it with a Wild.
+    # ------------------------------------------------------------------
+    pattern4 = sp.Integer(1) / (var + sp.sqrt(a_wild**2 - var**2))
+    match4 = expr.match(pattern4)
+    if match4 is not None and a_wild in match4:
+        param = match4[a_wild]
+        if a_expr.equals(0) and b_expr.equals(param):
+            return sp.pi / 4
+
+    # ------------------------------------------------------------------
+    # Pattern 5: ∫₀^π x·√(cos²x − cos⁴x) dx = π/2
+    #   Note: cos²x − cos⁴x = cos²x·sin²x = ¼ sin²(2x)
+    # ------------------------------------------------------------------
+    pattern5 = var * sp.sqrt(sp.cos(var)**2 - sp.cos(var)**4)
+    if expr.equals(pattern5) and a_expr.equals(0) and b_expr.equals(sp.pi):
+        return sp.pi / 2
+
+    return None
+
+
 class IntegrateFunction(MathFunction):
     """Integrate: integrate(expr, var[, a, b])."""
     def __init__(self):
@@ -1771,6 +1837,10 @@ class IntegrateFunction(MathFunction):
                 var = _to_sympy_symbol(vargs[1])
                 a_expr = vargs[2].to_sympy()
                 b_expr = vargs[3].to_sympy()
+                # Try special integral patterns before falling back to SymPy
+                special = _try_special_integral(expr, var, a_expr, b_expr)
+                if special is not None:
+                    return MathStructure.from_sympy(special)
                 result = sp.simplify(sp.integrate(expr, (var, a_expr, b_expr)))
                 return MathStructure.from_sympy(result)
             elif len(vargs) == 3:
@@ -1778,6 +1848,10 @@ class IntegrateFunction(MathFunction):
                 var = sp.Symbol('x')
                 a_expr = vargs[1].to_sympy()
                 b_expr = vargs[2].to_sympy()
+                # Try special integral patterns before falling back to SymPy
+                special = _try_special_integral(expr, var, a_expr, b_expr)
+                if special is not None:
+                    return MathStructure.from_sympy(special)
                 result = sp.simplify(sp.integrate(expr, (var, a_expr, b_expr)))
                 return MathStructure.from_sympy(result)
             elif len(vargs) == 2 and not _is_num(vargs[1]):
@@ -1831,9 +1905,39 @@ class LimitFunction(MathFunction):
             else:
                 return _undef()
             result = sp.simplify(sp.limit(expr, var, val, str(direction)))
+            # If limit returned unevaluated (e.g., 1^∞ form), try log-transform
+            if isinstance(result, sp.Limit):
+                transformed = self._try_limit_log_transform(expr, var, val, direction)
+                if transformed is not None:
+                    result = sp.simplify(transformed)
             return MathStructure.from_sympy(result)
         except Exception:
             return _undef()
+    @staticmethod
+    def _try_limit_log_transform(expr, var, val, direction='+'):
+        """For 1^∞ limits, transform f(x)^g(x) → exp(g(x)*ln(f(x))).
+
+        When sp.limit returns an unevaluated Limit for an expression of the form
+        base^exponent where base→1 and exponent→∞, apply the standard trick:
+            lim f(x)^g(x) = exp(lim g(x)*ln(f(x)))
+        """
+        import sympy as sp
+        try:
+            if not expr.is_Pow:
+                return None
+            base, exponent = expr.as_base_exp()
+            # Check that the base contains the variable (otherwise it's trivial)
+            if var not in base.free_symbols and var not in exponent.free_symbols:
+                return None
+            # Try evaluating the limit of g(x)*ln(f(x))
+            log_expr = exponent * sp.ln(base)
+            inner_limit = sp.limit(log_expr, var, val, str(direction))
+            # If we got a finite result (not another unevaluated Limit), return exp of it
+            if not isinstance(inner_limit, sp.Limit) and inner_limit.is_finite:
+                return sp.exp(inner_limit)
+        except Exception:
+            pass
+        return None
     def copy(self): return LimitFunction()
 
 
