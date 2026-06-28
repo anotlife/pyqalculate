@@ -1039,6 +1039,8 @@ class MathStructure:
             return cls.from_number(Number.plus_inf())
         if expr == -sp.oo:
             return cls.from_number(Number.minus_inf())
+        if expr in (sp.zoo, sp.nan):
+            return cls.undefined()
 
         # Numbers
         if isinstance(expr, sp.Integer):
@@ -1337,11 +1339,15 @@ class MathStructure:
 
     def inverse(self) -> MathStructure:
         """Return the inverse (1/x)."""
+        if self.is_zero() or self.is_undefined():
+            return MathStructure.undefined()
         m = MathStructure(struct_type=StructureType.INVERSE)
         m._children = [self]
         return m
 
     def __add__(self, other: MathStructure) -> MathStructure:
+        if self.is_undefined() or other.is_undefined():
+            return MathStructure.undefined()
         if self.is_zero():
             return other
         if other.is_zero():
@@ -1352,6 +1358,8 @@ class MathStructure:
         return self + other.negate()
 
     def __mul__(self, other: MathStructure) -> MathStructure:
+        if self.is_undefined() or other.is_undefined():
+            return MathStructure.undefined()
         if self.is_zero() and not other.is_unit():
             return MathStructure(0)
         if other.is_zero() and not self.is_unit():
@@ -1363,6 +1371,8 @@ class MathStructure:
         return MathStructure.multiplication(self, other)
 
     def __truediv__(self, other: MathStructure) -> MathStructure:
+        if self.is_undefined() or other.is_undefined() or other.is_zero():
+            return MathStructure.undefined()
         return self * other.inverse()
 
     def __pow__(self, other: MathStructure) -> MathStructure:

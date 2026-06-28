@@ -69,6 +69,11 @@ class TestBasicArithmetic:
         result = calc.calculate_and_print("10 / 4")
         assert result == "5/2"
 
+    def test_division_by_zero_is_undefined(self, calc: Calculator) -> None:
+        assert calc.calculate("3 / 0").is_undefined()
+        assert calc.calculate("0 / 0").is_undefined()
+        assert calc.calculate_and_print("3 / 0") == "undefined"
+
     def test_power(self, calc: Calculator) -> None:
         assert calc.calculate_and_print("2^10") == "1024"
 
