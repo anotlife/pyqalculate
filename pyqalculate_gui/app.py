@@ -33,6 +33,7 @@ from pyqalculate_gui.event_bus import (
 )
 from pyqalculate_gui.conversion_view import ConversionView
 from pyqalculate_gui.expression_edit import ExpressionEdit
+from pyqalculate_gui.history_view import HistoryView
 from pyqalculate_gui.expression_status import ExpressionStatusBar
 from pyqalculate_gui.keyboard_shortcuts import (
     SHORTCUT_TYPE_ACTIVATE_FIRST_COMPLETION,
@@ -117,7 +118,7 @@ class App:
             self._root, theme=self._theme, event_bus=self._event_bus,
         )
         self._exact_var = self._menu_bar.get_exact_mode_var()
-        self._exact_var.trace_add("write", self._on_exact_mode_toggle)
+        self._exact_trace_id = self._exact_var.trace_add("write", self._on_exact_mode_toggle)
 
         main = ttk.Frame(self._root, padding=8)
         main.pack(fill=tk.BOTH, expand=True)
@@ -134,9 +135,14 @@ class App:
         )
         self._keypad.pack(fill=tk.X, side=tk.BOTTOM, pady=(4, 0))
 
-        # PanedWindow for conversion (bottom area)
+        # PanedWindow for history + conversion (bottom area)
         self._paned = ttk.PanedWindow(main, orient=tk.HORIZONTAL, height=150)
         self._paned.pack(fill=tk.X, side=tk.BOTTOM, pady=(4, 0))
+
+        self._history_view = HistoryView(
+            self._paned, theme=self._theme, event_bus=self._event_bus,
+        )
+        self._paned.add(self._history_view, weight=1)
 
         self._conversion_view = ConversionView(
             self._paned, theme=self._theme, event_bus=self._event_bus,
@@ -254,14 +260,17 @@ class App:
             return
 
         result = self._calculator.calculate(expr, eo=self._eo)
+        self._history_view.add_expression(expr)
         if result.error:
             self._result_view.show_error(result.error)
             self._expr_status.show_error(result.error)
+            self._history_view.add_error(result.error)
         else:
             self._result_view.show_result(expr, result.result, result.exact)
             self._expr_status.show_autocalc_result(
                 result.result, result.exact
             )
+            self._history_view.add_result(result.result, result.exact)
 
         if not result.error:
             self._expr_edit.clear()
@@ -304,6 +313,7 @@ class App:
         self._expr_edit.clear()
         self._result_view.clear()
         self._expr_status.clear()
+        self._history_view.clear()
 
     def _on_open_preferences(self) -> None:
         """Show the preferences dialog modally."""
@@ -363,6 +373,7 @@ class App:
             self._expr_edit,
             self._result_view,
             self._autocomplete,
+            self._history_view,
         ):
             set_theme_fn = getattr(widget, "set_theme", None)
             if set_theme_fn is not None:
@@ -378,8 +389,10 @@ class App:
         approx_mode = approx_map.get(str(approx_str), ApproximationMode.TRY_EXACT)
         self._eo = EvaluationOptions(approximation=approx_mode)
 
-        # Sync the Exact Mode checkbox to match
+        # Sync the Exact Mode checkbox to match (suppress trace to avoid recursive toggle)
+        self._exact_var.trace_remove("write", self._exact_trace_id)
         self._exact_var.set(approx_mode == ApproximationMode.EXACT)
+        self._exact_trace_id = self._exact_var.trace_add("write", self._on_exact_mode_toggle)
 
     def _on_exact_mode_toggle(self, *args: object) -> None:
         """React to the Exact Mode menu checkbox toggle."""
@@ -387,7 +400,7 @@ class App:
         self._eo = EvaluationOptions(
             approximation=ApproximationMode.EXACT
             if is_exact
-            else ApproximationMode.TRY_EXACT,
+            else ApproximationMode.APPROXIMATE,
         )
 
     def _on_result_displayed(self, expression: str, result: str, exact: bool) -> None:
@@ -406,8 +419,11 @@ class App:
             self._keypad.pack(fill=tk.X, side=tk.BOTTOM, pady=(4, 0))
 
     def _on_toggle_history(self) -> None:
-        """History view removed — no-op for backward compat."""
-        pass
+        """Show or hide the history pane inside the PanedWindow."""
+        try:
+            self._paned.forget(self._history_view)
+        except tk.TclError:
+            self._paned.add(self._history_view, weight=1)
 
     def _on_toggle_conversion(self) -> None:
         """Show or hide the conversion pane inside the PanedWindow."""
