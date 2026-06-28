@@ -11,9 +11,9 @@
 |------|------|-----|------|
 | `pi` | `π` | 3.14159265358979... | variables.json:1398 |
 | `e` | — | 2.71828182845905... | variables.json:1400 |
-| `euler` | `γ` | ⚠️ 返回符号名 `euler`，需用 `euler + 0` 或 `float(euler)` 获取数值 0.57721566490153... | variables.json:1402 |
-| `catalan` | — | ⚠️ 返回符号名 `catalan`，需用 `catalan + 0` 或 `float(catalan)` 获取数值 0.91596559417722... | variables.json:1404 |
-| `golden` | `φ`, `phi` | ⚠️ 返回符号名 `golden`，需用 `golden + 0` 或 `float(golden)` 获取数值 (1+sqrt(5))/2 | variables.json:1406 |
+| `euler` | `γ` | ✅ 已识别，可用 `euler + 0` 或 `float(euler)` 获取数值 0.57721566490153... | variables.json:1402 |
+| `catalan` | — | ✅ 已识别，可用 `catalan + 0` 或 `float(catalan)` 获取数值 0.91596559417722... | variables.json:1404 |
+| `golden` | `φ`, `phi` | ✅ 已识别，可用 `golden + 0` 或 `float(golden)` 获取数值 (1+sqrt(5))/2 | variables.json:1406 |
 | `omega` | — | lambertw(1) | variables.json:1408 |
 | `pythagoras` | — | sqrt(2) | variables.json:1410 |
 | `apery` | — | zeta(3) | variables.json:1412 |

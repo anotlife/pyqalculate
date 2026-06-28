@@ -9,7 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from pyqalculate.calculator import Calculator
-from pyqalculate.types import EvaluationOptions, PrintOptions
+from pyqalculate.types import ApproximationMode, EvaluationOptions, PrintOptions
 
 
 @dataclass(frozen=True, slots=True)
@@ -59,7 +59,7 @@ class CalculatorService:
             return CalculationResult(
                 expression=expression,
                 result=result,
-                exact=not eo.approximation,
+                exact=(eo.approximation == ApproximationMode.EXACT),
                 error=None,
             )
         except Exception as exc:

@@ -147,7 +147,7 @@
 | `floor(x)` | 函数 | [04b.4 数论函数](04b-functions.md#4b4-数论函数-28-个) | ✅ |
 | `float(x)` | 函数 | [04b.9 进制转换函数](04b-functions.md#4b9-进制转换函数-8-个) | ✅ |
 | `floatError(x)` | 函数 | [04b.9 进制转换函数](04b-functions.md#4b9-进制转换函数-8-个) | ✅ |
-| `for(init, cond, step, expr)` | 函数 | [04b.13 工具函数](04b-functions.md#4b13-工具函数-16-个) | ⚠️ |
+| `for(init, cond, step, expr)` | 函数 | [04b.13 工具函数](04b-functions.md#4b13-工具函数-16-个) | ✅ 支持符号边界 |
 | `frac(x)` | 函数 | [04b.4 数论函数](04b-functions.md#4b4-数论函数-28-个) | ✅ |
 | `fresnelC(x)` | 函数 | [04b.11 特殊函数](04b-functions.md#4b11-特殊函数-12-个) | ⚠️ |
 | `fresnelS(x)` | 函数 | [04b.11 特殊函数](04b-functions.md#4b11-特殊函数-12-个) | ⚠️ |
@@ -165,7 +165,7 @@
 | `gas_constant` | 常量 | [04c.9 物理常量 - 物理化学](04c-constants.md#4c9-物理常量---物理化学) | ✅ |
 | `gcd(a, b)` | 函数 | [04b.4 数论函数](04b-functions.md#4b4-数论函数-28-个) | ✅ |
 | `genvector(size, expr)` | 函数 | [04b.13 工具函数](04b-functions.md#4b13-工具函数-16-个) | ⚠️ |
-| `golden` | 常量 | [04c.1 数学常量](04c-constants.md#4c1-数学常量) | ⚠️ 符号形式 |
+| `golden` | 常量 | [04c.1 数学常量](04c-constants.md#4c1-数学常量) | ✅ 已识别 |
 | `googol` | 常量 | [04c.3 大数](04c-constants.md#4c3-大数) | ✅ |
 | `googolplex` | 常量 | [04c.3 大数](04c-constants.md#4c3-大数) | ✅ |
 | `gross` | 常量 | [04c.4 传统数字](04c-constants.md#4c4-传统数字) | ✅ |
@@ -191,7 +191,7 @@
 |------|------|------|------|
 | `i` | 常量 | [04c.2 特殊数字](04c-constants.md#4c2-特殊数字) | ✅ |
 | `identity(n)` | 函数 | [04b.7 矩阵/向量函数](04b-functions.md#4b7-矩阵向量函数-15-个) | ✅ |
-| `if(cond, then, else)` | 函数 | [04b.13 工具函数](04b-functions.md#4b13-工具函数-16-个) | ⚠️ 返回符号形式 |
+| `if(cond, then, else)` | 函数 | [04b.13 工具函数](04b-functions.md#4b13-工具函数-16-个) | ✅ 支持比较条件 |
 | `im(z)` | 函数 | [04b.4 数论函数](04b-functions.md#4b4-数论函数-28-个) | ✅ |
 | `inf` | 常量 | [04c.2 特殊数字](04c-constants.md#4c2-特殊数字) | ✅ |
 | `infinity` | 常量 | [04c.2 特殊数字](04c-constants.md#4c2-特殊数字) | ✅ |
@@ -299,6 +299,7 @@
 |------|------|------|------|
 | `parallel(a, b)` | 函数 | [04b.4 数论函数](04b-functions.md#4b4-数论函数-28-个) | ✅ |
 | `percentile(v, p)` | 函数 | [04b.8 统计函数](04b-functions.md#4b8-统计函数-13-个) | ⚠️ |
+| `phi` | 常量 | [04c.1 数学常量](04c-constants.md#4c1-数学常量) | ✅ 黄金比例别名 |
 | `pi` | 常量 | [04c.1 数学常量](04c-constants.md#4c1-数学常量) | ✅ |
 | `planck` | 常量 | [04c.5 物理常量 - 通用](04c-constants.md#4c5-物理常量---通用) | ✅ |
 | `planck2pi` | 常量 | [04c.5 物理常量 - 通用](04c-constants.md#4c5-物理常量---通用) | ✅ |
@@ -334,7 +335,7 @@
 | `replace(str, old, new)` | 函数 | [04b.13 工具函数](04b-functions.md#4b13-工具函数-16-个) | ⚠️ |
 | `roots(expr)` | 函数 | [04b.5 代数函数](04b-functions.md#4b5-代数函数-8-个) | ✅ |
 | `roman(x)` | 函数 | [04b.9 进制转换函数](04b-functions.md#4b9-进制转换函数-8-个) | ✅ |
-| `round(x)` | 函数 | [04b.4 数论函数](04b-functions.md#4b4-数论函数-28-个) | ✅ |
+| `round(x)` | 函数 | [04b.4 数论函数](04b-functions.md#4b4-数论函数-28-个) | ✅ 支持符号参数 |
 | `rref(M)` | 函数 | [04b.7 矩阵/向量函数](04b-functions.md#4b7-矩阵向量函数-15-个) | ⚠️ |
 | `rydberg` | 常量 | [04c.8 物理常量 - 原子与核](04c-constants.md#4c8-物理常量---原子与核) | ✅ |
 
@@ -382,7 +383,7 @@
 | `transpose(M)` | 函数 | [04b.7 矩阵/向量函数](04b-functions.md#4b7-矩阵向量函数-15-个) | ⚠️ |
 | `trillion` | 常量 | [04c.3 大数](04c-constants.md#4c3-大数) | ✅ |
 | `true` | 常量 | [04c.2 特殊数字](04c-constants.md#4c2-特殊数字) | ✅ |
-| `trunc(x)` | 函数 | [04b.4 数论函数](04b-functions.md#4b4-数论函数-28-个) | ✅ |
+| `trunc(x)` | 函数 | [04b.4 数论函数](04b-functions.md#4b4-数论函数-28-个) | ✅ 支持符号参数 |
 
 ---
 

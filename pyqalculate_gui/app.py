@@ -10,6 +10,7 @@ import re
 import tkinter as tk
 from tkinter import ttk
 
+from pyqalculate.types import ApproximationMode, EvaluationOptions
 from pyqalculate_gui.autocomplete import AutoComplete
 from pyqalculate_gui.calculator_service import CalculatorService
 from pyqalculate_gui.dialogs.functions_list import FunctionsListDialog
@@ -33,7 +34,6 @@ from pyqalculate_gui.event_bus import (
 from pyqalculate_gui.conversion_view import ConversionView
 from pyqalculate_gui.expression_edit import ExpressionEdit
 from pyqalculate_gui.expression_status import ExpressionStatusBar
-from pyqalculate_gui.history_view import HistoryView
 from pyqalculate_gui.keyboard_shortcuts import (
     SHORTCUT_TYPE_ACTIVATE_FIRST_COMPLETION,
     SHORTCUT_TYPE_COPY_RESULT as KS_COPY_RESULT,
@@ -89,6 +89,7 @@ class App:
         self._theme: Theme = LIGHT
         self._event_bus = EventBus()
         self._calculator = CalculatorService()
+        self._eo = EvaluationOptions(approximation=ApproximationMode.TRY_EXACT)
 
         self._build_ui()
         self._wire_events()
@@ -115,6 +116,8 @@ class App:
         self._menu_bar = MenuBar(
             self._root, theme=self._theme, event_bus=self._event_bus,
         )
+        self._exact_var = self._menu_bar.get_exact_mode_var()
+        self._exact_var.trace_add("write", self._on_exact_mode_toggle)
 
         main = ttk.Frame(self._root, padding=8)
         main.pack(fill=tk.BOTH, expand=True)
@@ -131,14 +134,9 @@ class App:
         )
         self._keypad.pack(fill=tk.X, side=tk.BOTTOM, pady=(4, 0))
 
-        # PanedWindow for history (bottom area)
+        # PanedWindow for conversion (bottom area)
         self._paned = ttk.PanedWindow(main, orient=tk.HORIZONTAL, height=150)
         self._paned.pack(fill=tk.X, side=tk.BOTTOM, pady=(4, 0))
-
-        self._history_view = HistoryView(
-            self._paned, theme=self._theme, event_bus=self._event_bus,
-        )
-        self._paned.add(self._history_view, weight=1)
 
         self._conversion_view = ConversionView(
             self._paned, theme=self._theme, event_bus=self._event_bus,
@@ -241,7 +239,7 @@ class App:
         mgr.register_handler(SHORTCUT_TYPE_RPN_DELETE, lambda v: self._rpn_delete())
         mgr.register_handler(SHORTCUT_TYPE_RPN_CLEAR, lambda v: self._rpn_clear())
         mgr.register_handler(SHORTCUT_TYPE_ACTIVATE_FIRST_COMPLETION, lambda v: self._activate_completion())
-        mgr.register_handler(SHORTCUT_TYPE_HISTORY_CLEAR, lambda v: self._history_view.clear())
+        mgr.register_handler(SHORTCUT_TYPE_HISTORY_CLEAR, lambda v: self._result_view.clear())
 
     # ------------------------------------------------------------------
     # Handlers — calculation flow
@@ -254,16 +252,12 @@ class App:
         if not expr:
             return
 
-        self._history_view.add_expression(expr)
-
-        result = self._calculator.calculate(expr)
+        result = self._calculator.calculate(expr, eo=self._eo)
         if result.error:
             self._result_view.show_error(result.error)
-            self._history_view.add_error(result.error)
             self._expr_status.show_error(result.error)
         else:
             self._result_view.show_result(expr, result.result, result.exact)
-            self._history_view.add_result(result.result, result.exact)
             self._expr_status.show_autocalc_result(
                 result.result, result.exact
             )
@@ -276,7 +270,7 @@ class App:
 
         def _replace(match: re.Match[str]) -> str:
             idx = int(match.group(1))
-            value = self._history_view.get_answer(idx)
+            value = self._result_view.get_answer(idx)
             return f"({value})" if value is not None else match.group(0)
 
         return _ANSWER_RE.sub(_replace, expression)
@@ -307,7 +301,6 @@ class App:
         """Reset expression, results, and history."""
         self._expr_edit.clear()
         self._result_view.clear()
-        self._history_view.clear()
         self._expr_status.clear()
 
     def _on_open_preferences(self) -> None:
@@ -354,7 +347,7 @@ class App:
         self._expr_edit.focus_input()
 
     def _on_preference_applied(self, settings: dict[str, object]) -> None:
-        """React to preference changes (theme switch, etc.)."""
+        """React to preference changes (theme switch, approximation, etc.)."""
         theme_name = settings.get("theme", "light")
         if isinstance(theme_name, str):
             self._theme = get_theme(theme_name)
@@ -363,7 +356,6 @@ class App:
             self._menu_bar,
             self._status_bar,
             self._keypad,
-            self._history_view,
             self._conversion_view,
             self._expr_status,
             self._expr_edit,
@@ -373,6 +365,28 @@ class App:
             set_theme_fn = getattr(widget, "set_theme", None)
             if set_theme_fn is not None:
                 set_theme_fn(self._theme)
+
+        # Wire approximation mode from preferences
+        approx_map = {
+            "exact": ApproximationMode.EXACT,
+            "try_exact": ApproximationMode.TRY_EXACT,
+            "approximate": ApproximationMode.APPROXIMATE,
+        }
+        approx_str = settings.get("approximation", "try_exact")
+        approx_mode = approx_map.get(str(approx_str), ApproximationMode.TRY_EXACT)
+        self._eo = EvaluationOptions(approximation=approx_mode)
+
+        # Sync the Exact Mode checkbox to match
+        self._exact_var.set(approx_mode == ApproximationMode.EXACT)
+
+    def _on_exact_mode_toggle(self, *args: object) -> None:
+        """React to the Exact Mode menu checkbox toggle."""
+        is_exact = self._exact_var.get()
+        self._eo = EvaluationOptions(
+            approximation=ApproximationMode.EXACT
+            if is_exact
+            else ApproximationMode.TRY_EXACT,
+        )
 
     def _on_result_displayed(self, expression: str, result: str, exact: bool) -> None:
         """Update expression status bar when a result is displayed."""
@@ -390,11 +404,8 @@ class App:
             self._keypad.pack(fill=tk.X, side=tk.BOTTOM, pady=(0, 4), after=self._expr_edit)
 
     def _on_toggle_history(self) -> None:
-        """Show or hide the history pane inside the PanedWindow."""
-        try:
-            self._paned.forget(self._history_view)
-        except tk.TclError:
-            self._paned.add(self._history_view, weight=1)
+        """History view removed — no-op for backward compat."""
+        pass
 
     def _on_toggle_conversion(self) -> None:
         """Show or hide the conversion pane inside the PanedWindow."""
@@ -449,9 +460,8 @@ class App:
         self._event_bus.emit("open_manage_units")
 
     def _toggle_minimal(self) -> None:
-        """Toggle minimal window mode (hide keypad and history)."""
+        """Toggle minimal window mode (hide keypad)."""
         self._on_toggle_keypad()
-        self._on_toggle_history()
 
     def _toggle_programming(self) -> None:
         """Toggle programming keypad mode."""

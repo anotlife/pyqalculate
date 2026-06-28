@@ -155,12 +155,19 @@ python -m pyqalc
 
 ```
 > constants
+  Mathematical Constants:
+    pi = 3.1415926...
+    e = 2.7182818...
+    euler = 0.5772156... (Euler-Mascheroni constant)
+    catalan = 0.9159655... (Catalan's constant)
+    golden = 1.6180339... (Golden ratio, also φ/phi)
+    tau = 6.2831853... (2π)
+
   Physical Constants:
     alpha = 0.0072973526
     avogadro = 6.0221408e+23
     boltzmann = 1.380649e-23
     c = 299792458
-    e = 2.7182818
     e_charge = 1.6021766e-19
     elementary_charge = 1.6021766e-19
     g = 6.6743e-11
@@ -422,3 +429,25 @@ dsolve(y' - y, y)
 | 高次多项式 | ✅ 大部分支持 | 有解析解的多项式 |
 | 超越方程 | ⚠️ 有限 | `sin(x) = 0.5` 等可能不完整 |
 | 方程组 | ⚠️ 实验性 | `multisolve` 功能有限 |
+
+### 4.7.8 除零行为
+
+除零现在返回清晰的错误信息，不再返回 `zoo` 或 `4*zoo`：
+
+```
+> 1/0
+  Error: Division by zero
+> 5/(x-1) where x=1
+  Error: Division by zero
+```
+
+### 4.7.9 改进的函数行为
+
+以下函数在最新版本中获得了改进：
+
+| 函数 | 改进 | 说明 |
+|------|------|------|
+| `for(init, cond, step, expr)` | 符号边界支持 | 当边界为符号时返回符号求和，如 `for(i:=1, i<=n, i:=i+1, i)` → `1/2*n*(n+1)` |
+| `round(x)` | 符号参数支持 | `round(x)` 对符号参数返回符号形式 |
+| `trunc(x)` | 符号参数支持 | `trunc(x)` 对符号参数返回符号形式 |
+| `parallel(a, b)` | 零值处理 | `parallel(0, 5)` → `infinity`（不再崩溃） |

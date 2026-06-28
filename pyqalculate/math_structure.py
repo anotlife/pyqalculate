@@ -76,12 +76,18 @@ def _signum(x):
     return sp.sign(x)
 
 def _round(x, n=None):
-    if n is not None:
-        return sp.Float(round(float(x), int(n)))
-    return sp.Integer(round(float(x)))
+    try:
+        if n is not None:
+            return sp.Float(round(float(x), int(n)))
+        return sp.Integer(round(float(x)))
+    except (TypeError, ValueError):
+        return sp.Function('round')(x, n) if n is not None else sp.Function('round')(x)
 
 def _trunc(x):
-    return sp.Integer(int(float(x)))
+    try:
+        return sp.Integer(int(float(x)))
+    except (TypeError, ValueError):
+        return sp.Function('trunc')(x)
 
 def _rem(a, b):
     return sp.Mod(a, b)
@@ -232,8 +238,18 @@ def _even(x):
     return sp.Integer(1 if int(x) % 2 == 0 else 0)
 
 def _parallel(*args):
-    total = sum(sp.Rational(1, a) for a in args)
-    return 1 / total
+    try:
+        total = sp.Integer(0)
+        for a in args:
+            a_val = sp.nsimplify(a)
+            if a_val == 0:
+                return sp.zoo
+            total += 1 / a_val
+        if total == 0:
+            return sp.zoo
+        return 1 / total
+    except Exception:
+        return sp.Function('parallel')(*args)
 
 def _powermod(base, exp, mod):
     return sp.Integer(pow(int(base), int(exp), int(mod)))
@@ -339,15 +355,27 @@ def _percentile(v, p):
 
 
 def _if_func(cond, then_val, else_val=None):
-    if int(cond) != 0:
-        return then_val
-    return else_val if else_val is not None else sp.Symbol('undefined')
+    """Evaluate if(cond, then, else) - safe for symbolic args"""
+    try:
+        cond_num = complex(cond)
+        if cond_num != 0:
+            return then_val
+        return else_val if else_val is not None else sp.Integer(0)
+    except (TypeError, ValueError):
+        # Symbolic condition
+        return sp.Piecewise((then_val, sp.Ne(cond, 0)), (else_val if else_val is not None else sp.Integer(0), True))
 
 def _for_func(var, start, end, expr):
-    total = sp.Integer(0)
-    for i in range(int(start), int(end) + 1):
-        total += expr.subs(var, i)
-    return total
+    """Evaluate for(var, start, end, expr) - safe for symbolic args"""
+    try:
+        s = int(start)
+        e = int(end)
+        total = sp.Integer(0)
+        for i in range(s, e + 1):
+            total += expr.subs(var, i)
+        return total
+    except (TypeError, ValueError):
+        return sp.Sum(expr, (var, start, end)).doit()
 
 def _rand_func(max_val=None):
     import random
@@ -662,6 +690,20 @@ _SP_FUNC_TO_NAME: dict[type, str] = {
     sp.Max: "max",
     sp.Min: "min",
     sp.LambertW: "lambertw",
+    sp.erf: "erf",
+    sp.erfc: "erfc",
+    sp.besselj: "besselj",
+    sp.bessely: "bessely",
+    sp.zeta: "zeta",
+    sp.beta: "beta",
+    sp.airyai: "airyai",
+    sp.airybi: "airybi",
+    sp.fresnels: "fresnels",
+    sp.fresnelc: "fresnelc",
+    sp.digamma: "digamma",
+    sp.Heaviside: "heaviside",
+    sp.DiracDelta: "dirac",
+    sp.atan2: "atan2",
 }
 
 # Known symbolic constants
@@ -673,6 +715,10 @@ _SYMPY_CONSTANTS: dict[str, sp.Expr] = {
     "j": sp.I,
     "inf": sp.oo,
     "infinity": sp.oo,
+    "euler": sp.EulerGamma,
+    "catalan": sp.Catalan,
+    "golden_ratio": sp.GoldenRatio,
+    "phi": sp.GoldenRatio,
 }
 
 
@@ -705,6 +751,15 @@ def _number_to_sympy(num: Number | None) -> sp.Expr:
         return sp.E
     if abs(f - _PI_TOL) / _PI_TOL < 1e-10:
         return sp.pi
+    _GOLDEN_RATIO_VAL = 1.618033988749895
+    _CATALAN_VAL = 0.9159655941772190
+    _EULER_GAMMA_VAL = 0.5772156649015329
+    if abs(f - _GOLDEN_RATIO_VAL) / _GOLDEN_RATIO_VAL < 1e-10:
+        return sp.GoldenRatio
+    if abs(f - _CATALAN_VAL) / _CATALAN_VAL < 1e-10:
+        return sp.Catalan
+    if abs(f - _EULER_GAMMA_VAL) / _EULER_GAMMA_VAL < 1e-10:
+        return sp.EulerGamma
     return sp.Float(f)
 
 
@@ -1040,6 +1095,12 @@ class MathStructure:
             return cls.from_number(Number.plus_inf())
         if expr == -sp.oo:
             return cls.from_number(Number.minus_inf())
+        if expr == sp.zoo:
+            return cls.undefined()
+        if expr is sp.nan:
+            return cls.undefined()
+        if hasattr(expr, 'is_nan') and expr.is_nan:
+            return cls.undefined()
 
         # Numbers
         if isinstance(expr, sp.Integer):
@@ -2181,6 +2242,8 @@ class MathStructure:
                 # TRY_EXACT: simplify, keep exact if possible
                 result_expr = sp.simplify(sympy_expr)
 
+            if result_expr is sp.zoo or result_expr is sp.nan or (hasattr(result_expr, 'is_nan') and result_expr.is_nan):
+                return MathStructure.undefined()
             return MathStructure.from_sympy(result_expr)
         except Exception:
             return MathStructure.undefined()

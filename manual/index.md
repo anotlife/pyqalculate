@@ -1,7 +1,7 @@
 # PyQalculate 使用手册
 
 > **版本**: 0.1.0 | **许可证**: GPL-2.0  
-> **最后更新**: 2026-06-23
+> **最后更新**: 2026-06-29
 
 PyQalculate 是 [libqalculate](https://github.com/Qalculate/libqalculate) 的纯 Python 移植版，提供任意精度数学运算、单位转换、符号计算、绘图等功能。
 

@@ -28,35 +28,51 @@ for /f "tokens=*" %%i in ('python --version 2^>^&1') do echo Found %%i
 
 :: Check virtual environment
 echo [2/2] Checking virtual environment...
-if not exist ".venv" (
-    echo Creating virtual environment...
-    echo.
+:: Check if venv exists AND is valid
+set VENV_VALID=0
+if exist ".venv\Scripts\python.exe" (
+    .venv\Scripts\python.exe -c "import sys; print('ok')" >nul 2>&1
+    if not errorlevel 1 set VENV_VALID=1
+)
 
-    echo Creating .venv...
+if %VENV_VALID%==0 (
+    :: Venv missing or broken - recreate
+    if exist ".venv" (
+        echo Virtual environment is incomplete. Recreating...
+        rmdir /s /q ".venv"
+    )
+    echo Creating virtual environment...
     python -m venv .venv
     if errorlevel 1 (
-        echo Failed to create .venv!
+        echo ERROR: Failed to create virtual environment.
+        echo Please ensure Python is installed and accessible.
         pause
         exit /b 1
     )
-
+    
     echo Installing dependencies...
     call .venv\Scripts\activate.bat
     pip install -e . -q
     if errorlevel 1 (
-        echo Failed to install dependencies!
-        pause
-        exit /b 1
+        echo ERROR: Failed to install dependencies.
+        echo Retrying...
+        pip install -e . -q
     )
-
-    echo Installing extras: matplotlib, sympy, gmpy2...
+    
+    echo Installing optional dependencies...
     pip install matplotlib sympy gmpy2 -q
-
-    echo.
-    echo Setup complete!
+    
+    echo Virtual environment created successfully.
 ) else (
     echo Virtual environment found.
     call .venv\Scripts\activate.bat
+    
+    :: Verify key packages are installed
+    python -c "import sympy" >nul 2>&1
+    if errorlevel 1 (
+        echo Some dependencies are missing. Installing...
+        pip install -e . -q
+    )
 )
 
 echo.
@@ -90,7 +106,7 @@ echo.
 echo Starting CLI Mode...
 echo Type 'quit' to exit the calculator.
 echo.
-python scripts\cli.py
+.venv\Scripts\python.exe scripts\cli.py
 echo.
 pause
 goto MENU
@@ -98,21 +114,21 @@ goto MENU
 :GUI
 echo.
 echo Starting GUI Mode...
-python scripts\gui.py
+.venv\Scripts\python.exe scripts\gui.py
 echo.
 pause
 goto MENU
 
 :TEST
 echo.
-python scripts\test_runner.py
+.venv\Scripts\python.exe scripts\test_runner.py
 echo.
 pause
 goto MENU
 
 :DEMO
 echo.
-python scripts\demo.py
+.venv\Scripts\python.exe scripts\demo.py
 echo.
 pause
 goto MENU

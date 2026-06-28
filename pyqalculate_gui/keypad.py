@@ -56,6 +56,44 @@ BUTTON_DEFS: list[list[_ButtonDef]] = [
     ],
 ]
 
+# Dropdown menu items for function buttons: {button_label: [(menu_label, insert_string), ...]}
+# Left-click inserts the primary function; right-click shows alternatives.
+_DROPDOWN_MAP: dict[str, list[tuple[str, str]]] = {
+    "sin": [
+        ("asin", "asin("),
+        ("sinh", "sinh("),
+        ("asinh", "asinh("),
+    ],
+    "cos": [
+        ("acos", "acos("),
+        ("cosh", "cosh("),
+        ("acosh", "acosh("),
+    ],
+    "tan": [
+        ("atan", "atan("),
+        ("tanh", "tanh("),
+        ("atanh", "atanh("),
+    ],
+    "√": [
+        ("∛ (cbrt)", "cbrt("),
+    ],
+    "ln": [
+        ("log", "log("),
+        ("log₂", "log2("),
+        ("log₁₀", "log10("),
+    ],
+    "log": [
+        ("log₂", "log2("),
+        ("log₁₀", "log10("),
+    ],
+    "x²": [
+        ("x³", "^3"),
+    ],
+    "xʸ": [
+        ("x^(1/y)", "^(1/)"),
+    ],
+}
+
 _STYLE_KEYS = {"digit", "op", "func", "action", "equals"}
 
 
@@ -96,12 +134,64 @@ class KeypadWidget(ttk.Frame):
         super().__init__(parent)
         self._theme = theme
         self._event_bus = event_bus
-        self._buttons: dict[str, tk.Button] = {}
+        self._buttons: dict[str, tk.Button | tk.Menubutton] = {}
         self._build_ui()
 
     # ------------------------------------------------------------------
     # UI construction
     # ------------------------------------------------------------------
+
+    def _create_dropdown_button(
+        self,
+        parent: tk.Misc,
+        label: str,
+        style: ButtonStyle,
+        action: str,
+        value: str,
+        menu_items: list[tuple[str, str]],
+    ) -> tk.Menubutton:
+        """Create a Menubutton with dropdown menu for related functions.
+
+        Left-click inserts the primary function.  Right-click shows a dropdown
+        menu with alternative functions.
+        """
+        btn = tk.Menubutton(
+            parent,
+            text=label,
+            font=style.font,
+            bg=style.bg,
+            fg=style.fg,
+            activebackground=_darken(style.bg),
+            relief=tk.FLAT,
+            borderwidth=0,
+            highlightthickness=0,
+            cursor="hand2",
+            takefocus=False,
+        )
+
+        # Left-click inserts primary function.
+        # Return "break" to prevent the default Menubutton menu posting.
+        btn.bind(
+            "<Button-1>",
+            lambda e, a=action, v=value: (self._on_button(a, v), "break")[-1],
+        )
+
+        # Build dropdown menu with alternative functions.
+        menu = tk.Menu(btn, tearoff=0)
+        for menu_label, insert_str in menu_items:
+            menu.add_command(
+                label=menu_label,
+                command=lambda s=insert_str: self._on_button("insert", s),
+            )
+        btn.config(menu=menu)
+
+        # Right-click shows the dropdown menu.
+        btn.bind(
+            "<Button-3>",
+            lambda e, m=menu: m.post(e.x_root, e.y_root),
+        )
+
+        return btn
 
     def _build_ui(self) -> None:
         for row_idx, row in enumerate(BUTTON_DEFS):
@@ -110,20 +200,27 @@ class KeypadWidget(ttk.Frame):
                 self.columnconfigure(col_idx, weight=1)
 
                 style = _style_for_button(self._theme, style_key)
-                btn = tk.Button(
-                    self,
-                    text=label,
-                    font=style.font,
-                    bg=style.bg,
-                    fg=style.fg,
-                    activebackground=_darken(style.bg),
-                    relief=tk.FLAT,
-                    borderwidth=0,
-                    highlightthickness=0,
-                    cursor="hand2",
-                    takefocus=False,
-                    command=lambda a=action, v=value: self._on_button(a, v),
-                )
+
+                if label in _DROPDOWN_MAP:
+                    btn = self._create_dropdown_button(
+                        self, label, style, action, value, _DROPDOWN_MAP[label]
+                    )
+                else:
+                    btn = tk.Button(
+                        self,
+                        text=label,
+                        font=style.font,
+                        bg=style.bg,
+                        fg=style.fg,
+                        activebackground=_darken(style.bg),
+                        relief=tk.FLAT,
+                        borderwidth=0,
+                        highlightthickness=0,
+                        cursor="hand2",
+                        takefocus=False,
+                        command=lambda a=action, v=value: self._on_button(a, v),
+                    )
+
                 btn.grid(
                     row=row_idx,
                     column=col_idx,

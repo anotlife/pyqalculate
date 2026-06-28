@@ -15,6 +15,8 @@ python -m pyqalculate_gui
 start.bat → 选择 [2]
 ```
 
+**Venv 完整性检查**: 如果安装被中断，启动时会自动重新创建虚拟环境。
+
 [来源: pyqalculate_gui/__main__.py:2]
 
 ---
@@ -25,21 +27,21 @@ start.bat → 选择 [2]
 **最小大小**: 600×400 [来源: app.py:86]  
 **标题**: "PyQalculate" [来源: app.py:84]
 
-### 组件层次结构
+### Component Hierarchy
 
 ```
 root (tk.Tk)
-├── MenuBar                    # 菜单栏
+├── MenuBar                    # Menu bar
 └── main (ttk.Frame)
-    ├── StatusBar              # 底部状态栏
-    ├── KeypadWidget           # 虚拟键盘
+    ├── StatusBar              # Bottom status bar
+    ├── KeypadWidget           # Virtual keypad (with dropdown menus)
     ├── PanedWindow(HORIZONTAL)
-    │   ├── HistoryView        # 历史记录
-    │   └── ConversionView     # 单位转换
-    ├── ExpressionStatusBar    # 表达式状态
-    ├── ExpressionEdit         # 表达式输入
-    ├── AutoComplete           # 自动补全弹窗
-    └── ResultView             # 结果显示（中间主区域）
+    │   ├── HistoryView        # History (single instance)
+    │   └── ConversionView     # Unit conversion
+    ├── ExpressionStatusBar    # Expression status
+    ├── ExpressionEdit         # Expression input
+    ├── AutoComplete           # Autocomplete popup
+    └── ResultView             # Result display (double-click recalls expression)
 ```
 
 [来源: app.py:103-183]
@@ -55,18 +57,19 @@ root (tk.Tk)
 - 手动撤销/重做（最多 100 步）[来源: expression_edit.py:19, 42-43]
 - 公共 API: `get_expression()`, `set_expression()`, `insert_at_cursor()`, `clear()`, `undo()`, `redo()` [来源: expression_edit.py:100-168]
 
-### ResultView — 结果显示
+### ResultView — Result Display
 
-- 只读 `tk.Text` 组件 [来源: result_view.py:26-176]
-- 文本标签: `expression`, `result`, `approx`, `error`, `separator`, `info` [来源: result_view.py:74-91]
-- 数学渲染: 使用 `MathRenderer` 转换为 matplotlib 数学文本 [来源: result_view.py:107-113]
+- Read-only `tk.Text` component [来源: result_view.py:26-176]
+- Text labels: `expression`, `result`, `approx`, `error`, `separator`, `info` [来源: result_view.py:74-91]
+- Math rendering: Uses `MathRenderer` to convert to matplotlib math text [来源: result_view.py:107-113]
+- **Double-click recall**: Double-clicking on a result recalls the expression to the input field [来源: result_view.py]
 
-### KeypadWidget — 虚拟键盘
+### KeypadWidget — Virtual Keypad
 
-6 行 × 5 列按钮网格 [来源: keypad.py:79-180]:
+6 rows × 5 columns button grid [来源: keypad.py:79-180]:
 
-| 行 | 列 0 | 列 1 | 列 2 | 列 3 | 列 4 |
-|----|------|------|------|------|------|
+| Row | Col 0 | Col 1 | Col 2 | Col 3 | Col 4 |
+|-----|-------|-------|-------|-------|-------|
 | 0 | AC | DEL | ( | ) | ÷ |
 | 1 | 7 | 8 | 9 | × | x² |
 | 2 | 4 | 5 | 6 | − | √ |
@@ -74,14 +77,24 @@ root (tk.Tk)
 | 4 | 0 | . | EXP | ± | = |
 | 5 | sin | cos | tan | ln | log |
 
+**Dropdown Menus**: Right-click on function buttons to access alternatives:
+- `sin` → asin, sinh, asinh
+- `cos` → acos, cosh, acosh
+- `tan` → atan, tanh, atanh
+- `√` → cbrt
+- `ln` → log, log₂, log₁₀
+- `x²` → x³
+- `x^y` → x^(1/y)
+
 [来源: keypad.py:14-57]
 
-### HistoryView — 历史记录
+### HistoryView — History Display
 
-- 可滚动 `tk.Listbox` [来源: history_view.py:37-168]
-- 显示表达式、结果、错误
-- 双击召回表达式 [来源: history_view.py:85-97]
-- `answer(N)` 支持: `get_answer(n)` 返回第 N 个最近结果 [来源: history_view.py:144-149]
+- Single instance (removed duplicate HistoryView)
+- Scrollable `tk.Listbox` [来源: history_view.py:37-168]
+- Shows expressions, results, errors
+- **Double-click recall**: Double-clicking recalls expression to input [来源: history_view.py:85-97]
+- `answer(N)` support: `get_answer(n)` returns the N-th most recent result [来源: history_view.py:144-149]
 
 ### ConversionView — 单位转换
 
@@ -90,10 +103,11 @@ root (tk.Tk)
 - 右侧: 搜索栏 + 值输入 + 转换按钮
 - 自动转换 [来源: conversion_view.py:360-363]
 
-### StatusBar — 状态栏
+### StatusBar — Status Bar
 
-- 左侧: "Functions: N | Units: N | Variables: N" [来源: status_bar.py:30-31]
-- 右侧: "Exact" 或 "Approximate" 模式 [来源: status_bar.py:38]
+- Left: "Functions: N | Units: N | Variables: N" [来源: status_bar.py:30-31]
+- Right: "Exact" or "Approximate" mode indicator [来源: status_bar.py:38]
+- **= vs ≈ display**: Exact results show "=" prefix, approximate results show "≈" prefix
 
 ### ExpressionStatusBar — 表达式状态
 
@@ -131,7 +145,7 @@ root (tk.Tk)
 
 | 菜单项 | 功能 |
 |--------|------|
-| Exact Mode | 切换精确模式 |
+| Exact Mode | 切换精确模式（已验证可用） |
 | Functions... | 管理函数 |
 | Variables... | 管理变量 |
 | Units... | 管理单位 |

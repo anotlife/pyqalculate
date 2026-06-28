@@ -70,10 +70,10 @@
 |------|------|------|------|------|
 | `abs(x)` | `abs(x)` | 绝对值 | `abs(-5)` | `5` |
 | `signum(x)` | `signum(x)` | 符号函数 | `signum(-3)` | `-1` |
-| `round(x)` | `round(x)` | 四舍五入 | `round(3.7)` | `4` |
+| `round(x)` | `round(x)` | 四舍五入（支持符号参数） | `round(3.7)` | `4` |
 | `floor(x)` | `floor(x)` | 向下取整 | `floor(3.7)` | `3` |
 | `ceil(x)` | `ceil(x)` | 向上取整 | `ceil(3.2)` | `4` |
-| `trunc(x)` | `trunc(x)` | 截断 | `trunc(3.7)` | `3` |
+| `trunc(x)` | `trunc(x)` | 截断（支持符号参数） | `trunc(3.7)` | `3` |
 | `gcd(a, b)` | `gcd(a, b)` | 最大公约数 | `gcd(12, 8)` | `4` |
 | `lcm(a, b)` | `lcm(a, b)` | 最小公倍数 | `lcm(12, 8)` | `24` |
 | `mod(a, b)` | `mod(a, b)` | 取模 | `mod(7, 3)` | `1` |
@@ -93,7 +93,7 @@
 | `im(z)` | `im(z)` | 虚部 | `im(3+4i)` | `4` |
 | `arg(z)` | `arg(z)` | 辐角 | `arg(1+i)` | `1/4 * pi` |
 | `powermod(a, b, m)` | `powermod(a, b, m)` | 模幂 | `powermod(2, 10, 1000)` | `24` |
-| `parallel(a, b)` | `parallel(a, b)` | 并联电阻 | `parallel(4, 6)` | `12/5` |
+| `parallel(a, b)` | `parallel(a, b)` | 并联电阻（零值返回 infinity） | `parallel(4, 6)` | `12/5` |
 | `interval(a, b)` | `interval(a, b)` | 区间 | `interval(1, 5)` | `[1, 5]` |
 | `uncertainty(v, u)` | `uncertainty(v, u)` | 不确定度 | `uncertainty(5, 0.1)` | `5±0.1` |
 
@@ -258,8 +258,8 @@
 
 | 函数 | 语法 | 说明 | 示例 | 结果 |
 |------|------|------|------|------|
-| `if(cond, then, else)` | `if(cond, then, else)` | ⚠️ 有限支持 — 返回符号形式 | `if(1>0, 1, 0)` | `if(1 > 0, 1, 0)` |
-| `for(init, cond, step, expr)` | `for(init, cond, step, expr)` | 循环 | — | — |
+| `if(cond, then, else)` | `if(cond, then, else)` | 条件选择 | `if(1>0, 1, 0)` | `1` |
+| `for(init, cond, step, expr)` | `for(init, cond, step, expr)` | 循环（支持符号边界） | `for(i:=1, i<=3, i:=i+1, i^2)` | `14` |
 | `genvector(size, expr)` | `genvector(size, expr)` | 生成向量 | — | — |
 | `load(file)` | `load(file)` | 加载文件 | — | — |
 | `export(expr, file)` | `export(expr, file)` | 导出 | — | — |
@@ -372,8 +372,11 @@
 
 | 函数 | 状态 | 说明 |
 |------|------|------|
-| `if(cond, then, else)` | ⚠️ 有限支持 | 返回符号形式，不执行求值 |
-| `for(init, cond, step, expr)` | ⚠️ 有限 | 循环支持有限 |
+| `if(cond, then, else)` | ✅ 支持 | 支持比较条件，如 `if(x>0, 1, 0)` |
+| `for(init, cond, step, expr)` | ✅ 支持 | 支持符号边界，返回符号求和 |
+| `round(x)` | ✅ 支持 | 支持符号参数 |
+| `trunc(x)` | ✅ 支持 | 支持符号参数 |
+| `parallel(a, b)` | ✅ 支持 | 零值返回 infinity |
 | `genvector(size, expr)` | ⚠️ 未测试 | 生成向量 |
 | `load(file)` | ⚠️ 未测试 | 加载文件 |
 | `export(expr, file)` | ⚠️ 未测试 | 导出 |
