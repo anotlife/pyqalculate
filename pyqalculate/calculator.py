@@ -941,6 +941,8 @@ class Calculator:
             eo.approximation = ApproximationMode.APPROXIMATE
 
         result = self.calculate(expression, timeout_ms, eo)
+        if result.is_undefined():
+            return "Error: Division by zero"
         return result.print(po)
 
     # -- Printing --

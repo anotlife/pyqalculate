@@ -168,7 +168,8 @@ class App:
             calculator=self._calculator,
         )
         self._autocomplete.set_on_select(self._on_autocomplete_select)
-        self._expr_edit.bind_key("<KeyRelease>", self._on_key_release)
+        # Disabled: autocomplete now only triggers on Tab (see _on_tab_key)
+        # self._expr_edit.bind_key("<KeyRelease>", self._on_key_release)
         self._expr_edit.bind_key("<Up>", self._on_nav_key)
         self._expr_edit.bind_key("<Down>", self._on_nav_key)
         self._expr_edit.bind_key("<Escape>", self._on_escape_key)
@@ -262,7 +263,8 @@ class App:
                 result.result, result.exact
             )
 
-        self._expr_edit.clear()
+        if not result.error:
+            self._expr_edit.clear()
         self._expr_edit.focus_input()
 
     def _resolve_answer_refs(self, expression: str) -> str:
@@ -401,7 +403,7 @@ class App:
         if self._keypad.winfo_viewable():
             self._keypad.pack_forget()
         else:
-            self._keypad.pack(fill=tk.X, side=tk.BOTTOM, pady=(0, 4), after=self._expr_edit)
+            self._keypad.pack(fill=tk.X, side=tk.BOTTOM, pady=(4, 0))
 
     def _on_toggle_history(self) -> None:
         """History view removed — no-op for backward compat."""
@@ -470,6 +472,9 @@ class App:
     def _insert_parentheses(self) -> None:
         """Insert a pair of parentheses at cursor."""
         self._expr_edit.insert_at_cursor("()")
+        # Move cursor back one position to be between ( and )
+        entry = self._expr_edit.get_text_widget()
+        entry.mark_set(tk.INSERT, f"{tk.INSERT}-1c")
 
     def _rpn_up(self) -> None:
         """RPN: move up in stack."""
@@ -541,13 +546,16 @@ class App:
         return None
 
     def _on_tab_key(self, event: tk.Event) -> str | None:
-        """Accept current autocomplete selection on Tab."""
+        """Accept current autocomplete selection on Tab, or trigger it."""
         if self._autocomplete.is_visible():
             selected = self._autocomplete.get_selected()
             if selected:
                 self._on_autocomplete_select(selected)
             return "break"
-        return None
+        else:
+            # Trigger autocomplete on Tab when popup not visible
+            self._activate_completion()
+            return "break"
 
     def _on_autocomplete_select(self, name: str) -> None:
         """Insert the selected completion into the expression edit."""

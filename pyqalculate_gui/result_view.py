@@ -97,6 +97,8 @@ class ResultView(ttk.Frame):
 
     def _on_expression_submitted(self, expression: str) -> None:
         """Handle expression submission — show the expression."""
+        if not expression:
+            return  # Skip empty expression echo (e.g., from = button)
         self._expressions.append(expression)
         line = int(self._text.index(tk.END).split('.')[0]) - 1
         self._expression_lines.append((expression, line))

@@ -1406,6 +1406,8 @@ class MathStructure:
         return m
 
     def __add__(self, other: MathStructure) -> MathStructure:
+        if self.is_undefined() or other.is_undefined():
+            return MathStructure.undefined()
         if self.is_zero():
             return other
         if other.is_zero():
@@ -1413,9 +1415,13 @@ class MathStructure:
         return MathStructure.addition(self, other)
 
     def __sub__(self, other: MathStructure) -> MathStructure:
+        if self.is_undefined() or other.is_undefined():
+            return MathStructure.undefined()
         return self + other.negate()
 
     def __mul__(self, other: MathStructure) -> MathStructure:
+        if self.is_undefined() or other.is_undefined():
+            return MathStructure.undefined()
         if self.is_zero() and not other.is_unit():
             return MathStructure(0)
         if other.is_zero() and not self.is_unit():
@@ -1427,6 +1433,8 @@ class MathStructure:
         return MathStructure.multiplication(self, other)
 
     def __truediv__(self, other: MathStructure) -> MathStructure:
+        if other.is_zero():
+            return MathStructure.undefined()
         return self * other.inverse()
 
     def __pow__(self, other: MathStructure) -> MathStructure:
@@ -2055,6 +2063,8 @@ class MathStructure:
                           StructureType.BITWISE_AND, StructureType.BITWISE_OR,
                           StructureType.BITWISE_XOR):
             evaluated_children = [child.evaluate(eo) for child in self._children]
+            if any(c.is_undefined() for c in evaluated_children):
+                return MathStructure.undefined()
             # Reconstruct with evaluated children
             if self._type == StructureType.ADDITION:
                 rebuilt = evaluated_children[0]
