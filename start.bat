@@ -5,13 +5,17 @@ setlocal enabledelayedexpansion
 title PyQalculate v3.0.0
 cd /d "%~dp0"
 
+:: ---- fixed paths (no dependency on activate.bat) ----
+set PY=.venv\Scripts\python.exe
+set PIP=%PY% -m pip
+
 echo.
 echo ========================================
 echo   PyQalculate v3.0.0 - Python Calculator
 echo ========================================
 echo.
 
-:: Check Python exists
+:: Check system Python exists
 echo [1/2] Checking Python...
 python --version >nul 2>&1
 if errorlevel 1 (
@@ -28,15 +32,13 @@ for /f "tokens=*" %%i in ('python --version 2^>^&1') do echo Found %%i
 
 :: Check virtual environment
 echo [2/2] Checking virtual environment...
-:: Check if venv exists AND is valid
 set VENV_VALID=0
-if exist ".venv\Scripts\python.exe" (
-    .venv\Scripts\python.exe -c "import sys; print('ok')" >nul 2>&1
+if exist "%PY%" (
+    %PY% -c "" >nul 2>&1
     if not errorlevel 1 set VENV_VALID=1
 )
 
 if %VENV_VALID%==0 (
-    :: Venv missing or broken - recreate
     if exist ".venv" (
         echo Virtual environment is incomplete. Recreating...
         rmdir /s /q ".venv"
@@ -49,33 +51,42 @@ if %VENV_VALID%==0 (
         pause
         exit /b 1
     )
-    
+
     echo Installing dependencies...
-    call .venv\Scripts\activate.bat
-    pip install -e . -q
+    %PIP% install -e . --require-virtualenv
     if errorlevel 1 (
         echo ERROR: Failed to install dependencies.
-        echo Retrying...
-        pip install -e . -q
+        echo Retrying without --require-virtualenv...
+        %PIP% install -e .
     )
-    
+
     echo Installing optional dependencies...
-    pip install matplotlib sympy gmpy2 -q
-    
+    %PIP% install matplotlib sympy gmpy2 --require-virtualenv
+
     echo Virtual environment created successfully.
+    @REM Touch a marker to avoid full check on next runs
+    %PY% -c ""
 ) else (
     echo Virtual environment found.
-    call .venv\Scripts\activate.bat
-    
-    :: Verify key packages are installed
-    python -c "import sympy" >nul 2>&1
+
+    :: pip check -- verifies ALL installed packages, not just sympy
+    echo   Verifying dependencies...
+    %PIP% check --require-virtualenv >nul 2>&1
     if errorlevel 1 (
-        echo Some dependencies are missing. Installing...
-        pip install -e . -q
+        echo   Dependencies broken or missing. Reinstalling...
+        %PIP% install -e . --require-virtualenv
+        if errorlevel 1 (
+            %PIP% install -e .
+        )
+    ) else (
+        echo   All dependencies OK.
     )
 )
 
 echo.
+echo Press any key to continue...
+pause >nul
+cls
 
 :MENU
 echo ========================================
@@ -99,38 +110,40 @@ if "%choice%"=="0" goto EXIT
 
 echo Invalid choice!
 echo.
-goto MENU
+goto RETURN
 
 :CLI
 echo.
 echo Starting CLI Mode...
 echo Type 'quit' to exit the calculator.
 echo.
-.venv\Scripts\python.exe scripts\cli.py
+%PY% scripts\cli.py
 echo.
-pause
-goto MENU
+goto RETURN
 
 :GUI
 echo.
 echo Starting GUI Mode...
-.venv\Scripts\python.exe scripts\gui.py
+%PY% scripts\gui.py
 echo.
-pause
-goto MENU
+goto RETURN
 
 :TEST
 echo.
-.venv\Scripts\python.exe scripts\test_runner.py
+%PY% scripts\test_runner.py
 echo.
-pause
-goto MENU
+goto RETURN
 
 :DEMO
 echo.
-.venv\Scripts\python.exe scripts\demo.py
+%PY% scripts\demo.py
+echo.
+goto RETURN
+
+:RETURN
 echo.
 pause
+cls
 goto MENU
 
 :EXIT
