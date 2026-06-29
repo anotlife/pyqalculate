@@ -21,6 +21,7 @@ TOGGLE_CONVERSION = "toggle_conversion"
 COPY_RESULT = "copy_result"
 IMPORT_CSV = "import_csv"
 EXPORT_CSV = "export_csv"
+OPEN_HELP_DOC = "open_help_doc"
 
 
 class EventBus:

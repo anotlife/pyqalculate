@@ -33,8 +33,11 @@ dependencies = [
     "pint>=0.22",
     "convertdate>=2.4.0",
     "matplotlib>=3.7.0",
+    "numpy>=1.24.0",
     "scipy>=1.11.0",
     "requests>=2.31.0",
+    "Pillow>=10.0.0",
+    "python-dateutil>=2.8.0",
     "pyreadline3>=3.4.0; sys_platform == 'win32'",
 ]
 
