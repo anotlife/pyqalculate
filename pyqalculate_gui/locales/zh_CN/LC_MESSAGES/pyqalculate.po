@@ -1,0 +1,822 @@
+# PyQalculate GUI simplified Chinese translation.
+# Copyright (C) 2024-2026 PyQalculate Contributors
+# This file is distributed under the MIT license.
+msgid ""
+msgstr ""
+"Project-Id-Version: PyQalculate 3.0\n"
+"Report-Msgid-Bugs-To: https://github.com/anotlife/pyqalculate/issues\n"
+"POT-Creation-Date: 2026-06-30 00:00+0000\n"
+"PO-Revision-Date: 2026-06-30 00:00+0000\n"
+"Last-Translator: PyQalculate Contributors\n"
+"Language-Team: Chinese (Simplified) <i18n@pyqalculate.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+# ==================== app.py ====================
+msgid "PyQalculate"
+msgstr "PyQalculate"
+
+# ==================== menu_bar.py ====================
+msgid "File"
+msgstr "文件"
+
+msgid "Clear All"
+msgstr "全部清除"
+
+msgid "Import CSV..."
+msgstr "导入 CSV..."
+
+msgid "Export CSV..."
+msgstr "导出 CSV..."
+
+msgid "Exit"
+msgstr "退出"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "Copy Result"
+msgstr "复制结果"
+
+msgid "Clear Expression"
+msgstr "清除表达式"
+
+msgid "Mode"
+msgstr "模式"
+
+msgid "Exact Mode"
+msgstr "精确模式"
+
+msgid "Functions..."
+msgstr "函数..."
+
+msgid "Variables..."
+msgstr "变量..."
+
+msgid "Units..."
+msgstr "单位..."
+
+msgid "Preferences..."
+msgstr "首选项..."
+
+msgid "View"
+msgstr "视图"
+
+msgid "Toggle History"
+msgstr "切换历史记录"
+
+msgid "Toggle Keypad"
+msgstr "切换虚拟键盘"
+
+msgid "Toggle Conversion"
+msgstr "切换单位换算"
+
+msgid "Plot..."
+msgstr "绘图..."
+
+msgid "Number Bases..."
+msgstr "进制转换..."
+
+msgid "Help"
+msgstr "帮助"
+
+msgid "Help Documentation"
+msgstr "帮助文档"
+
+msgid "About"
+msgstr "关于"
+
+msgid "About PyQalculate"
+msgstr "关于 PyQalculate"
+
+msgid "PyQalculate v3.0\nPure Python calculator"
+msgstr "PyQalculate v3.0\n纯 Python 计算器"
+
+# ==================== keypad.py ====================
+msgid "AC"
+msgstr "清屏"
+
+msgid "DEL"
+msgstr "删除"
+
+msgid "EXP"
+msgstr "指数"
+
+# ==================== status_bar.py ====================
+msgid "Functions: {n_funcs} | Units: {n_units} | Variables: {n_vars}"
+msgstr "函数: {n_funcs} | 单位: {n_units} | 变量: {n_vars}"
+
+msgid "Exact"
+msgstr "精确"
+
+msgid "Approximate"
+msgstr "近似"
+
+# ==================== dialogs/base.py ====================
+msgid "OK"
+msgstr "确定"
+
+msgid "Cancel"
+msgstr "取消"
+
+# ==================== dialogs/help_dialog.py ====================
+msgid ""
+"A pure Python port of the Qalculate! library.\n"
+"Features a complete calculator with unit conversion,\n"
+"function plotting, and mathematical expression evaluation."
+msgstr ""
+"Qalculate! 库的纯 Python 移植版本。\n"
+"提供完整的计算器功能，包括单位换算、\n"
+"函数绘图和数学表达式求值。"
+
+msgid "Credits:"
+msgstr "致谢:"
+
+msgid "Original Qalculate! by Hanna Knutsson"
+msgstr "原始 Qalculate! 作者: Hanna Knutsson"
+
+msgid "Python port by anotlife"
+msgstr "Python 移植: anotlife"
+
+msgid "Built with tkinter and matplotlib"
+msgstr "使用 tkinter 和 matplotlib 构建"
+
+msgid "GitHub: github.com/anotlife/pyqalculate"
+msgstr "GitHub: github.com/anotlife/pyqalculate"
+
+msgid "License: MIT"
+msgstr "许可证: MIT"
+
+# ==================== dialogs/number_bases.py ====================
+msgid "Number Bases"
+msgstr "进制转换"
+
+msgid "Enter a value in any field to convert to other bases."
+msgstr "在任意字段输入数值以换算到其他进制。"
+
+msgid "Decimal"
+msgstr "十进制"
+
+msgid "Binary"
+msgstr "二进制"
+
+msgid "Octal"
+msgstr "八进制"
+
+msgid "Hexadecimal"
+msgstr "十六进制"
+
+msgid "Duodecimal"
+msgstr "十二进制"
+
+msgid "Roman"
+msgstr "罗马数字"
+
+# ==================== dialogs/functions_list.py ====================
+msgid "Functions"
+msgstr "函数"
+
+msgid "Search:"
+msgstr "搜索:"
+
+msgid "Insert into Expression"
+msgstr "插入到表达式"
+
+msgid "Arguments: {}"
+msgstr "参数: {}"
+
+msgid "Arguments: {} or more"
+msgstr "参数: {} 个或更多"
+
+msgid "Arguments: {} to {}"
+msgstr "参数: {} 到 {}"
+
+msgid "Category: {}"
+msgstr "分类: {}"
+
+# ==================== plot_dialog.py ====================
+msgid "Plot"
+msgstr "绘图"
+
+msgid "Save PNG"
+msgstr "保存 PNG"
+
+msgid "Save SVG"
+msgstr "保存 SVG"
+
+msgid "Clear"
+msgstr "清空"
+
+msgid "Close"
+msgstr "关闭"
+
+msgid "Add expressions and click Plot"
+msgstr "添加表达式并点击绘图"
+
+msgid "Expressions"
+msgstr "表达式"
+
+msgid "Add"
+msgstr "添加"
+
+msgid "Remove"
+msgstr "移除"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "X Range"
+msgstr "X 轴范围"
+
+msgid "Min:"
+msgstr "最小值:"
+
+msgid "Max:"
+msgstr "最大值:"
+
+msgid "Points:"
+msgstr "采样点:"
+
+msgid "Style"
+msgstr "样式"
+
+msgid "Line style:"
+msgstr "线条样式:"
+
+msgid "Line width:"
+msgstr "线条宽度:"
+
+msgid "Show grid"
+msgstr "显示网格"
+
+msgid "Show legend"
+msgstr "显示图例"
+
+msgid "Title:"
+msgstr "标题:"
+
+msgid "matplotlib is required for plotting.\nInstall with:  pip install matplotlib"
+msgstr "绘图功能需要 matplotlib。\n请使用 pip install matplotlib 安装"
+
+msgid "Missing Dependency"
+msgstr "缺少依赖"
+
+msgid "X min, max, and points must be valid numbers."
+msgstr "X 轴最小值、最大值和采样点必须是有效的数字。"
+
+msgid "Invalid Range"
+msgstr "无效范围"
+
+msgid "X min must be less than X max."
+msgstr "X 轴最小值必须小于最大值。"
+
+msgid "Add at least one expression to plot."
+msgstr "请至少添加一个表达式来绘图。"
+
+msgid "No Expressions"
+msgstr "无表达式"
+
+msgid "(empty)"
+msgstr "（空）"
+
+msgid "Add Expression"
+msgstr "添加表达式"
+
+msgid "Edit Expression"
+msgstr "编辑表达式"
+
+msgid "Expression:"
+msgstr "表达式:"
+
+msgid "Nothing to save. Click Plot first."
+msgstr "没有可保存的内容。请先点击绘图。"
+
+msgid "No Plot"
+msgstr "无绘图"
+
+msgid "Save Plot as {}"
+msgstr "保存图像为 {}"
+
+msgid "Plot saved to:\n{}"
+msgstr "图像已保存到:\n{}"
+
+msgid "Saved"
+msgstr "已保存"
+
+msgid "Failed to save:\n{}"
+msgstr "保存失败:\n{}"
+
+msgid "Save Error"
+msgstr "保存错误"
+
+# ==================== import_csv_dialog.py ====================
+msgid "Import CSV"
+msgstr "导入 CSV"
+
+msgid "File:"
+msgstr "文件:"
+
+msgid "Browse..."
+msgstr "浏览..."
+
+msgid "Name:"
+msgstr "名称:"
+
+msgid "First row:"
+msgstr "首行:"
+
+msgid "First row contains headers"
+msgstr "首行为标题行"
+
+msgid "Delimiter:"
+msgstr "分隔符:"
+
+msgid "Comma"
+msgstr "逗号"
+
+msgid "Tab"
+msgstr "制表符"
+
+msgid "Semicolon"
+msgstr "分号"
+
+msgid "Space"
+msgstr "空格"
+
+msgid "Other"
+msgstr "其他"
+
+msgid "Format:"
+msgstr "格式:"
+
+msgid "Separate vectors per column"
+msgstr "按列分离为向量"
+
+msgid "Single matrix variable"
+msgstr "单一矩阵变量"
+
+msgid "Select CSV File"
+msgstr "选择 CSV 文件"
+
+msgid "CSV files"
+msgstr "CSV 文件"
+
+msgid "All files"
+msgstr "所有文件"
+
+msgid "Error"
+msgstr "错误"
+
+msgid "Please select a CSV file."
+msgstr "请选择一个 CSV 文件。"
+
+msgid "Import Failed"
+msgstr "导入失败"
+
+msgid "Could not import the CSV file. Check the file path and format."
+msgstr "无法导入 CSV 文件。请检查文件路径和格式。"
+
+msgid "Imported as matrix variable '{}'."
+msgstr "已导入为矩阵变量 '{}'。"
+
+msgid "Imported columns as variables with prefix '{}'."
+msgstr "已将列导入为带前缀 '{}' 的变量。"
+
+msgid "Import Successful"
+msgstr "导入成功"
+
+msgid "Import Error"
+msgstr "导入错误"
+
+# ==================== export_csv_dialog.py ====================
+msgid "Export CSV"
+msgstr "导出 CSV"
+
+msgid "Source:"
+msgstr "来源:"
+
+msgid "Named variable"
+msgstr "命名变量"
+
+msgid "Current result"
+msgstr "当前结果"
+
+msgid "Variable:"
+msgstr "变量:"
+
+msgid "Save CSV File"
+msgstr "保存 CSV 文件"
+
+msgid "Please specify an output file."
+msgstr "请指定输出文件。"
+
+msgid "Please enter a variable name."
+msgstr "请输入变量名称。"
+
+msgid "No calculator available."
+msgstr "计算器不可用。"
+
+msgid "Variable '{}' not found."
+msgstr "未找到变量 '{}'。"
+
+msgid "No data to export."
+msgstr "没有可导出的数据。"
+
+msgid "Export Successful"
+msgstr "导出成功"
+
+msgid "Data exported to {}"
+msgstr "数据已导出到 {}"
+
+msgid "Export Failed"
+msgstr "导出失败"
+
+msgid "Could not write the CSV file."
+msgstr "无法写入 CSV 文件。"
+
+# ==================== conversion_view.py ====================
+msgid "Categories"
+msgstr "分类"
+
+msgid "Units"
+msgstr "单位"
+
+msgid "Convert"
+msgstr "换算"
+
+msgid "Value:"
+msgstr "数值:"
+
+msgid "From:"
+msgstr "从:"
+
+msgid "(select a unit)"
+msgstr "（选择单位）"
+
+msgid "To:"
+msgstr "到:"
+
+msgid "Copy Result"
+msgstr "复制结果"
+
+msgid "All Units"
+msgstr "全部单位"
+
+msgid "{} units"
+msgstr "{} 个单位"
+
+msgid "{} units in {}"
+msgstr "{} {} 中的单位"
+
+msgid "{} matching units"
+msgstr "{} 个匹配的单位"
+
+msgid "Enter a value to convert"
+msgstr "请输入要换算的数值"
+
+msgid "Select a source unit from the list"
+msgstr "请从列表中选择源单位"
+
+msgid "Enter a target unit"
+msgstr "请输入目标单位"
+
+msgid "No calculator available"
+msgstr "计算器不可用"
+
+msgid "Conversion error: {}"
+msgstr "换算错误: {}"
+
+msgid "Cannot convert {} to {}"
+msgstr "无法将 {} 换算为 {}"
+
+# ==================== result_view.py / history_view.py ====================
+msgid "Error: {}"
+msgstr "错误: {}"
+
+# ==================== expression_status.py ====================
+msgid "EXACT"
+msgstr "精确"
+
+msgid "RPN"
+msgstr "RPN"
+
+msgid "CHN"
+msgstr "链式"
+
+msgid "BIN"
+msgstr "二进制"
+
+msgid "OCT"
+msgstr "八进制"
+
+msgid "DUO"
+msgstr "十二进制"
+
+msgid "HEX"
+msgstr "十六进制"
+
+msgid "DEG"
+msgstr "角度"
+
+msgid "RAD"
+msgstr "弧度"
+
+msgid "GRA"
+msgstr "百分度"
+
+msgid "FUNC"
+msgstr "函数"
+
+msgid "UNIT"
+msgstr "单位"
+
+msgid "VAR"
+msgstr "变量"
+
+# ==================== autocomplete.py ====================
+msgid "Name"
+msgstr "名称"
+
+msgid "Description"
+msgstr "描述"
+
+msgid "Function: {}"
+msgstr "函数: {}"
+
+msgid "Variable: {}"
+msgstr "变量: {}"
+
+msgid "Unit: {}"
+msgstr "单位: {}"
+
+# ==================== keyboard_shortcuts.py ====================
+msgid "Insert function"
+msgstr "插入函数"
+
+msgid "Insert variable"
+msgstr "插入变量"
+
+msgid "Insert unit"
+msgstr "插入单位"
+
+msgid "Insert text"
+msgstr "插入文本"
+
+msgid "Convert to unit"
+msgstr "换算为单位"
+
+msgid "Convert to number base"
+msgstr "换算进制"
+
+msgid "Factorize result"
+msgstr "分解结果"
+
+msgid "Expand result"
+msgstr "展开结果"
+
+msgid "RPN: up"
+msgstr "RPN: 上移"
+
+msgid "RPN: down"
+msgstr "RPN: 下移"
+
+msgid "RPN: swap"
+msgstr "RPN: 交换"
+
+msgid "RPN: copy"
+msgstr "RPN: 复制"
+
+msgid "RPN: lastx"
+msgstr "RPN: lastx"
+
+msgid "RPN: delete register"
+msgstr "RPN: 删除寄存器"
+
+msgid "RPN: clear stack"
+msgstr "RPN: 清空堆栈"
+
+msgid "Load meta mode"
+msgstr "加载元模式"
+
+msgid "Set result base"
+msgstr "设置结果进制"
+
+msgid "Set expression base"
+msgstr "设置表达式进制"
+
+msgid "Toggle exact mode"
+msgstr "切换精确模式"
+
+msgid "Set angle unit to degrees"
+msgstr "设置角度单位为度"
+
+msgid "Set angle unit to radians"
+msgstr "设置角度单位为弧度"
+
+msgid "Set angle unit to gradians"
+msgstr "设置角度单位为百分度"
+
+msgid "Toggle simple fractions"
+msgstr "切换简分数"
+
+msgid "Toggle mixed fractions"
+msgstr "切换带分数"
+
+msgid "Toggle scientific notation"
+msgstr "切换科学记数法"
+
+msgid "Toggle simple notation"
+msgstr "切换简单记数法"
+
+msgid "Toggle RPN mode"
+msgstr "切换 RPN 模式"
+
+msgid "Toggle calculate as you type"
+msgstr "切换实时计算"
+
+msgid "Toggle programming keypad"
+msgstr "切换编程键盘"
+
+msgid "Show keypad"
+msgstr "显示虚拟键盘"
+
+msgid "Show history"
+msgstr "显示历史记录"
+
+msgid "Search history"
+msgstr "搜索历史"
+
+msgid "Show conversion"
+msgstr "显示单位换算"
+
+msgid "Show RPN stack"
+msgstr "显示 RPN 堆栈"
+
+msgid "Toggle minimal window"
+msgstr "切换最小窗口"
+
+msgid "Manage variables"
+msgstr "管理变量"
+
+msgid "Manage functions"
+msgstr "管理函数"
+
+msgid "Manage units"
+msgstr "管理单位"
+
+msgid "Store result"
+msgstr "存储结果"
+
+msgid "MC (memory clear)"
+msgstr "MC (清除记忆)"
+
+msgid "MR (memory recall)"
+msgstr "MR (调用记忆)"
+
+msgid "MS (memory store)"
+msgstr "MS (存储记忆)"
+
+msgid "M+ (memory plus)"
+msgstr "M+ (累加记忆)"
+
+msgid "M- (memory minus)"
+msgstr "M- (累减记忆)"
+
+msgid "Open plot functions/data"
+msgstr "打开函数/数据绘图"
+
+msgid "Open convert number bases"
+msgstr "打开进制转换"
+
+msgid "Help"
+msgstr "帮助"
+
+msgid "Quit"
+msgstr "退出"
+
+msgid "Toggle chain mode"
+msgstr "切换链式模式"
+
+msgid "Show/hide completion"
+msgstr "显示/隐藏补全"
+
+msgid "Perform completion"
+msgstr "执行补全"
+
+msgid "Insert result"
+msgstr "插入结果"
+
+msgid "Clear history"
+msgstr "清除历史记录"
+
+msgid "Insert parentheses"
+msgstr "插入括号"
+
+# ==================== preferences_dialog.py ====================
+msgid "Preferences"
+msgstr "首选项"
+
+msgid "Calculation"
+msgstr "计算"
+
+msgid "Precision (significant digits):"
+msgstr "精度（有效数字）:"
+
+msgid "Approximation mode:"
+msgstr "近似模式:"
+
+msgid "Angle unit:"
+msgstr "角度单位:"
+
+msgid "none"
+msgstr "无"
+
+msgid "radians"
+msgstr "弧度"
+
+msgid "degrees"
+msgstr "度"
+
+msgid "gradians"
+msgstr "百分度"
+
+msgid "Display"
+msgstr "显示"
+
+msgid "Number format:"
+msgstr "数字格式:"
+
+msgid "Enable digit grouping (e.g. 1,000,000)"
+msgstr "启用数字分组（例如 1,000,000）"
+
+msgid "Use Unicode signs (\u00d7, \u00f7, \u221a, \u2248)"
+msgstr "使用 Unicode 符号（\u00d7, \u00f7, \u221a, \u2248）"
+
+msgid "Exponent display:"
+msgstr "指数显示方式:"
+
+msgid "Appearance"
+msgstr "外观"
+
+msgid "Font family:"
+msgstr "字体:"
+
+msgid "Font size:"
+msgstr "字号:"
+
+msgid "Theme:"
+msgstr "主题:"
+
+msgid "Language:"
+msgstr "语言:"
+
+msgid "Please restart the application for the language change to take effect."
+msgstr "请重新启动应用程序以使语言更改生效。"
+
+msgid "Language Changed"
+msgstr "语言已更改"
+
+msgid "English"
+msgstr "English"
+
+msgid "中文（简体）"
+msgstr "中文（简体）"
+
+msgid "Light"
+msgstr "浅色"
+
+msgid "Dark"
+msgstr "深色"
+
+msgid "Tools"
+msgstr "工具"
+
+msgid "Unit Conversion..."
+msgstr "单位换算..."
+
+msgid "Unit Conversion"
+msgstr "单位换算"
+
+msgid "History..."
+msgstr "历史记录..."
+
+msgid "History"
+msgstr "历史记录"
+
+msgid "Scientific"
+msgstr "科学记数"
+
+msgid "Engineering"
+msgstr "工程记数"
+
+msgid "Decimal"
+msgstr "十进制"
+
+msgid "Version {}"
+msgstr "版本 {}"
+
+msgid "Try Exact"
+msgstr "尝试精确"

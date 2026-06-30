@@ -20,6 +20,7 @@ from tkinter import ttk
 from pyqalculate_gui.calculator_service import CalculatorService
 from pyqalculate_gui.event_bus import CONVERSION_RESULT, EventBus
 from pyqalculate_gui.theme import LIGHT, Theme
+from pyqalculate_gui.i18n import _
 
 # Treeview sentinel that represents "show every unit"
 _ALL_NODE = "__all__"
@@ -59,24 +60,30 @@ class ConversionView(ttk.Frame):
     # ==================================================================
 
     def _build_ui(self) -> None:
-        """Build the full conversion panel layout."""
-        self.columnconfigure(0, weight=1)
-        self.rowconfigure(0, weight=1)  # tree/list area expands
-        self.rowconfigure(1, weight=0)  # conversion controls fixed
+        """Build the full conversion panel layout.
 
-        self._build_browse_area()
-        self._build_conversion_area()
+        Uses a vertical PanedWindow so the user can drag the sash to
+        allocate space between the browse and conversion areas.
+        """
+        vpane = ttk.PanedWindow(self, orient=tk.VERTICAL)
+        vpane.pack(fill=tk.BOTH, expand=True)
 
-    def _build_browse_area(self) -> None:
+        browse_frame = ttk.Frame(vpane)
+        vpane.add(browse_frame, weight=3)
+        self._build_browse_area(browse_frame)
+
+        conv_frame = ttk.Frame(vpane)
+        vpane.add(conv_frame, weight=2)
+        self._build_conversion_area(conv_frame)
+
+    def _build_browse_area(self, parent: ttk.Frame) -> None:
         """Category tree + unit list with search."""
-        frame = ttk.Frame(self)
-        frame.grid(row=0, column=0, sticky="nsew", pady=(0, 6))
-        frame.columnconfigure(0, weight=1)
-        frame.columnconfigure(1, weight=2)
-        frame.rowconfigure(0, weight=1)
+        parent.columnconfigure(0, weight=1)
+        parent.columnconfigure(1, weight=2)
+        parent.rowconfigure(0, weight=1)
 
         # --- category tree (left) ---
-        cat_outer = ttk.LabelFrame(frame, text="Categories", padding=4)
+        cat_outer = ttk.LabelFrame(parent, text=_("Categories"), padding=4)
         cat_outer.grid(row=0, column=0, sticky="nsew", padx=(0, 4))
         cat_outer.columnconfigure(0, weight=1)
         cat_outer.rowconfigure(0, weight=1)
@@ -94,7 +101,7 @@ class ConversionView(ttk.Frame):
         self._cat_tree.bind("<<TreeviewSelect>>", self._on_category_select)
 
         # --- unit list (right) with search ---
-        unit_outer = ttk.LabelFrame(frame, text="Units", padding=4)
+        unit_outer = ttk.LabelFrame(parent, text=_("Units"), padding=4)
         unit_outer.grid(row=0, column=1, sticky="nsew")
         unit_outer.columnconfigure(0, weight=1)
         unit_outer.rowconfigure(1, weight=1)
@@ -104,7 +111,7 @@ class ConversionView(ttk.Frame):
         search_frame.grid(row=0, column=0, sticky="ew", pady=(0, 4))
         search_frame.columnconfigure(1, weight=1)
 
-        ttk.Label(search_frame, text="Search:").grid(row=0, column=0, padx=(0, 4))
+        ttk.Label(search_frame, text=_("Search:")).grid(row=0, column=0, padx=(0, 4))
         self._search_var = tk.StringVar()
         search_entry = ttk.Entry(search_frame, textvariable=self._search_var)
         search_entry.grid(row=0, column=1, sticky="ew")
@@ -134,14 +141,14 @@ class ConversionView(ttk.Frame):
         self._unit_listbox.bind("<<ListboxSelect>>", self._on_unit_select)
         self._unit_listbox.bind("<Double-Button-1>", self._on_unit_double_click)
 
-    def _build_conversion_area(self) -> None:
+    def _build_conversion_area(self, parent: ttk.Frame) -> None:
         """Value entry, from/to display, convert button, result."""
-        conv = ttk.LabelFrame(self, text="Convert", padding=6)
-        conv.grid(row=1, column=0, sticky="ew")
+        conv = ttk.LabelFrame(parent, text=_("Convert"), padding=6)
+        conv.pack(fill=tk.BOTH, expand=True)
         conv.columnconfigure(1, weight=1)
 
         # row 0 – value + from unit
-        ttk.Label(conv, text="Value:").grid(row=0, column=0, sticky="w", padx=(0, 4))
+        ttk.Label(conv, text=_("Value:")).grid(row=0, column=0, sticky="w", padx=(0, 4))
         self._value_var = tk.StringVar(value="1")
         self._value_entry = ttk.Entry(
             conv, textvariable=self._value_var, width=16,
@@ -150,8 +157,8 @@ class ConversionView(ttk.Frame):
         self._value_entry.grid(row=0, column=1, sticky="ew", padx=(0, 8))
         self._value_var.trace_add("write", lambda *_: self._maybe_auto_convert())
 
-        ttk.Label(conv, text="From:").grid(row=0, column=2, sticky="w", padx=(0, 4))
-        self._from_var = tk.StringVar(value="(select a unit)")
+        ttk.Label(conv, text=_("From:")).grid(row=0, column=2, sticky="w", padx=(0, 4))
+        self._from_var = tk.StringVar(value=_("(select a unit)"))
         self._from_label = ttk.Label(
             conv,
             textvariable=self._from_var,
@@ -163,7 +170,7 @@ class ConversionView(ttk.Frame):
         self._from_label.grid(row=0, column=3, sticky="w")
 
         # row 1 – target unit + convert
-        ttk.Label(conv, text="To:").grid(
+        ttk.Label(conv, text=_("To:")).grid(
             row=1, column=0, sticky="w", padx=(0, 4), pady=(4, 0),
         )
         self._to_var = tk.StringVar()
@@ -175,7 +182,7 @@ class ConversionView(ttk.Frame):
         to_entry.bind("<Return>", lambda _: self._do_convert())
         self._to_var.trace_add("write", lambda *_: self._maybe_auto_convert())
 
-        ttk.Button(conv, text="Convert", command=self._do_convert).grid(
+        ttk.Button(conv, text=_("Convert"), command=self._do_convert).grid(
             row=1, column=2, columnspan=2, sticky="ew", pady=(4, 0),
         )
 
@@ -207,7 +214,7 @@ class ConversionView(ttk.Frame):
 
         btn_row = ttk.Frame(result_frame)
         btn_row.grid(row=2, column=0, sticky="e", pady=(4, 0))
-        ttk.Button(btn_row, text="Copy Result", command=self._copy_result).pack(
+        ttk.Button(btn_row, text=_("Copy Result"), command=self._copy_result).pack(
             side=tk.RIGHT,
         )
 
@@ -248,7 +255,7 @@ class ConversionView(ttk.Frame):
 
         # "All Units" root node
         all_iid = self._cat_tree.insert(
-            "", tk.END, iid=_ALL_NODE, text="All Units", open=True,
+            "", tk.END, iid=_ALL_NODE, text=_("All Units"), open=True,
         )
 
         for cat in sorted(roots):
@@ -298,7 +305,7 @@ class ConversionView(ttk.Frame):
                     self._current_units.append((display, key))
         self._current_units.sort(key=lambda e: e[0].lower())
         self._refresh_listbox()
-        self._status_var.set(f"{len(self._current_units)} units")
+        self._status_var.set(_("{} units").format(len(self._current_units)))
 
     def _show_units_for_category(self, category: str) -> None:
         """Populate the listbox for *category* and its sub-categories."""
@@ -312,7 +319,7 @@ class ConversionView(ttk.Frame):
                         self._current_units.append((display, key))
         self._current_units.sort(key=lambda e: e[0].lower())
         self._refresh_listbox()
-        self._status_var.set(f"{len(self._current_units)} units in {category}")
+        self._status_var.set(_("{} units in {}").format(len(self._current_units), category))
 
     def _filter_units(self) -> None:
         """Filter the listbox by search text."""
@@ -325,14 +332,14 @@ class ConversionView(ttk.Frame):
             if query in d.lower() or query in k.lower()
         ]
         self._unit_listbox.delete(0, tk.END)
-        for display, _ in filtered:
+        for display, _key in filtered:
             self._unit_listbox.insert(tk.END, display)
-        self._status_var.set(f"{len(filtered)} matching units")
+        self._status_var.set(_("{} matching units").format(len(filtered)))
 
     def _refresh_listbox(self) -> None:
         """Reload the listbox from ``_current_units``."""
         self._unit_listbox.delete(0, tk.END)
-        for display, _ in self._current_units:
+        for display, _key in self._current_units:
             self._unit_listbox.insert(tk.END, display)
 
     def _on_unit_select(self, _event: tk.Event) -> None:
@@ -373,31 +380,31 @@ class ConversionView(ttk.Frame):
 
         value_str = self._value_var.get().strip()
         if not value_str:
-            self._error_var.set("Enter a value to convert")
+            self._error_var.set(_("Enter a value to convert"))
             return
 
         from_key = self._selected_from_key
         if not from_key:
-            self._error_var.set("Select a source unit from the list")
+            self._error_var.set(_("Select a source unit from the list"))
             return
 
         to_str = self._to_var.get().strip()
         if not to_str:
-            self._error_var.set("Enter a target unit")
+            self._error_var.set(_("Enter a target unit"))
             return
 
         if not self._calc:
-            self._error_var.set("No calculator available")
+            self._error_var.set(_("No calculator available"))
             return
 
         try:
             result = self._calc.convert(value_str, from_key, to_str)
         except Exception as exc:
-            self._error_var.set(f"Conversion error: {exc}")
+            self._error_var.set(_("Conversion error: {}").format(exc))
             return
 
         if not result:
-            self._error_var.set(f"Cannot convert {from_key} to {to_str}")
+            self._error_var.set(_("Cannot convert {} to {}").format(from_key, to_str))
             return
 
         self._result_var.set(result)
@@ -456,3 +463,54 @@ class ConversionView(ttk.Frame):
         self._result_label.config(font=theme.result_font, foreground=theme.result_fg)
         self._error_label.config(font=theme.info_font, foreground=theme.error_fg)
         self._status_label.config(font=theme.info_font, foreground=theme.separator_fg)
+
+
+class ConversionWindow:
+    """Toplevel window wrapping a ConversionView for the Tools menu."""
+
+    def __init__(
+        self,
+        parent: tk.Widget,
+        calculator: CalculatorService | None = None,
+        event_bus: EventBus | None = None,
+        theme: Theme = LIGHT,
+    ) -> None:
+        self._window = tk.Toplevel(parent)
+        self._window.title(_("Unit Conversion"))
+        self._window.geometry("650x500")
+        self._window.transient(parent)
+
+        self._view = ConversionView(
+            self._window, theme=theme, event_bus=event_bus, calculator=calculator,
+        )
+        self._view.pack(fill=tk.BOTH, expand=True)
+
+        self._centred = False
+
+    def show(self) -> None:
+        """Show the window, centring on first display."""
+        if not self._centred:
+            self._window.update_idletasks()
+            pw = self._window.winfo_parent()
+            parent_widget = self._window.nametowidget(pw) if pw else self._window.master
+            x = parent_widget.winfo_x() + (parent_widget.winfo_width() - self._window.winfo_width()) // 2
+            y = parent_widget.winfo_y() + (parent_widget.winfo_height() - self._window.winfo_height()) // 2
+            self._window.geometry(f"+{x}+{y}")
+            self._centred = True
+        self._window.deiconify()
+        self._window.lift()
+
+    def focus(self) -> None:
+        """Bring window to front."""
+        self.show()
+
+    def is_alive(self) -> bool:
+        """Return True if the Toplevel window still exists."""
+        try:
+            return self._window.winfo_exists()
+        except tk.TclError:
+            return False
+
+    def set_theme(self, theme: Theme) -> None:
+        """Push theme to the contained ConversionView."""
+        self._view.set_theme(theme)

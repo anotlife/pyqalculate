@@ -12,6 +12,7 @@ from tkinter import ttk
 from typing import TYPE_CHECKING, Callable, List, Optional, Tuple
 
 from pyqalculate_gui.theme import LIGHT, Theme
+from pyqalculate_gui.i18n import _
 
 if TYPE_CHECKING:
     from pyqalculate_gui.calculator_service import CalculatorService
@@ -99,13 +100,13 @@ class AutoComplete:
         self._items = []
 
         for func in self._calc.get_functions():
-            self._items.append((func, f"Function: {func}", "function"))
+            self._items.append((func, _("Function: {}").format(func), "function"))
 
         for var in self._calc.get_variables():
-            self._items.append((var, f"Variable: {var}", "variable"))
+            self._items.append((var, _("Variable: {}").format(var), "variable"))
 
         for unit in self._calc.get_units():
-            self._items.append((unit, f"Unit: {unit}", "unit"))
+            self._items.append((unit, _("Unit: {}").format(unit), "unit"))
 
         self._items.sort(key=lambda x: x[0].lower())
 
@@ -151,8 +152,8 @@ class AutoComplete:
             show="headings",
             height=8,
         )
-        self._tree.heading("name", text="Name")
-        self._tree.heading("title", text="Description")
+        self._tree.heading("name", text=_("Name"))
+        self._tree.heading("title", text=_("Description"))
         self._tree.column("name", width=150)
         self._tree.column("title", width=250)
 

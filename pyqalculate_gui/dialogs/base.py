@@ -8,6 +8,7 @@ from typing import Any
 
 from tkinter import ttk
 
+from pyqalculate_gui.i18n import _
 from pyqalculate_gui.theme import LIGHT, Theme
 
 
@@ -70,10 +71,10 @@ class ModalDialog(ABC):
         btn_frame = ttk.Frame(self._dialog, padding=(10, 0, 10, 10))
         btn_frame.pack(fill=tk.X)
 
-        ttk.Button(btn_frame, text="OK", command=self._on_ok).pack(
+        ttk.Button(btn_frame, text=_("OK"), command=self._on_ok).pack(
             side=tk.RIGHT, padx=5,
         )
-        ttk.Button(btn_frame, text="Cancel", command=self._on_cancel).pack(
+        ttk.Button(btn_frame, text=_("Cancel"), command=self._on_cancel).pack(
             side=tk.RIGHT,
         )
 

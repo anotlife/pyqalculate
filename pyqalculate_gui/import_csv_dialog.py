@@ -14,6 +14,7 @@ from pathlib import Path
 from pyqalculate_gui.theme import Theme, LIGHT
 from pyqalculate_gui.dialogs.base import ModalDialog
 from pyqalculate_gui.calculator_service import CalculatorService
+from pyqalculate_gui.i18n import _
 
 
 class ImportCsvDialog(ModalDialog):
@@ -34,14 +35,14 @@ class ImportCsvDialog(ModalDialog):
         theme: Theme = LIGHT,
         calculator: CalculatorService | None = None,
     ) -> None:
-        super().__init__(parent, "Import CSV", size=(480, 380), theme=theme)
+        super().__init__(parent, _("Import CSV"), size=(480, 380), theme=theme)
         self._calc = calculator
         self._file_path = ""
 
     def _build_content(self, parent: ttk.Frame) -> None:
         """Build the import CSV UI."""
         # --- File path ---
-        ttk.Label(parent, text="File:").grid(row=0, column=0, sticky="w", pady=4)
+        ttk.Label(parent, text=_("File:")).grid(row=0, column=0, sticky="w", pady=4)
         file_frame = ttk.Frame(parent)
         file_frame.grid(row=0, column=1, columnspan=2, sticky="ew", pady=4)
         parent.columnconfigure(1, weight=1)
@@ -49,19 +50,19 @@ class ImportCsvDialog(ModalDialog):
         self._file_var = tk.StringVar()
         self._file_entry = ttk.Entry(file_frame, textvariable=self._file_var, width=35)
         self._file_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
-        ttk.Button(file_frame, text="Browse...", command=self._browse_file).pack(
+        ttk.Button(file_frame, text=_("Browse..."), command=self._browse_file).pack(
             side=tk.LEFT, padx=(4, 0)
         )
 
         # --- Variable name ---
-        ttk.Label(parent, text="Name:").grid(row=1, column=0, sticky="w", pady=4)
+        ttk.Label(parent, text=_("Name:")).grid(row=1, column=0, sticky="w", pady=4)
         self._name_var = tk.StringVar()
         ttk.Entry(parent, textvariable=self._name_var, width=30).grid(
             row=1, column=1, columnspan=2, sticky="ew", pady=4
         )
 
         # --- First row ---
-        ttk.Label(parent, text="First row:").grid(row=2, column=0, sticky="w", pady=4)
+        ttk.Label(parent, text=_("First row:")).grid(row=2, column=0, sticky="w", pady=4)
         self._first_row_var = tk.IntVar(value=1)
         ttk.Spinbox(
             parent, from_=1, to=10000, textvariable=self._first_row_var, width=8
@@ -70,11 +71,11 @@ class ImportCsvDialog(ModalDialog):
         # --- Headers checkbox ---
         self._headers_var = tk.BooleanVar(value=True)
         ttk.Checkbutton(
-            parent, text="First row contains headers", variable=self._headers_var
+            parent, text=_("First row contains headers"), variable=self._headers_var
         ).grid(row=3, column=0, columnspan=3, sticky="w", pady=4)
 
         # --- Delimiter ---
-        ttk.Label(parent, text="Delimiter:").grid(row=4, column=0, sticky="w", pady=4)
+        ttk.Label(parent, text=_("Delimiter:")).grid(row=4, column=0, sticky="w", pady=4)
         delim_frame = ttk.Frame(parent)
         delim_frame.grid(row=4, column=1, columnspan=2, sticky="ew", pady=4)
 
@@ -82,11 +83,11 @@ class ImportCsvDialog(ModalDialog):
         self._delimiter_choice = tk.StringVar(value="comma")
 
         delim_options = [
-            ("Comma", "comma"),
-            ("Tab", "tab"),
-            ("Semicolon", "semicolon"),
-            ("Space", "space"),
-            ("Other", "other"),
+            (_("Comma"), "comma"),
+            (_("Tab"), "tab"),
+            (_("Semicolon"), "semicolon"),
+            (_("Space"), "space"),
+            (_("Other"), "other"),
         ]
         for text, val in delim_options:
             ttk.Radiobutton(
@@ -103,20 +104,20 @@ class ImportCsvDialog(ModalDialog):
         self._other_delim_entry.pack(side=tk.LEFT, padx=(8, 0))
 
         # --- Output format ---
-        ttk.Label(parent, text="Format:").grid(row=5, column=0, sticky="w", pady=4)
+        ttk.Label(parent, text=_("Format:")).grid(row=5, column=0, sticky="w", pady=4)
         format_frame = ttk.Frame(parent)
         format_frame.grid(row=5, column=1, columnspan=2, sticky="ew", pady=4)
 
         self._format_var = tk.StringVar(value="vectors")
         ttk.Radiobutton(
             format_frame,
-            text="Separate vectors per column",
+            text=_("Separate vectors per column"),
             variable=self._format_var,
             value="vectors",
         ).pack(anchor=tk.W)
         ttk.Radiobutton(
             format_frame,
-            text="Single matrix variable",
+            text=_("Single matrix variable"),
             variable=self._format_var,
             value="matrix",
         ).pack(anchor=tk.W)
@@ -141,8 +142,8 @@ class ImportCsvDialog(ModalDialog):
         assert self._dialog is not None
         path = filedialog.askopenfilename(
             parent=self._dialog,
-            title="Select CSV File",
-            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")],
+            title=_("Select CSV File"),
+            filetypes=[(_("CSV files"), "*.csv"), (_("All files"), "*.*")],
         )
         if path:
             self._file_var.set(path)
@@ -157,7 +158,7 @@ class ImportCsvDialog(ModalDialog):
         filename = self._file_var.get().strip()
         if not filename:
             messagebox.showerror(
-                "Error", "Please select a CSV file.", parent=self._dialog
+                _("Error"), _("Please select a CSV file."), parent=self._dialog
             )
             return
 
@@ -186,23 +187,23 @@ class ImportCsvDialog(ModalDialog):
 
             if result.is_undefined():
                 messagebox.showerror(
-                    "Import Failed",
-                    "Could not import the CSV file. Check the file path and format.",
+                    _("Import Failed"),
+                    _("Could not import the CSV file. Check the file path and format."),
                     parent=self._dialog,
                 )
                 return
 
             # Show success message
             if to_matrix:
-                msg = f"Imported as matrix variable '{name}'."
+                msg = _("Imported as matrix variable '{}'.").format(name)
             else:
-                msg = f"Imported columns as variables with prefix '{name}'."
+                msg = _("Imported columns as variables with prefix '{}'.").format(name)
 
-            messagebox.showinfo("Import Successful", msg, parent=self._dialog)
+            messagebox.showinfo(_("Import Successful"), msg, parent=self._dialog)
             super()._on_ok()
 
         except Exception as e:
-            messagebox.showerror("Import Error", str(e), parent=self._dialog)
+            messagebox.showerror(_("Import Error"), str(e), parent=self._dialog)
 
     # Public API
     def get_file_path(self) -> str:

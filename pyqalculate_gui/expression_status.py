@@ -12,6 +12,7 @@ from tkinter import ttk
 
 from pyqalculate_gui.event_bus import MODE_CHANGED, EventBus
 from pyqalculate_gui.theme import LIGHT, Theme
+from pyqalculate_gui.i18n import _
 
 # Status text source constants (mirror qalculate-gtk)
 STATUS_TEXT_NONE = 0
@@ -147,19 +148,19 @@ class ExpressionStatusBar(ttk.Frame):
 
         # Approximation mode
         if mode_info.get("exact", False):
-            indicators.append("EXACT")
+            indicators.append(_("EXACT"))
 
         # RPN mode
         if mode_info.get("rpn", False):
-            indicators.append("RPN")
+            indicators.append(_("RPN"))
 
         # Chain mode
         if mode_info.get("chain", False):
-            indicators.append("CHN")
+            indicators.append(_("CHN"))
 
         # Number base
         base = mode_info.get("base", 10)
-        base_map = {2: "BIN", 8: "OCT", 12: "DUO", 16: "HEX"}
+        base_map = {2: _("BIN"), 8: _("OCT"), 12: _("DUO"), 16: _("HEX")}
         if base in base_map:
             indicators.append(base_map[base])
         elif base != 10:
@@ -167,17 +168,17 @@ class ExpressionStatusBar(ttk.Frame):
 
         # Angle unit
         angle = mode_info.get("angle", "degrees")
-        angle_map = {"degrees": "DEG", "radians": "RAD", "gradians": "GRA"}
+        angle_map = {"degrees": _("DEG"), "radians": _("RAD"), "gradians": _("GRA")}
         if angle in angle_map:
             indicators.append(angle_map[angle])
 
         # Disabled features
         if not mode_info.get("functions_enabled", True):
-            indicators.append("FUNC")
+            indicators.append(_("FUNC"))
         if not mode_info.get("units_enabled", True):
-            indicators.append("UNIT")
+            indicators.append(_("UNIT"))
         if not mode_info.get("variables_enabled", True):
-            indicators.append("VAR")
+            indicators.append(_("VAR"))
 
         # Update label
         self._right_label.config(text="  ".join(indicators))

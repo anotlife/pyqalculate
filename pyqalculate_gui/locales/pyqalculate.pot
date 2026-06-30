@@ -1,0 +1,784 @@
+# PyQalculate GUI translation template.
+# Copyright (C) 2024-2026 PyQalculate Contributors
+# This file is distributed under the MIT license.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PyQalculate 3.0\n"
+"Report-Msgid-Bugs-To: https://github.com/anotlife/pyqalculate/issues\n"
+"POT-Creation-Date: 2026-06-30 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+# ==================== app.py ====================
+msgid "PyQalculate"
+msgstr ""
+
+# ==================== menu_bar.py ====================
+msgid "File"
+msgstr ""
+
+msgid "Clear All"
+msgstr ""
+
+msgid "Import CSV..."
+msgstr ""
+
+msgid "Export CSV..."
+msgstr ""
+
+msgid "Exit"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Copy Result"
+msgstr ""
+
+msgid "Clear Expression"
+msgstr ""
+
+msgid "Mode"
+msgstr ""
+
+msgid "Exact Mode"
+msgstr ""
+
+msgid "Functions..."
+msgstr ""
+
+msgid "Variables..."
+msgstr ""
+
+msgid "Units..."
+msgstr ""
+
+msgid "Preferences..."
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "Toggle History"
+msgstr ""
+
+msgid "Toggle Keypad"
+msgstr ""
+
+msgid "Toggle Conversion"
+msgstr ""
+
+msgid "Plot..."
+msgstr ""
+
+msgid "Number Bases..."
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "Help Documentation"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "About PyQalculate"
+msgstr ""
+
+msgid "PyQalculate v3.0\nPure Python calculator"
+msgstr ""
+
+# ==================== keypad.py ====================
+msgid "AC"
+msgstr ""
+
+msgid "DEL"
+msgstr ""
+
+msgid "EXP"
+msgstr ""
+
+# ==================== status_bar.py ====================
+msgid "Functions: {n_funcs} | Units: {n_units} | Variables: {n_vars}"
+msgstr ""
+
+msgid "Exact"
+msgstr ""
+
+msgid "Approximate"
+msgstr ""
+
+# ==================== dialogs/base.py ====================
+msgid "OK"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+# ==================== dialogs/help_dialog.py ====================
+msgid ""
+"A pure Python port of the Qalculate! library.\n"
+"Features a complete calculator with unit conversion,\n"
+"function plotting, and mathematical expression evaluation."
+msgstr ""
+
+msgid "Credits:"
+msgstr ""
+
+msgid "Original Qalculate! by Hanna Knutsson"
+msgstr ""
+
+msgid "Python port by anotlife"
+msgstr ""
+
+msgid "Built with tkinter and matplotlib"
+msgstr ""
+
+msgid "GitHub: github.com/anotlife/pyqalculate"
+msgstr ""
+
+msgid "License: MIT"
+msgstr ""
+
+# ==================== dialogs/number_bases.py ====================
+msgid "Number Bases"
+msgstr ""
+
+msgid "Enter a value in any field to convert to other bases."
+msgstr ""
+
+msgid "Decimal"
+msgstr ""
+
+msgid "Binary"
+msgstr ""
+
+msgid "Octal"
+msgstr ""
+
+msgid "Hexadecimal"
+msgstr ""
+
+msgid "Duodecimal"
+msgstr ""
+
+msgid "Roman"
+msgstr ""
+
+# ==================== dialogs/functions_list.py ====================
+msgid "Functions"
+msgstr ""
+
+msgid "Search:"
+msgstr ""
+
+msgid "Insert into Expression"
+msgstr ""
+
+msgid "Arguments: {}"
+msgstr ""
+
+msgid "Arguments: {} or more"
+msgstr ""
+
+msgid "Arguments: {} to {}"
+msgstr ""
+
+msgid "Category: {}"
+msgstr ""
+
+# ==================== plot_dialog.py ====================
+msgid "Plot"
+msgstr ""
+
+msgid "Save PNG"
+msgstr ""
+
+msgid "Save SVG"
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Add expressions and click Plot"
+msgstr ""
+
+msgid "Expressions"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "X Range"
+msgstr ""
+
+msgid "Min:"
+msgstr ""
+
+msgid "Max:"
+msgstr ""
+
+msgid "Points:"
+msgstr ""
+
+msgid "Style"
+msgstr ""
+
+msgid "Line style:"
+msgstr ""
+
+msgid "Line width:"
+msgstr ""
+
+msgid "Show grid"
+msgstr ""
+
+msgid "Show legend"
+msgstr ""
+
+msgid "Title:"
+msgstr ""
+
+msgid "matplotlib is required for plotting.\nInstall with:  pip install matplotlib"
+msgstr ""
+
+msgid "Missing Dependency"
+msgstr ""
+
+msgid "X min, max, and points must be valid numbers."
+msgstr ""
+
+msgid "Invalid Range"
+msgstr ""
+
+msgid "X min must be less than X max."
+msgstr ""
+
+msgid "Add at least one expression to plot."
+msgstr ""
+
+msgid "No Expressions"
+msgstr ""
+
+msgid "(empty)"
+msgstr ""
+
+msgid "Add Expression"
+msgstr ""
+
+msgid "Edit Expression"
+msgstr ""
+
+msgid "Expression:"
+msgstr ""
+
+msgid "Nothing to save. Click Plot first."
+msgstr ""
+
+msgid "No Plot"
+msgstr ""
+
+msgid "Save Plot as {}"
+msgstr ""
+
+msgid "Plot saved to:\n{}"
+msgstr ""
+
+msgid "Saved"
+msgstr ""
+
+msgid "Failed to save:\n{}"
+msgstr ""
+
+msgid "Save Error"
+msgstr ""
+
+# ==================== import_csv_dialog.py ====================
+msgid "Import CSV"
+msgstr ""
+
+msgid "File:"
+msgstr ""
+
+msgid "Browse..."
+msgstr ""
+
+msgid "Name:"
+msgstr ""
+
+msgid "First row:"
+msgstr ""
+
+msgid "First row contains headers"
+msgstr ""
+
+msgid "Delimiter:"
+msgstr ""
+
+msgid "Comma"
+msgstr ""
+
+msgid "Tab"
+msgstr ""
+
+msgid "Semicolon"
+msgstr ""
+
+msgid "Space"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "Format:"
+msgstr ""
+
+msgid "Separate vectors per column"
+msgstr ""
+
+msgid "Single matrix variable"
+msgstr ""
+
+msgid "Select CSV File"
+msgstr ""
+
+msgid "CSV files"
+msgstr ""
+
+msgid "All files"
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "Please select a CSV file."
+msgstr ""
+
+msgid "Import Failed"
+msgstr ""
+
+msgid "Could not import the CSV file. Check the file path and format."
+msgstr ""
+
+msgid "Imported as matrix variable '{}'."
+msgstr ""
+
+msgid "Imported columns as variables with prefix '{}'."
+msgstr ""
+
+msgid "Import Successful"
+msgstr ""
+
+msgid "Import Error"
+msgstr ""
+
+# ==================== export_csv_dialog.py ====================
+msgid "Export CSV"
+msgstr ""
+
+msgid "Source:"
+msgstr ""
+
+msgid "Named variable"
+msgstr ""
+
+msgid "Current result"
+msgstr ""
+
+msgid "Variable:"
+msgstr ""
+
+msgid "Save CSV File"
+msgstr ""
+
+msgid "Please specify an output file."
+msgstr ""
+
+msgid "Please enter a variable name."
+msgstr ""
+
+msgid "No calculator available."
+msgstr ""
+
+msgid "Variable '{}' not found."
+msgstr ""
+
+msgid "No data to export."
+msgstr ""
+
+msgid "Export Successful"
+msgstr ""
+
+msgid "Data exported to {}"
+msgstr ""
+
+msgid "Export Failed"
+msgstr ""
+
+msgid "Could not write the CSV file."
+msgstr ""
+
+# ==================== conversion_view.py ====================
+msgid "Categories"
+msgstr ""
+
+msgid "Units"
+msgstr ""
+
+msgid "Convert"
+msgstr ""
+
+msgid "Value:"
+msgstr ""
+
+msgid "From:"
+msgstr ""
+
+msgid "(select a unit)"
+msgstr ""
+
+msgid "To:"
+msgstr ""
+
+msgid "Copy Result"
+msgstr ""
+
+msgid "All Units"
+msgstr ""
+
+msgid "{} units"
+msgstr ""
+
+msgid "{} units in {}"
+msgstr ""
+
+msgid "{} matching units"
+msgstr ""
+
+msgid "Enter a value to convert"
+msgstr ""
+
+msgid "Select a source unit from the list"
+msgstr ""
+
+msgid "Enter a target unit"
+msgstr ""
+
+msgid "No calculator available"
+msgstr ""
+
+msgid "Conversion error: {}"
+msgstr ""
+
+msgid "Cannot convert {} to {}"
+msgstr ""
+
+# ==================== result_view.py / expression_status.py / history_view.py ====================
+msgid "Error: {}"
+msgstr ""
+
+# ==================== expression_status.py ====================
+msgid "EXACT"
+msgstr ""
+
+msgid "RPN"
+msgstr ""
+
+msgid "CHN"
+msgstr ""
+
+msgid "BIN"
+msgstr ""
+
+msgid "OCT"
+msgstr ""
+
+msgid "DUO"
+msgstr ""
+
+msgid "HEX"
+msgstr ""
+
+msgid "DEG"
+msgstr ""
+
+msgid "RAD"
+msgstr ""
+
+msgid "GRA"
+msgstr ""
+
+msgid "FUNC"
+msgstr ""
+
+msgid "UNIT"
+msgstr ""
+
+msgid "VAR"
+msgstr ""
+
+# ==================== autocomplete.py ====================
+msgid "Name"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Function: {}"
+msgstr ""
+
+msgid "Variable: {}"
+msgstr ""
+
+msgid "Unit: {}"
+msgstr ""
+
+# ==================== keyboard_shortcuts.py ====================
+msgid "Insert function"
+msgstr ""
+
+msgid "Insert variable"
+msgstr ""
+
+msgid "Insert unit"
+msgstr ""
+
+msgid "Insert text"
+msgstr ""
+
+msgid "Convert to unit"
+msgstr ""
+
+msgid "Convert to number base"
+msgstr ""
+
+msgid "Factorize result"
+msgstr ""
+
+msgid "Expand result"
+msgstr ""
+
+msgid "RPN: up"
+msgstr ""
+
+msgid "RPN: down"
+msgstr ""
+
+msgid "RPN: swap"
+msgstr ""
+
+msgid "RPN: copy"
+msgstr ""
+
+msgid "RPN: lastx"
+msgstr ""
+
+msgid "RPN: delete register"
+msgstr ""
+
+msgid "RPN: clear stack"
+msgstr ""
+
+msgid "Load meta mode"
+msgstr ""
+
+msgid "Set result base"
+msgstr ""
+
+msgid "Set expression base"
+msgstr ""
+
+msgid "Toggle exact mode"
+msgstr ""
+
+msgid "Set angle unit to degrees"
+msgstr ""
+
+msgid "Set angle unit to radians"
+msgstr ""
+
+msgid "Set angle unit to gradians"
+msgstr ""
+
+msgid "Toggle simple fractions"
+msgstr ""
+
+msgid "Toggle mixed fractions"
+msgstr ""
+
+msgid "Toggle scientific notation"
+msgstr ""
+
+msgid "Toggle simple notation"
+msgstr ""
+
+msgid "Toggle RPN mode"
+msgstr ""
+
+msgid "Toggle calculate as you type"
+msgstr ""
+
+msgid "Toggle programming keypad"
+msgstr ""
+
+msgid "Show keypad"
+msgstr ""
+
+msgid "Show history"
+msgstr ""
+
+msgid "Search history"
+msgstr ""
+
+msgid "Show conversion"
+msgstr ""
+
+msgid "Show RPN stack"
+msgstr ""
+
+msgid "Toggle minimal window"
+msgstr ""
+
+msgid "Manage variables"
+msgstr ""
+
+msgid "Manage functions"
+msgstr ""
+
+msgid "Manage units"
+msgstr ""
+
+msgid "Store result"
+msgstr ""
+
+msgid "MC (memory clear)"
+msgstr ""
+
+msgid "MR (memory recall)"
+msgstr ""
+
+msgid "MS (memory store)"
+msgstr ""
+
+msgid "M+ (memory plus)"
+msgstr ""
+
+msgid "M- (memory minus)"
+msgstr ""
+
+msgid "Open plot functions/data"
+msgstr ""
+
+msgid "Open convert number bases"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "Quit"
+msgstr ""
+
+msgid "Toggle chain mode"
+msgstr ""
+
+msgid "Show/hide completion"
+msgstr ""
+
+msgid "Perform completion"
+msgstr ""
+
+msgid "Insert result"
+msgstr ""
+
+msgid "Clear history"
+msgstr ""
+
+msgid "Insert parentheses"
+msgstr ""
+
+# ==================== preferences_dialog.py ====================
+msgid "Preferences"
+msgstr ""
+
+msgid "Calculation"
+msgstr ""
+
+msgid "Precision (significant digits):"
+msgstr ""
+
+msgid "Approximation mode:"
+msgstr ""
+
+msgid "Angle unit:"
+msgstr ""
+
+msgid "none"
+msgstr ""
+
+msgid "radians"
+msgstr ""
+
+msgid "degrees"
+msgstr ""
+
+msgid "gradians"
+msgstr ""
+
+msgid "Display"
+msgstr ""
+
+msgid "Number format:"
+msgstr ""
+
+msgid "Enable digit grouping (e.g. 1,000,000)"
+msgstr ""
+
+msgid "Use Unicode signs (\u00d7, \u00f7, \u221a, \u2248)"
+msgstr ""
+
+msgid "Exponent display:"
+msgstr ""
+
+msgid "Appearance"
+msgstr ""
+
+msgid "Font family:"
+msgstr ""
+
+msgid "Font size:"
+msgstr ""
+
+msgid "Theme:"
+msgstr ""
+
+msgid "Language:"
+msgstr ""
+
+msgid "Please restart the application for the language change to take effect."
+msgstr ""
+
+msgid "Language Changed"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
+msgid "中文（简体）"
+msgstr ""

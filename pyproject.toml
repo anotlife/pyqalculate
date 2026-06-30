@@ -60,6 +60,7 @@ include = ["pyqalculate*", "pyqalc*", "pyqalculate_gui*"]
 
 [tool.setuptools.package-data]
 pyqalculate_data = ["*.json"]
+pyqalculate_gui = ["locales/**/*.mo"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -20,6 +20,7 @@ from pyqalculate_gui.event_bus import (
 )
 from pyqalculate_gui.math_renderer import MathRenderer
 from pyqalculate_gui.theme import LIGHT, Theme
+from pyqalculate_gui.i18n import _
 
 SEPARATOR_LEN = 40
 
@@ -129,7 +130,7 @@ class ResultView(ttk.Frame):
 
     def show_error(self, error: str) -> None:
         """Show an error message."""
-        self._append(f"Error: {error}\n", "error")
+        self._append(_("Error: {}").format(error) + "\n", "error")
         self._append("─" * SEPARATOR_LEN + "\n", "separator")
 
     def show_info(self, info: str) -> None:

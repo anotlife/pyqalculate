@@ -13,18 +13,19 @@ from typing import TYPE_CHECKING
 
 from pyqalculate_gui.dialogs.base import ModalDialog
 from pyqalculate_gui.theme import LIGHT, Theme
+from pyqalculate_gui.i18n import _
 
 if TYPE_CHECKING:
     from pyqalculate_gui.calculator_service import CalculatorService
 
 # (display_label, entry_key, calculator_prefix)
 _BASES: list[tuple[str, str, str]] = [
-    ("Decimal", "10", ""),
-    ("Binary", "2", "0b"),
-    ("Octal", "8", "0o"),
-    ("Hexadecimal", "16", "0x"),
-    ("Duodecimal", "12", ""),
-    ("Roman", "roman", ""),
+    (_("Decimal"), "10", ""),
+    (_("Binary"), "2", "0b"),
+    (_("Octal"), "8", "0o"),
+    (_("Hexadecimal"), "16", "0x"),
+    (_("Duodecimal"), "12", ""),
+    (_("Roman"), "roman", ""),
 ]
 
 
@@ -40,7 +41,7 @@ class NumberBasesDialog(ModalDialog):
     ) -> None:
         super().__init__(
             parent,
-            title="Number Bases",
+            title=_("Number Bases"),
             size=(500, 400),
             resizable=(True, True),
             theme=theme,
@@ -58,15 +59,15 @@ class NumberBasesDialog(ModalDialog):
         """Build the number bases dialog content."""
         ttk.Label(
             parent,
-            text="Enter a value in any field to convert to other bases.",
+            text=_("Enter a value in any field to convert to other bases."),
             font=self._theme.info_font,
         ).pack(anchor=tk.W, pady=(0, 10))
 
-        for label, key, _ in _BASES:
+        for label, key, _prefix in _BASES:
             frame = ttk.Frame(parent)
             frame.pack(fill=tk.X, pady=2)
 
-            ttk.Label(frame, text=f"{label}:", width=14).pack(side=tk.LEFT)
+            ttk.Label(frame, text=_("{}:").format(label), width=14).pack(side=tk.LEFT)
 
             entry = ttk.Entry(frame, font=self._theme.expression_font)
             entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(5, 0))
