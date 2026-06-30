@@ -1,7 +1,7 @@
 # 第9章 绘图系统
 
 > **验证状态**: ✅ 已验证  
-> **来源**: `pyqalculate/plot.py` (434 行)
+> **来源**: `pyqalculate/plot.py` (543 行)
 
 ---
 
@@ -55,7 +55,7 @@ plotter.plot_implicit("x^2 + y^2 - 1", filename="circle.png")
 
 ## 9.3 Plotter 方法
 
-[来源: plot.py:73-434]
+[来源: plot.py:73-543]
 
 | 方法 | 行号 | 说明 |
 |------|------|------|
@@ -123,7 +123,7 @@ result = plotter.plot_data(
 ## 9.7 generate_data — 生成数据
 
 ```python
-x_vals, y_vals = plotter.generate_data(
+data = plotter.generate_data(
     expr="x^2",
     x_min=-5,
     x_max=5,
@@ -131,7 +131,7 @@ x_vals, y_vals = plotter.generate_data(
 )
 ```
 
-**返回**: (x_values, y_values) 元组
+**返回**: `PlotData` 对象（含 `x_values` 和 `y_values` 属性）
 
 [来源: plot.py:253-310]
 
@@ -165,16 +165,13 @@ result = plotter.plot_parametric(
 ```python
 result = plotter.plot_implicit(
     expr_str="x^2 + y^2 - 1",  # f(x,y) = 0
-    params=None,
-    x_min=-2,
-    x_max=2,
-    y_min=-2,
-    y_max=2,
+    x_range=(-2.0, 2.0),
+    y_range=(-2.0, 2.0),
     filename="circle.png"
 )
 ```
 
-**原理**: 使用 matplotlib 的等高线功能 (`contour`) 绘制 f(x,y) = 0 的等高线 [来源: plot.py:361-434]
+**原理**: 使用 matplotlib 的等高线功能 (`contour`) 绘制 f(x,y) = 0 的等高线 [来源: plot.py:361-419]
 
 **示例**:
 - 圆: `x^2 + y^2 - 1`
@@ -183,7 +180,30 @@ result = plotter.plot_implicit(
 
 ---
 
-## 9.10 PlotParameters — 绘图参数
+## 9.10 plot_subplot — 子图绘图
+
+[来源: plot.py:420-474]
+
+```python
+result = plotter.plot_subplot(
+    subplot_specs=[
+        {"type": "plot", "args": {"expr": "sin(x)", "x_min": -10, "x_max": 10}},
+        {"type": "plot", "args": {"expr": "cos(x)", "x_min": -10, "x_max": 10}},
+    ],
+    rows=1,
+    cols=2,
+    filename="subplot.png"
+)
+```
+
+每个 subplot spec 支持以下 `type`:
+- `"plot"`: 标准函数绘图
+- `"parametric"`: 参数方程绘图
+- `"implicit"`: 隐函数绘图
+
+---
+
+## 9.11 PlotParameters — 绘图参数
 
 ```python
 @dataclass
@@ -192,21 +212,49 @@ class PlotParameters:
     x_label: str = ""        # X 轴标签
     y_label: str = ""        # Y 轴标签
     filename: str = ""       # 输出文件名
-    color: str = ""          # 颜色
+    filetype: PlotFileType = PlotFileType.AUTO  # 输出格式
+    font: str = ""           # 字体
+    color: str = "blue"      # 颜色
     grid: bool = True        # 显示网格
-    x_min: float = None      # X 最小值
-    x_max: float = None      # X 最大值
-    y_min: float = None      # Y 最小值
-    y_max: float = None      # Y 最大值
-    x_log: bool = False      # X 轴对数
-    y_log: bool = False      # Y 轴对数
+    x_axis_with: bool = True # X 轴是否与 Y 轴交叉
+    x_min: float = 0.0       # X 最小值（auto_x_min=True 时自动计算）
+    x_max: float = 0.0       # X 最大值（auto_x_max=True 时自动计算）
+    y_min: float = 0.0       # Y 最小值（auto_y_min=True 时自动计算）
+    y_max: float = 0.0       # Y 最大值（auto_y_max=True 时自动计算）
+    auto_x_min: bool = True  # 自动 X 最小值
+    auto_x_max: bool = True  # 自动 X 最大值
+    auto_y_min: bool = True  # 自动 Y 最小值
+    auto_y_max: bool = True  # 自动 Y 最大值
+    logarithmic_x: bool = False  # X 轴对数
+    logarithmic_y: bool = False  # Y 轴对数
 ```
 
-[来源: types.py:746-768]
+[来源: types.py:748-769]
 
 ---
 
-## 9.11 安全表达式求值
+## 9.12 PlotDataParameters — 数据系列参数
+
+[来源: types.py:772-783]
+
+```python
+@dataclass
+class PlotDataParameters:
+    """Parameters for a single data series in a plot."""
+    title: str = ""                         # 系列标题
+    style: PlotStyle = PlotStyle.LINES      # 绘图样式
+    smoothing: PlotSmoothing = PlotSmoothing.NONE  # 平滑方式
+    test_continuous: bool = False           # 检测连续性
+    force_continuous: bool = False          # 强制连续
+    y_axis2: bool = False                   # 使用右侧 Y 轴
+    x_axis2: bool = False                   # 使用顶部 X 轴
+    color: str = ""                         # 颜色（空字符串使用调色板自动分配）
+    width: int = -1                         # 线宽（-1 为默认）
+```
+
+---
+
+## 9.13 安全表达式求值
 
 绘图使用受限命名空间，只包含数学函数，不执行任意代码 [来源: plot.py:25-37]
 
@@ -222,7 +270,7 @@ _SAFE_NAMESPACE = {
 
 ---
 
-## 9.12 输出格式
+## 9.14 输出格式
 
 支持的输出格式 [来源: types.py:510]:
 
@@ -232,11 +280,14 @@ _SAFE_NAMESPACE = {
 | SVG | 矢量图 |
 | PDF | PDF 文档 |
 | EPS | PostScript |
-| JPG | JPEG 图片 |
+| PS | PostScript |
+| LATEX | LaTeX (PGF/TikZ) |
+| FIG | XFig |
+| AUTO | 自动检测 |
 
 ---
 
-## 9.13 使用示例
+## 9.15 使用示例
 
 ### 基本函数
 

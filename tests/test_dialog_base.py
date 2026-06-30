@@ -96,6 +96,28 @@ def test_custom_size() -> None:
         root.destroy()
 
 
+def test_show_ok_defaults_true() -> None:
+    """Given: no show_ok argument\nWhen: construct SimpleDialog\nThen: _show_ok is True."""
+    root = tk.Tk()
+    root.withdraw()
+    try:
+        dlg = SimpleDialog(root, "Test")
+        assert dlg._show_ok is True
+    finally:
+        root.destroy()
+
+
+def test_show_ok_false_stored() -> None:
+    """Given: show_ok=False\nWhen: construct SimpleDialog\nThen: _show_ok is False."""
+    root = tk.Tk()
+    root.withdraw()
+    try:
+        dlg = SimpleDialog(root, "Test", show_ok=False)
+        assert dlg._show_ok is False
+    finally:
+        root.destroy()
+
+
 # ---------------------------------------------------------------------------
 # Integration — requires a display (skip in headless CI)
 # ---------------------------------------------------------------------------

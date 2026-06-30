@@ -28,7 +28,7 @@ PyQalculate 是 [libqalculate](https://github.com/Qalculate/libqalculate) 的纯
 |------|-----|------|
 | 版本号 | 0.1.0 (Pre-Alpha) | `pyproject.toml:4` |
 | Python 要求 | >= 3.10 | `pyproject.toml:25` |
-| 许可证 | GPL-2.0 | `pyproject.toml:3` |
+| 许可证 | GPL-2.0-or-later | `pyproject.toml:3` |
 | qalculate 版本 | 5.11.0 | `pyqalculate/types.py:17` |
 
 ---
@@ -47,6 +47,10 @@ PyQalculate 是 [libqalculate](https://github.com/Qalculate/libqalculate) 的纯
 | matplotlib | >= 3.7.0 | 绘图 |
 | scipy | >= 1.11.0 | 科学计算 |
 | requests | >= 2.31.0 | HTTP 请求（汇率） |
+| numpy | >= 1.24.0 | array computing |
+| Pillow | >= 10.0.0 | image processing |
+| python-dateutil | >= 2.8.0 | date utilities |
+| pyreadline3 | >= 3.4.0 | readline for Windows |
 
 ---
 
@@ -54,12 +58,12 @@ PyQalculate 是 [libqalculate](https://github.com/Qalculate/libqalculate) 的纯
 
 ```
 pyqalculate/
-├── pyqalculate/           # 核心库（14 个 Python 模块）
+├── pyqalculate/           # 核心库（16 个 Python 模块）
 │   ├── __init__.py         # 公共 API：导出 Calculator
-│   ├── calculator.py       # 主 Calculator 类（~2500 行）
-│   ├── builtin_functions.py # 156 个内置数学函数（3713 行）
+│   ├── calculator.py       # 主 Calculator 类（2530 行）
+│   ├── builtin_functions.py # 156 个内置数学函数（3817 行）
 │   ├── parser.py           # 表达式解析器（1118 行）
-│   ├── math_structure.py   # MathStructure AST 节点（2482 行）
+│   ├── math_structure.py   # MathStructure AST 节点（2600 行）
 │   ├── number.py           # Number 类（有理数/浮点/复数）
 │   ├── unit.py             # Unit 层次结构（779 行）
 │   ├── variable.py         # Variable 类（347 行）
@@ -70,12 +74,12 @@ pyqalculate/
 │   ├── expression_item.py  # ExpressionItem 基类
 │   ├── dataset.py          # DataSet 结构化数据（438 行）
 │   ├── datetime_ext.py     # 日期时间扩展（232 行）
-│   └── plot.py             # matplotlib 绘图器（434 行）
+│   └── plot.py             # matplotlib 绘图器（543 行）
 ├── pyqalc/                 # CLI 包
-│   ├── cli.py              # CLI 入口点（602 行）
+│   ├── cli.py              # CLI 入口点（960 行）
 │   └── __main__.py         # 模块运行器
 ├── pyqalculate_gui/        # GUI 包（实验性）
-│   ├── app.py              # 应用程序控制器（587 行）
+│   ├── app.py              # 应用程序控制器（652 行）
 │   ├── calculator_service.py # GUI 计算器服务包装器
 │   ├── event_bus.py        # 事件驱动通信
 │   ├── expression_edit.py  # 表达式输入组件
@@ -85,17 +89,28 @@ pyqalculate/
 │   ├── menu_bar.py         # 菜单栏
 │   ├── autocomplete.py     # 自动补全弹窗
 │   ├── theme.py            # 亮色/暗色主题
+│   ├── conversion_view.py  # 单位转换视图
+│   ├── expression_status.py # 表达式状态显示
+│   ├── i18n.py             # 国际化
+│   ├── import_csv_dialog.py # CSV 导入对话框
+│   ├── export_csv_dialog.py # CSV 导出对话框
+│   ├── keyboard_shortcuts.py # 键盘快捷键
+│   ├── math_renderer.py    # 数学公式渲染
+│   ├── state.py            # 应用状态
+│   ├── status_bar.py       # 状态栏
 │   ├── plot_dialog.py      # 绘图配置对话框
 │   ├── preferences_dialog.py # 设置对话框
-│   └── dialogs/            # 数制转换、函数列表、帮助对话框
+│   └── dialogs/            # 数制转换、函数列表、帮助、基类对话框
 ├── pyqalculate_data/       # JSON 数据文件
 │   ├── units.json          # 500+ 单位定义
 │   ├── variables.json      # 166+ 常量/变量
 │   ├── prefixes.json       # SI 和二进制前缀
 │   ├── currencies.json     # 货币定义
 │   ├── elements.json       # 118 种化学元素
-│   └── planets.json        # 10 个太阳系天体
-├── tests/                  # 39 个测试文件
+│   ├── planets.json        # 10 个太阳系天体
+│   ├── functions.json      # 函数定义
+│   └── datasets.json       # 数据集定义
+├── tests/                  # 38 个测试文件
 ├── scripts/                # 测试运行器、演示脚本
 ├── start.bat               # Windows 启动器
 └── docs/                   # 文档

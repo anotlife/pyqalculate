@@ -175,12 +175,22 @@ class PreferencesDialog(ModalDialog):
         ttk.Label(frame, text=_("Angle unit:"), font=("", 10)).grid(
             row=row, column=0, sticky="w", pady=(0, 4),
         )
-        angle_var = tk.StringVar(value=self._settings["angle_unit"])
+        # Map internal keys to translated display values
+        _ANGLE_DISPLAY = {
+            "none": _("none"),
+            "radians": _("radians"),
+            "degrees": _("degrees"),
+            "gradians": _("gradians"),
+        }
+        _ANGLE_REVERSE = {v: k for k, v in _ANGLE_DISPLAY.items()}
+        angle_var = tk.StringVar(value=_ANGLE_DISPLAY.get(self._settings["angle_unit"], _("degrees")))
         self._vars["angle_unit"] = angle_var
+        self._angle_display = _ANGLE_DISPLAY  # store for sync
+        self._angle_reverse = _ANGLE_REVERSE
         ttk.Combobox(
             frame,
             textvariable=angle_var,
-            values=[_("none"), _("radians"), _("degrees"), _("gradians")],
+            values=list(_ANGLE_DISPLAY.values()),
             state="readonly",
             width=14,
         ).grid(row=row, column=1, sticky="w", padx=(12, 0), pady=(0, 4))
@@ -363,6 +373,9 @@ class PreferencesDialog(ModalDialog):
     def _sync_from_widgets(self) -> None:
         """Read current widget values into the settings dict."""
         for key, var in self._vars.items():
-            self._settings[key] = var.get()
+            value = var.get()
+            if key == "angle_unit":
+                value = self._angle_reverse.get(value, value)
+            self._settings[key] = value
         lang_display = self._settings.get("language", "English")
         self._settings["language"] = _LANG_DISPLAY_TO_CODE.get(lang_display, "en")

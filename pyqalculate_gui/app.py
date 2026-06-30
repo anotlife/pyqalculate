@@ -23,6 +23,7 @@ from pyqalculate_gui.event_bus import (
     EXPORT_CSV,
     HISTORY_RECALLED,
     IMPORT_CSV,
+    MODE_CHANGED,
     OPEN_HELP_DOC,
     OPEN_HISTORY_WINDOW,
     OPEN_NUMBER_BASES,
@@ -82,14 +83,14 @@ class App:
 
     def __init__(self) -> None:
         self._root = tk.Tk()
-        self._root.geometry("800x600")
-        self._root.minsize(600, 400)
+        # self._root.geometry("600x450")  # removed — auto-sized after _build_ui
+        self._root.minsize(400, 300)
 
         self._state = AppState()
         self._theme: Theme = LIGHT
         self._event_bus = EventBus()
         self._calculator = CalculatorService()
-        self._eo = EvaluationOptions(approximation=ApproximationMode.TRY_EXACT)
+        self._eo = EvaluationOptions(approximation=ApproximationMode.APPROXIMATE)
         self._conversion_window: ConversionWindow | None = None
         self._history_window: HistoryWindow | None = None
 
@@ -102,6 +103,10 @@ class App:
         self._init_shortcuts()
         self._update_status()
         self._root.after(100, self._expr_edit.focus_input)
+
+        # Auto-size window to fit all widgets tightly
+        self._root.update_idletasks()
+        self._root.geometry("400x300")
 
     @staticmethod
     def _load_language() -> str:
@@ -149,6 +154,15 @@ class App:
         main = ttk.Frame(self._root, padding=8)
         main.pack(fill=tk.BOTH, expand=True)
 
+        # Expression edit — fills all available space
+        self._expr_edit = ExpressionEdit(
+            main,
+            theme=self._theme,
+            event_bus=self._event_bus,
+            state=self._state,
+        )
+        self._expr_edit.pack(fill=tk.BOTH, expand=True, side=tk.TOP, pady=(0, 4))
+
         # Status bar at bottom (packed first to anchor)
         self._status_bar = StatusBar(
             main, theme=self._theme, event_bus=self._event_bus,
@@ -166,22 +180,10 @@ class App:
             main, theme=self._theme, event_bus=self._event_bus, emit_updates=True,
         )
 
-        # Expression status bar (below expression)
+        # Expression status bar (backend only — mode events, not displayed)
         self._expr_status = ExpressionStatusBar(
             main, theme=self._theme, event_bus=self._event_bus,
         )
-        self._expr_status.pack(fill=tk.X, side=tk.BOTTOM, pady=(0, 4))
-
-        # Expression edit (below result)
-        self._expr_edit = ExpressionEdit(
-            main,
-            theme=self._theme,
-            event_bus=self._event_bus,
-            state=self._state,
-        )
-        self._expr_edit.pack(fill=tk.X, side=tk.BOTTOM, pady=(0, 0))
-        self._expr_edit.pack_propagate(False)
-        self._expr_edit.configure(height=40)
 
         # Autocomplete popup — wired to expression edit's text widget
         self._autocomplete = AutoComplete(
@@ -197,11 +199,13 @@ class App:
         self._expr_edit.bind_key("<Escape>", self._on_escape_key)
         self._expr_edit.bind_key("<Tab>", self._on_tab_key)
 
-        # Result view (expandable middle - fills remaining space)
+        # Backend only — not displayed; stores results for get_last_result()/get_answer()
         self._result_view = ResultView(
             main, theme=self._theme, event_bus=self._event_bus,
         )
-        self._result_view.pack(fill=tk.BOTH, expand=True, pady=(4, 0))
+
+        # Sync initial mode state to all listeners
+        self._event_bus.emit(MODE_CHANGED, {"exact": False, "angle": "degrees", "base": 10})
 
     # ------------------------------------------------------------------
     # Event wiring
@@ -275,18 +279,17 @@ class App:
         result = self._calculator.calculate(expr, eo=self._eo)
         self._history_view.add_expression(expr)
         if result.error:
-            self._result_view.show_error(result.error)
             self._expr_status.show_error(result.error)
             self._history_view.add_error(result.error)
         else:
             self._result_view.show_result(expr, result.result, result.exact)
+            expr_text = expr
+            self._expr_edit.show_expression_and_result(expr_text, result.result)
             self._expr_status.show_autocalc_result(
                 result.result, result.exact
             )
             self._history_view.add_result(result.result, result.exact)
 
-        if not result.error:
-            self._expr_edit.clear()
         self._expr_edit.focus_input()
 
     def _resolve_answer_refs(self, expression: str) -> str:
@@ -381,7 +384,6 @@ class App:
             self._menu_bar,
             self._status_bar,
             self._keypad,
-            self._expr_status,
             self._expr_edit,
             self._result_view,
             self._autocomplete,
@@ -420,6 +422,11 @@ class App:
         self._exact_var.set(approx_mode == ApproximationMode.EXACT)
         self._exact_trace_id = self._exact_var.trace_add("write", self._on_exact_mode_toggle)
 
+        # Emit updated mode info to sync expression status bar
+        exact = approx_mode == ApproximationMode.EXACT
+        angle = str(settings.get("angle_unit", "degrees"))
+        self._event_bus.emit(MODE_CHANGED, {"exact": exact, "angle": angle, "base": 10})
+
     def _on_exact_mode_toggle(self, *args: object) -> None:
         """React to the Exact Mode menu checkbox toggle."""
         is_exact = self._exact_var.get()
@@ -428,6 +435,7 @@ class App:
             if is_exact
             else ApproximationMode.APPROXIMATE,
         )
+        self._event_bus.emit(MODE_CHANGED, {"exact": is_exact, "angle": "degrees", "base": 10})
 
     def _on_result_displayed(self, expression: str, result: str, exact: bool) -> None:
         """Update expression status bar when a result is displayed."""

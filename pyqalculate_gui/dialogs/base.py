@@ -16,7 +16,7 @@ class ModalDialog(ABC):
     """Base class for all modal dialogs.
 
     Subclasses must implement ``_build_content`` to populate the dialog body.
-    OK / Cancel buttons are provided automatically.
+    OK / Cancel buttons are provided by default; set show_ok=False to suppress the OK button.
     """
 
     def __init__(
@@ -26,12 +26,14 @@ class ModalDialog(ABC):
         size: tuple[int, int] = (400, 300),
         resizable: tuple[bool, bool] = (False, False),
         theme: Theme = LIGHT,
+        show_ok: bool = True,
     ) -> None:
         self._parent = parent
         self._title = title
         self._size = size
         self._resizable = resizable
         self._theme = theme
+        self._show_ok = show_ok
         self._result: Any = None
         self._dialog: tk.Toplevel | None = None
 
@@ -44,6 +46,13 @@ class ModalDialog(ABC):
         """Build dialog content inside *parent* frame.
 
         Subclasses must override this method.
+        """
+
+    def _add_extra_buttons(self, btn_frame: ttk.Frame) -> None:
+        """Hook for subclasses to add custom buttons to the bottom bar.
+
+        Called before OK/Cancel in ``show()``.  Default is no-op.
+        Buttons should pack with ``side=tk.RIGHT``.
         """
 
     # ------------------------------------------------------------------
@@ -71,9 +80,12 @@ class ModalDialog(ABC):
         btn_frame = ttk.Frame(self._dialog, padding=(10, 0, 10, 10))
         btn_frame.pack(fill=tk.X)
 
-        ttk.Button(btn_frame, text=_("OK"), command=self._on_ok).pack(
-            side=tk.RIGHT, padx=5,
-        )
+        self._add_extra_buttons(btn_frame)
+
+        if self._show_ok:
+            ttk.Button(btn_frame, text=_("OK"), command=self._on_ok).pack(
+                side=tk.RIGHT, padx=5,
+            )
         ttk.Button(btn_frame, text=_("Cancel"), command=self._on_cancel).pack(
             side=tk.RIGHT,
         )

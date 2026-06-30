@@ -149,8 +149,8 @@
 | `floatError(x)` | 函数 | [04b.9 进制转换函数](04b-functions.md#4b9-进制转换函数-8-个) | ✅ |
 | `for(init, cond, step, expr)` | 函数 | [04b.13 工具函数](04b-functions.md#4b13-工具函数-16-个) | ✅ 支持符号边界 |
 | `frac(x)` | 函数 | [04b.4 数论函数](04b-functions.md#4b4-数论函数-28-个) | ✅ |
-| `fresnelC(x)` | 函数 | [04b.11 特殊函数](04b-functions.md#4b11-特殊函数-12-个) | ⚠️ |
-| `fresnelS(x)` | 函数 | [04b.11 特殊函数](04b-functions.md#4b11-特殊函数-12-个) | ⚠️ |
+| `fresnelc(x)` | 函数 | [04b.11 特殊函数](04b-functions.md#4b11-特殊函数-12-个) | ⚠️ |
+| `fresnels(x)` | 函数 | [04b.11 特殊函数](04b-functions.md#4b11-特殊函数-12-个) | ⚠️ |
 | `functions` | 命令 | [04.4 REPL 元命令](04-cli.md#44-repl-元命令) | ✅ |
 
 ---
@@ -476,7 +476,7 @@
 - **统计**: mean, stdev, variance, median, mode, percentile, quartile, normdist, min, max, rand, correlation, covariance → [04b.8](04b-functions.md#4b8-统计函数-13-个)
 - **进制转换**: bin, oct, hex, base, roman, float, floatError, bases → [04b.9](04b-functions.md#4b9-进制转换函数-8-个)
 - **日期时间**: date, timestamp, stamptodate, days, weeks, months, years, now, today, lunarphase → [04b.10](04b-functions.md#4b10-日期时间函数-10-个)
-- **特殊函数**: zeta, beta, erf, erfc, besselj, bessely, airy, fresnelS, fresnelC, digamma, heaviside, dirac → [04b.11](04b-functions.md#4b11-特殊函数-12-个)
+- **特殊函数**: zeta, beta, erf, erfc, besselj, bessely, airy, fresnels, fresnelc, digamma, heaviside, dirac → [04b.11](04b-functions.md#4b11-特殊函数-12-个)
 - **逻辑/位运算**: bitand, bitor, bitxor, bitnot, shift, and, or, xor, not → [04b.12](04b-functions.md#4b12-逻辑位运算函数-9-个)
 - **工具函数**: if, for, genvector, load, export, replace, tostring, length, concatenate, is_number, is_real, is_rational, is_integer, odd, even, plot → [04b.13](04b-functions.md#4b13-工具函数-16-个)
 

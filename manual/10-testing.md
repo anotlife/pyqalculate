@@ -32,6 +32,7 @@
 | `test_csv.py` | CSV 导入/导出 | `tests/test_csv.py` |
 | `test_integration.py` | 集成测试 | `tests/test_integration.py` |
 | `test_qalculate_reference.py` | 参考测试用例 | `tests/test_qalculate_reference.py` |
+| `test_cli.py` | CLI 测试 | `tests/test_cli.py` |
 
 ### GUI 测试
 

@@ -1,7 +1,7 @@
 # 第5章 图形界面 (GUI)
 
 > **验证状态**: ✅ 已验证  
-> **来源**: `pyqalculate_gui/app.py` (587 行), `pyqalculate_gui/` 目录
+> **来源**: `pyqalculate_gui/app.py` (652 行), `pyqalculate_gui/` 目录
 
 ---
 
@@ -33,18 +33,20 @@ start.bat → 选择 [2]
 root (tk.Tk)
 ├── MenuBar                    # Menu bar
 └── main (ttk.Frame)
-    ├── StatusBar              # Bottom status bar
-    ├── KeypadWidget           # Virtual keypad (with dropdown menus)
-    ├── PanedWindow(HORIZONTAL)
-    │   ├── HistoryView        # History (single instance)
-    │   └── ConversionView     # Unit conversion
-    ├── ExpressionStatusBar    # Expression status
+    ├── ResultView             # Result display (fills remaining space)
     ├── ExpressionEdit         # Expression input
-    ├── AutoComplete           # Autocomplete popup
-    └── ResultView             # Result display (double-click recalls expression)
+    │   └── AutoComplete       # Autocomplete popup (child of ExpressionEdit)
+    ├── ExpressionStatusBar    # Expression status
+    ├── KeypadWidget           # Virtual keypad
+    └── StatusBar              # Bottom status bar
 ```
 
-[来源: app.py:103-183]
+**Notes**:
+- HistoryView is created but not packed (backend only, used by answer(N) and history window)
+- ConversionView opens as a separate Toplevel window (not in main)
+- PanedWindow does NOT exist in the widget tree
+
+[来源: app.py:131-204]
 
 ---
 
@@ -70,23 +72,24 @@ root (tk.Tk)
 
 | Row | Col 0 | Col 1 | Col 2 | Col 3 | Col 4 |
 |-----|-------|-------|-------|-------|-------|
-| 0 | AC | DEL | ( | ) | ÷ |
-| 1 | 7 | 8 | 9 | × | x² |
-| 2 | 4 | 5 | 6 | − | √ |
-| 3 | 1 | 2 | 3 | + | x^y |
-| 4 | 0 | . | EXP | ± | = |
-| 5 | sin | cos | tan | ln | log |
+| 0 | sin | cos | tan | ln | log |
+| 1 | ( | ) | x² | xʸ | √ |
+| 2 | 7 | 8 | 9 | DEL | AC |
+| 3 | 4 | 5 | 6 | × | ÷ |
+| 4 | 1 | 2 | 3 | + | − |
+| 5 | 0 | . | EXP | ± | = |
 
 **Dropdown Menus**: Right-click on function buttons to access alternatives:
 - `sin` → asin, sinh, asinh
 - `cos` → acos, cosh, acosh
 - `tan` → atan, tanh, atanh
-- `√` → cbrt
+- `√` → ∛ (cbrt)
 - `ln` → log, log₂, log₁₀
+- `log` → log₂, log₁₀
 - `x²` → x³
-- `x^y` → x^(1/y)
+- `xʸ` → x^(1/y)
 
-[来源: keypad.py:14-57]
+[来源: keypad.py:15-96]
 
 ### HistoryView — History Display
 
@@ -119,18 +122,18 @@ root (tk.Tk)
 
 ## 5.4 菜单栏
 
-[来源: menu_bar.py:24-123]
+[来源: menu_bar.py:24-120]
 
 ### File 菜单
 
 | 菜单项 | 快捷键 | 功能 |
 |--------|--------|------|
-| Clear All | Ctrl+L | 清除所有 |
 | Import CSV... | — | 导入 CSV |
 | Export CSV... | — | 导出 CSV |
+| Preferences... | — | 打开设置 |
 | Exit | — | 退出 |
 
-[来源: menu_bar.py:52-62]
+[来源: menu_bar.py:53-60]
 
 ### Edit 菜单
 
@@ -138,40 +141,40 @@ root (tk.Tk)
 |--------|--------|------|
 | Copy Result | Ctrl+C | 复制结果 |
 | Clear Expression | — | 清除表达式 |
+| Clear All | Ctrl+L | 清除所有 |
 
-[来源: menu_bar.py:64-70]
+[来源: menu_bar.py:62-71]
 
 ### Mode 菜单
 
 | 菜单项 | 功能 |
 |--------|------|
-| Exact Mode | 切换精确模式（已验证可用） |
+| Exact Mode | 切换精确模式 |
 | Functions... | 管理函数 |
 | Variables... | 管理变量 |
 | Units... | 管理单位 |
-| Preferences... | 打开设置 |
 
-[来源: menu_bar.py:72-81]
+[来源: menu_bar.py:73-80]
 
-### View 菜单
+### Tools 菜单
 
 | 菜单项 | 功能 |
 |--------|------|
-| Toggle History | 切换历史面板 |
-| Toggle Keypad | 切换虚拟键盘 |
-| Toggle Conversion | 切换转换面板 |
 | Plot... | 打开绘图对话框 |
 | Number Bases... | 打开进制转换 |
+| Unit Conversion... | 打开单位转换窗口 |
+| History... | 打开历史窗口 |
 
-[来源: menu_bar.py:83-93]
+[来源: menu_bar.py:82-88]
 
 ### Help 菜单
 
 | 菜单项 | 功能 |
 |--------|------|
-| About | 显示版本 "PyQalculate v3.0" |
+| Help Documentation | 打开帮助 |
+| About | 显示关于对话框 |
 
-[来源: menu_bar.py:95-98]
+[来源: menu_bar.py:90-95]
 
 ---
 
@@ -197,6 +200,8 @@ root (tk.Tk)
 | Ctrl+P | 切换编程键盘 | `PROGRAMMING` |
 | Ctrl+R | 切换 RPN 模式 | `RPN_MODE` |
 | Tab | 接受第一个补全 | `ACTIVATE_FIRST_COMPLETION` |
+| Ctrl+Shift+( | 插入括号 | `PARENTHESES` |
+| Ctrl+Shift+) | 插入括号 | `PARENTHESES` |
 
 **RPN 快捷键**:
 
@@ -287,6 +292,23 @@ root (tk.Tk)
 **导出** [来源: export_csv_dialog.py:27-217]:
 - 数据源: 命名变量 / 当前结果
 - 分隔符选择
+
+---
+
+## 5.X 国际化 (i18n)
+
+[来源: i18n.py:1-122]
+
+PyQalculate GUI 支持通过 gettext 实现多语言界面。当前支持：
+
+| 语言 | 代码 | 翻译文件 |
+|------|------|---------|
+| English | en | (默认) |
+| 中文（简体） | zh_CN | `locales/zh_CN/LC_MESSAGES/pyqalculate.po` |
+
+**切换方式**: Preferences → Appearance → Language（需重启生效）
+
+**翻译覆盖**: 菜单栏、对话框、按钮、状态栏、快捷键说明等 UI 文本。
 
 ---
 

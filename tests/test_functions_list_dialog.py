@@ -10,7 +10,7 @@ import pytest
 from pyqalculate_gui.calculator_service import CalculatorService, FunctionInfo
 from pyqalculate_gui.dialogs.base import ModalDialog
 from pyqalculate_gui.dialogs.functions_list import FunctionsListDialog
-from pyqalculate_gui.event_bus import EXPRESSION_SUBMITTED, EventBus
+from pyqalculate_gui.event_bus import EventBus
 from pyqalculate_gui.theme import DARK, LIGHT
 
 # ---------------------------------------------------------------------------
@@ -281,15 +281,15 @@ class TestSearchFilter:
 
 
 class TestInsertFunction:
-    """Given: a FunctionsListDialog with an EventBus\nWhen:  inserting a function\nThen:  EXPRESSION_SUBMITTED is emitted."""
+    """Given: a FunctionsListDialog with an EventBus\nWhen:  inserting a function\nThen:  "keypad_insert" is emitted."""
 
-    def test_emits_expression_submitted(self) -> None:
-        """Insert emits EXPRESSION_SUBMITTED with function name."""
+    def test_emits_keypad_insert(self) -> None:
+        """Insert emits "keypad_insert" with function name."""
         root = _make_root()
         try:
             bus = EventBus()
             received: list[str] = []
-            bus.subscribe(EXPRESSION_SUBMITTED, lambda e: received.append(e))
+            bus.subscribe("keypad_insert", lambda e: received.append(e))
 
             dlg = FunctionsListDialog(root, event_bus=bus)
             dlg._name_var.set("sin")
@@ -297,6 +297,7 @@ class TestInsertFunction:
 
             assert len(received) == 1
             assert received[0] == "sin("
+            assert dlg.get_result() is True
         finally:
             root.destroy()
 
@@ -317,13 +318,31 @@ class TestInsertFunction:
         try:
             bus = EventBus()
             received: list[str] = []
-            bus.subscribe(EXPRESSION_SUBMITTED, lambda e: received.append(e))
+            bus.subscribe("keypad_insert", lambda e: received.append(e))
 
             dlg = FunctionsListDialog(root, event_bus=bus)
             dlg._name_var.set("")
             dlg._insert_function()
 
             assert len(received) == 0
+        finally:
+            root.destroy()
+
+    def test_insert_function_sets_result_true(self) -> None:
+        """Inserting a function sets _result to True."""
+        root = _make_root()
+        try:
+            bus = EventBus()
+            received: list[str] = []
+            bus.subscribe("keypad_insert", lambda e: received.append(e))
+
+            dlg = FunctionsListDialog(root, event_bus=bus)
+            dlg._name_var.set("sin")
+            dlg._insert_function()
+
+            assert len(received) == 1
+            assert received[0] == "sin("
+            assert dlg.get_result() is True
         finally:
             root.destroy()
 
@@ -392,7 +411,7 @@ class TestFunctionsListDialogIntegration:
             bus = EventBus()
             calc = CalculatorService()
             received: list[str] = []
-            bus.subscribe(EXPRESSION_SUBMITTED, lambda e: received.append(e))
+            bus.subscribe("keypad_insert", lambda e: received.append(e))
 
             dlg = FunctionsListDialog(root, event_bus=bus, calculator=calc)
 
