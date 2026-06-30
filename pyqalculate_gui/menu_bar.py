@@ -34,7 +34,7 @@ class MenuBar:
         self._parent = parent
         self._theme = theme
         self._event_bus = event_bus
-        self._exact_var = tk.BooleanVar(value=True)
+        self._exact_var = tk.BooleanVar(value=False)
         self._build_menu()
 
     # -- construction --------------------------------------------------------

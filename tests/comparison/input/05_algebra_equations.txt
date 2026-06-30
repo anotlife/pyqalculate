@@ -1,0 +1,41 @@
+=== 5. ALGEBRA & EQUATION SOLVING ===
+
+5.1 Polynomial factorization: x^6 - 1 to factors
+x^6 - 1 to factors
+=> (x - 1)(x + 1)(x^2 - x + 1)(x^2 + x + 1)
+
+
+5.2 Partial fraction: 1/(x^3 - x) to partial fraction
+1/(x^3 - x) to partial fraction
+=> 1 / (2x + 2) + 1 / (2x - 2) - 1 / x
+
+
+5.3 Multi-equation system: x+y+z=6, 2x-y+z=3, x+2y-z=5
+multisolve([x+y+z=6, 2x-y+z=3, x+2y-z=5]; [x, y, z])
+=> [1.857142857  2.428571429  1.714285714]
+
+
+5.4 Differential equation: dy/dx + 2y = 4x, y(0)=5
+dsolve(diff(y; x) + 2y = 4x; 5)
+=> 2x + 6 * 0.1353352832^x - 1
+
+
+5.5 Lambert W: solve(x = y + ln(y); y)
+solve(x = y + ln(y); y)
+=> lambertw(2.718281828^x)
+
+
+5.6 Quadratic with condition: x^2 + 5x + 6 = 0 where x > -3
+x^2 + 5x + 6 = 0 where x > -3
+=> x = -2
+
+
+5.7 Polynomial expansion: (x+1)^8 expanded
+expand((x+1)^8)
+=> 1 + 8x + 28x^2 + 56x^3 + 70x^4 + 56x^5 + 28x^6 + 8x^7 + x^8
+
+
+5.8 Symbolic GCD: gcd(x^3 - 1; x^2 - 1)
+gcd(x^3 - 1; x^2 - 1)
+=> x - 1
+

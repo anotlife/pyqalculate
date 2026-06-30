@@ -1,7 +1,7 @@
 # 第6章 Calculator API
 
 > **验证状态**: ✅ 已验证  
-> **来源**: `pyqalculate/calculator.py` (2517 行), `pyqalculate/types.py` (782 行)
+> **来源**: `pyqalculate/calculator.py` (2530 行), `pyqalculate/types.py` (783 行)
 
 ---
 
@@ -17,7 +17,7 @@ calc.load_global_definitions()    # 加载全局定义
 result = calc.calculate_and_print("1 + 1")  # "2"
 ```
 
-[来源: calculator.py:39, 223-240]
+[来源: calculator.py:39, 225-237]
 
 ---
 
@@ -35,41 +35,41 @@ calc = Calculator()
 
 | 方法 | 行号 | 说明 |
 |------|------|------|
-| `get_precision()` | 67 | 返回当前精度 |
-| `set_precision(n)` | 71 | 设置精度（有效数字位数） |
+| `get_precision()` | 69 | 返回当前精度 |
+| `set_precision(n)` | 73 | 设置精度（有效数字位数） |
 
-[来源: calculator.py:67-71]
+[来源: calculator.py:69-73]
 
 ### 定义管理
 
 | 方法 | 行号 | 说明 |
 |------|------|------|
-| `add_function(func)` | 77 | 注册数学函数 |
-| `add_variable(var)` | 82 | 注册变量 |
-| `add_unit(unit)` | 94 | 注册单位 |
-| `add_prefix(prefix)` | 108 | 注册前缀 |
-| `get_function(name)` | 112 | 查找函数（不区分大小写） |
-| `get_variable(name)` | 116 | 查找变量（不区分大小写） |
-| `get_unit(name)` | 120 | 查找单位（多优先级：精确→别名→前缀分解→不区分大小写） |
-| `get_item(name)` | 180 | 统一查找（单位→变量→函数） |
-| `has_function(name)` | 201 | 检查函数是否存在 |
-| `has_variable(name)` | 204 | 检查变量是否存在 |
-| `has_unit(name)` | 207 | 检查单位是否存在 |
-| `count_functions()` | 212 | 统计函数数量 |
-| `count_variables()` | 215 | 统计变量数量 |
-| `count_units()` | 218 | 统计单位数量 |
+| `add_function(func)` | 79 | 注册数学函数 |
+| `add_variable(var)` | 84 | 注册变量 |
+| `add_unit(unit)` | 96 | 注册单位 |
+| `add_prefix(prefix)` | 110 | 注册前缀 |
+| `get_function(name)` | 114 | 查找函数（不区分大小写） |
+| `get_variable(name)` | 118 | 查找变量（不区分大小写） |
+| `get_unit(name)` | 122 | 查找单位（多优先级：精确→别名→前缀分解→不区分大小写） |
+| `get_item(name)` | 182 | 统一查找（单位→变量→函数） |
+| `has_function(name)` | 203 | 检查函数是否存在 |
+| `has_variable(name)` | 206 | 检查变量是否存在 |
+| `has_unit(name)` | 209 | 检查单位是否存在 |
+| `count_functions()` | 214 | 统计函数数量 |
+| `count_variables()` | 217 | 统计变量数量 |
+| `count_units()` | 220 | 统计单位数量 |
 
-[来源: calculator.py:77-218]
+[来源: calculator.py:79-220]
 
 ### 定义加载
 
 | 方法 | 行号 | 说明 |
 |------|------|------|
-| `load_definitions()` | 223 | 加载所有内置函数、变量、单位、前缀 |
-| `load_global_definitions()` | 235 | 从 JSON 加载：166+ 变量/常量、元素数据集、行星数据集 |
-| `load_exchange_rates()` | 248 | 加载货币汇率（TODO） |
+| `load_definitions()` | 225 | 加载所有内置函数、变量、单位、前缀 |
+| `load_global_definitions()` | 237 | 从 JSON 加载：166+ 变量/常量、元素数据集、行星数据集 |
+| `load_exchange_rates()` | 250 | 加载货币汇率（TODO） |
 
-[来源: calculator.py:223-248]
+[来源: calculator.py:225-250]
 
 ---
 
@@ -87,7 +87,7 @@ mstruct = calc.parse("1 + 1", po=None)
 
 **返回**: MathStructure
 
-[来源: calculator.py:641]
+[来源: calculator.py:643]
 
 ### calculate — 计算表达式
 
@@ -102,7 +102,7 @@ mstruct = calc.calculate("1 + 1", timeout_ms=0, eo=None)
 
 **返回**: MathStructure
 
-**特殊处理** [来源: calculator.py:651-905]:
+**特殊处理** [来源: calculator.py:653-907]:
 - 单位转换: `"expr to unit"`
 - WHERE 子句: `"expr where x > 0"`
 - 日期运算: `"2024-01-01 + 100 days"`
@@ -124,7 +124,7 @@ result = calc.calculate_and_print("1 + 1", timeout_ms=0, eo=None, po=None)
 
 **返回**: 格式化的字符串
 
-[来源: calculator.py:906]
+[来源: calculator.py:908]
 
 ### print_result — 格式化结果
 
@@ -138,7 +138,7 @@ result = calc.print_result(mstruct, po=None)
 
 **返回**: 格式化的字符串
 
-[来源: calculator.py:940]
+[来源: calculator.py:950]
 
 ---
 
@@ -150,7 +150,7 @@ result = calc.print_result(mstruct, po=None)
 unit = calc.find_unit("meter")
 ```
 
-[来源: calculator.py:965]
+[来源: calculator.py:978]
 
 ### convert — 转换值
 
@@ -167,7 +167,7 @@ result = calc.convert(5.0, "ft", "m")  # 1.524
 
 **返回**: 转换后的数值，失败返回 None
 
-[来源: calculator.py:993]
+[来源: calculator.py:1006]
 
 ---
 
@@ -180,7 +180,7 @@ mstruct = calc.importCSV(filename, first_row=1, headers=True,
                          delimiter=",", to_matrix=False, name="")
 ```
 
-[来源: calculator.py:2355]
+[来源: calculator.py:2368]
 
 ### exportCSV
 
@@ -188,7 +188,7 @@ mstruct = calc.importCSV(filename, first_row=1, headers=True,
 calc.exportCSV(mstruct, filename, delimiter=",")
 ```
 
-[来源: calculator.py:2456]
+[来源: calculator.py:2469]
 
 ---
 
@@ -296,24 +296,24 @@ class ParseOptions:
 
 ## 6.8 MathStructure — 数学结构
 
-表达式的 AST（抽象语法树）节点 [来源: math_structure.py:728]
+表达式的 AST（抽象语法树）节点 [来源: math_structure.py:786]
 
 ### 工厂方法
 
 | 方法 | 行号 | 说明 |
 |------|------|------|
-| `from_number(n)` | 794 | 从数字创建 |
-| `from_variable(v)` | 801 | 从变量创建 |
-| `from_unit(u)` | 808 | 从单位创建 |
-| `from_symbol(s)` | 816 | 从符号创建 |
-| `undefined()` | 823 | 创建未定义 |
-| `addition(*children)` | 827 | 创建加法 |
-| `multiplication(*children)` | 833 | 创建乘法 |
-| `power(base, exp)` | 839 | 创建幂 |
-| `vector(*elements)` | 857 | 创建向量 |
-| `matrix(rows)` | 863 | 创建矩阵 |
+| `from_number(n)` | 853 | 从数字创建 |
+| `from_variable(v)` | 860 | 从变量创建 |
+| `from_unit(u)` | 867 | 从单位创建 |
+| `from_symbol(s)` | 875 | 从符号创建 |
+| `undefined()` | 882 | 创建未定义 |
+| `addition(*children)` | 886 | 创建加法 |
+| `multiplication(*children)` | 892 | 创建乘法 |
+| `power(base, exp)` | 898 | 创建幂 |
+| `vector(*elements)` | 916 | 创建向量 |
+| `matrix(rows)` | 922 | 创建矩阵 |
 
-[来源: math_structure.py:794-863]
+[来源: math_structure.py:853-922]
 
 ### SymPy 桥接
 
@@ -325,7 +325,7 @@ sympy_expr = mstruct.to_sympy()
 mstruct = MathStructure.from_sympy(sympy_expr)
 ```
 
-[来源: math_structure.py:898-1148]
+[来源: math_structure.py:956-1148]
 
 ### 属性检查
 
@@ -342,7 +342,7 @@ mstruct.is_matrix()      # 是否为矩阵
 mstruct.is_undefined()   # 是否未定义
 ```
 
-[来源: math_structure.py:1206-1261]
+[来源: math_structure.py:1274-1310]
 
 ---
 
@@ -354,4 +354,4 @@ from pyqalculate.calculator import get_calculator
 calc = get_calculator()  # 返回全局单例
 ```
 
-[来源: calculator.py:2512]
+[来源: calculator.py:2525]

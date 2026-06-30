@@ -10,6 +10,7 @@ import pytest
 
 from pyqalculate_gui.event_bus import EventBus, HISTORY_RECALLED
 from pyqalculate_gui.history_view import HistoryView, HistoryEntry
+from pyqalculate_gui.i18n import _
 from pyqalculate_gui.theme import LIGHT, DARK
 
 
@@ -33,7 +34,10 @@ def root():
     root = tk.Tk()
     root.withdraw()  # hide window
     yield root
-    root.destroy()
+    try:
+        root.destroy()
+    except Exception:
+        pass
 
 
 @pytest.fixture
@@ -133,7 +137,7 @@ class TestAddError:
         view = HistoryView(root)
         view.add_error("parse failed")
         assert view._listbox.size() == 1
-        assert view._listbox.get(0) == "Error: parse failed"
+        assert view._listbox.get(0) == _("Error: {}").format("parse failed")
 
     def test_add_error_stores_entry(self, root: tk.Tk) -> None:
         """Given: empty history When: adding error Then: entry stored as error type."""

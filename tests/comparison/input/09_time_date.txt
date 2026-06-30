@@ -1,0 +1,41 @@
+=== 9. TIME & DATE ===
+
+9.1 Time addition: 10:31 + 8:30 to time
+10:31 + 8:30 to time
+=> 19:01
+
+
+9.2 Time in hours: 10h 31min + 8h 30min to time
+10h 31min + 8h 30min to time
+=> 19:01
+
+
+9.3 Current time UTC
+now to utc
+=> "2026-06-19T11:54:21Z"
+
+
+9.4 Timezone conversion
+now to utc+8
+=> "2026-06-19T19:54:21+08:00"
+
+
+9.5 Date difference: days from 2024-01-01 to 2024-12-25
+days(2024-01-01; 2024-12-25)
+=> 359
+
+
+9.6 Date + 100 days
+2024-06-15 + 100 days
+=> 2003 + 100 * days()
+
+
+9.7 Timestamp
+timestamp(2024-01-01)
+=> 1704038400
+
+
+9.8 Multi-calendar
+2024-10-01 to calendars
+=> 2013
+

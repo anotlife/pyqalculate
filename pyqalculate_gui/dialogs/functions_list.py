@@ -10,7 +10,8 @@ from tkinter import ttk
 
 from pyqalculate_gui.calculator_service import CalculatorService, FunctionInfo
 from pyqalculate_gui.dialogs.base import ModalDialog
-from pyqalculate_gui.event_bus import EXPRESSION_SUBMITTED, EventBus
+from pyqalculate_gui.event_bus import EventBus
+from pyqalculate_gui.i18n import _
 from pyqalculate_gui.theme import LIGHT, Theme
 
 
@@ -26,10 +27,11 @@ class FunctionsListDialog(ModalDialog):
     ) -> None:
         super().__init__(
             parent,
-            title="Functions",
+            title=_("Functions"),
             size=(600, 500),
             resizable=(True, True),
             theme=theme,
+            show_ok=False,
         )
         self._calculator = calculator
         self._event_bus = event_bus
@@ -48,7 +50,7 @@ class FunctionsListDialog(ModalDialog):
         # Search
         search_frame = ttk.Frame(parent)
         search_frame.pack(fill=tk.X, pady=(0, 10))
-        ttk.Label(search_frame, text="Search:").pack(side=tk.LEFT)
+        ttk.Label(search_frame, text=_("Search:")).pack(side=tk.LEFT)
         search_entry = ttk.Entry(search_frame, textvariable=self._search_var)
         search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(5, 0))
         search_entry.bind("<KeyRelease>", self._on_search)
@@ -89,9 +91,6 @@ class FunctionsListDialog(ModalDialog):
         )
         self._desc_text.pack(fill=tk.BOTH, expand=True)
 
-        btn_frame = ttk.Frame(details_frame)
-        btn_frame.pack(fill=tk.X, pady=(10, 0))
-        ttk.Button(btn_frame, text="Insert into Expression", command=self._insert_function).pack(side=tk.LEFT)
         paned.add(details_frame, weight=2)
 
         self._load_functions()
@@ -169,14 +168,21 @@ class FunctionsListDialog(ModalDialog):
     def _format_args(info: FunctionInfo) -> str:
         """Format the argument-count line."""
         if info.min_args == info.max_args:
-            return f"Arguments: {info.min_args}"
+            return _("Arguments: {}").format(info.min_args)
         if info.max_args == -1:
-            return f"Arguments: {info.min_args} or more"
-        return f"Arguments: {info.min_args} to {info.max_args}"
+            return _("Arguments: {} or more").format(info.min_args)
+        return _("Arguments: {} to {}").format(info.min_args, info.max_args)
 
     def _insert_function(self) -> None:
         """Insert selected function name into the expression."""
         func_name = self._name_var.get()
         if func_name and self._event_bus is not None:
-            self._event_bus.emit(EXPRESSION_SUBMITTED, f"{func_name}(")
+            self._event_bus.emit("keypad_insert", f"{func_name}(")
+            self._result = True
             self._close()
+
+    def _add_extra_buttons(self, btn_frame: ttk.Frame) -> None:
+        ttk.Button(
+            btn_frame, text=_("Insert into Expression"),
+            command=self._insert_function,
+        ).pack(side=tk.RIGHT, padx=5)

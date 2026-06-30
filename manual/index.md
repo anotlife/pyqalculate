@@ -1,6 +1,6 @@
 # PyQalculate 使用手册
 
-> **版本**: 0.1.0 | **许可证**: GPL-2.0  
+> **版本**: 0.1.0 | **许可证**: GPL-2.0-or-later  
 > **最后更新**: 2026-06-29
 
 PyQalculate 是 [libqalculate](https://github.com/Qalculate/libqalculate) 的纯 Python 移植版，提供任意精度数学运算、单位转换、符号计算、绘图等功能。
@@ -16,7 +16,7 @@ PyQalculate 是 [libqalculate](https://github.com/Qalculate/libqalculate) 的纯
 | 3 | [start.bat 启动器](03-start-bat.md) | 所有菜单模式说明（CLI/GUI/测试/演示） |
 | 4 | [命令行界面 (CLI)](04-cli.md) | 命令参数、REPL 元命令、Tab 补全 |
 | 4a | [表达式语法](04a-expressions.md) | 运算符优先级、所有语法模式 |
-| 4b | [内置函数](04b-functions.md) | 157 函数分类、参数、示例 |
+| 4b | [内置函数](04b-functions.md) | 156 函数分类、参数、示例 |
 | 4c | [常量与变量](04c-constants.md) | 物理常量、数学常量、预定义变量 |
 | 4d | [CLI 命令示例](04d-examples.md) | 真实 CLI 输出、所有命令演示 |
 | 5 | [图形界面 (GUI)](05-gui.md) | 窗口布局、快捷键、主题、对话框 |

@@ -942,7 +942,8 @@ class Calculator:
 
         result = self.calculate(expression, timeout_ms, eo)
         if result.is_undefined():
-            return "Error: Division by zero"
+            msg = result._error_message or "Division by zero"
+            return f"Error: {msg}"
         return result.print(po)
 
     # -- Printing --

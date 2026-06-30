@@ -1,0 +1,51 @@
+=== 2. UNIT CONVERSIONS ===
+
+2.1 Speed: 3.5 miles in 12 minutes to km/h
+(3.5 * miles) / (12 * minutes) to km/h
+=> 28.16352 km/h
+
+
+2.2 Electromagnetic: 50 Ohm * 2.5 A = Voltage
+50 Ohm * 2.5 A
+=> 125 V
+
+
+2.3 Temperature: 98.6 F to C (manual)
+(98.6 - 32) * 5/9
+=> 37
+
+
+2.4 Data rate: 1 Gbit/s * 1 hour to GB
+1 Gbit/s * 3600 s to GB
+=> 450 GB
+
+
+2.5 Pressure: 14.7 psi to Pa
+14.7 psi to Pa
+=> 101352.9322 Pa
+
+
+2.6 Mixed unit: 1.74 m to ft+in
+1.74 to ft
+=> 5 ft + 8.503937008 in
+
+
+2.7 Energy: 1000 cal to J
+1000 cal to J
+=> 4184 J
+
+
+2.8 Force: 100 lbf to N
+100 lbf to N
+=> 444.8221615 N
+
+
+2.9 Volume: 1 US gallon to liters
+1 gallon to L
+=> 3.785411784 L
+
+
+2.10 Mass: 1 stone to kg
+1 stone to kg
+=> 6.35029318 kg
+

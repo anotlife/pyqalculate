@@ -12,6 +12,7 @@ from pyqalculate_gui.event_bus import (
     RESULT_DISPLAYED,
     EventBus,
 )
+from pyqalculate_gui.i18n import _
 from pyqalculate_gui.theme import DARK, LIGHT, Theme
 
 
@@ -94,7 +95,7 @@ class TestShowError:
         view, root = _make_view()
         view.show_error("divide by zero")
         content = view._text.get("1.0", tk.END)
-        assert "Error: divide by zero" in content
+        assert _("Error: {}").format("divide by zero") in content
         root.destroy()
 
     def test_error_does_not_update_last_result(self) -> None:

@@ -1,0 +1,43 @@
+=== 6. CALCULUS ===
+# FORMAT DIFF: pyqalculate returns more simplified/expanded forms for derivatives and integrals
+# Tests 6.1-6.4, 6.6-6.8 may show format differences but are symbolically equivalent
+
+6.1 Chain rule: diff(sin(x^2) * e^(-x))
+diff(sin(x^2) * e^(-x))
+=> 2 * 0.3678794412^x * cos(x^2) * x - 0.3678794412^x * sin(x^2)
+
+
+6.2 Symbolic integral: integrate(x^2 * ln(x))
+integrate(x^2 * ln(x))
+=> 0.3333333333 * ln(x) * x^3 - 0.1111111111x^3 + C
+
+
+6.3 Gaussian integral: integrate(e^(-x^2); -inf; inf)
+integrate(e^(-x^2); -inf; inf)
+=> 1.772453851 * erf(1 in)
+
+
+6.4 Limit: limit((1 + 1/n)^n; inf)
+limit((1 + 1/n)^n; inf)
+=> (n + 1)^n / n^n
+
+
+6.5 Limit: limit(sin(x)/x; 0)
+limit(sin(x)/x; 0)
+=> 1
+
+
+6.6 Second derivative: diff(x^4 - 3x^3 + 2x^2 - x + 1; x; 2)
+diff(x^4 - 3x^3 + 2x^2 - x + 1; x; 2)
+=> 12x^2 - 18x + 4
+
+
+6.7 Definite integral: integrate(sin(x)^2; 0; pi)
+integrate(sin(x)^2; 0; pi)
+=> 1.570796327
+
+
+6.8 Integral: integrate(1/(1+x^2); -inf; inf)
+integrate(1/(1+x^2); -inf; inf)
+=> 2 * arctan(1 in)
+

@@ -808,7 +808,7 @@ class MathStructure:
     __slots__ = (
         "_type", "_number", "_unit", "_prefix", "_variable", "_function",
         "_symbol", "_children", "_comparison_type", "_datetime",
-        "_number_fraction_format",
+        "_number_fraction_format", "_error_message",
     )
 
     def __init__(
@@ -833,6 +833,7 @@ class MathStructure:
         self._comparison_type: ComparisonType | None = None
         self._datetime: object | None = None
         self._number_fraction_format: NumberFractionFormat | None = None
+        self._error_message: str | None = None
 
         if struct_type is not None:
             self._type = struct_type
@@ -879,8 +880,11 @@ class MathStructure:
         return m
 
     @classmethod
-    def undefined(cls) -> MathStructure:
-        return cls(struct_type=StructureType.UNDEFINED)
+    def undefined(cls, message: str | None = None) -> MathStructure:
+        m = cls(struct_type=StructureType.UNDEFINED)
+        if message is not None:
+            m._error_message = message
+        return m
 
     @classmethod
     def addition(cls, *children: MathStructure) -> MathStructure:
@@ -1986,7 +1990,7 @@ class MathStructure:
 
         # Undefined stays undefined
         if self._type == StructureType.UNDEFINED:
-            return MathStructure.undefined()
+            return MathStructure.undefined(self._error_message)
 
         # Leaf types: return as-is (no evaluation needed)
         if self._type in (StructureType.NUMBER, StructureType.UNIT):
@@ -2064,7 +2068,8 @@ class MathStructure:
                           StructureType.BITWISE_XOR):
             evaluated_children = [child.evaluate(eo) for child in self._children]
             if any(c.is_undefined() for c in evaluated_children):
-                return MathStructure.undefined()
+                msg = next((c._error_message for c in evaluated_children if c.is_undefined() and c._error_message), None)
+                return MathStructure.undefined(msg)
             # Reconstruct with evaluated children
             if self._type == StructureType.ADDITION:
                 rebuilt = evaluated_children[0]

@@ -440,7 +440,7 @@ class Parser:
 
         expr = expression.strip()
         if not expr:
-            return MathStructure.undefined()
+            return MathStructure.undefined("Empty expression")
 
         tok = _Tokenizer(expr)
         tokens = tok.tokenize()
@@ -628,6 +628,8 @@ class Parser:
         while self._match(tokens, pos, (TT.PLUS, TT.MINUS)):
             op = tokens[pos].type
             pos += 1
+            if pos >= len(tokens) or tokens[pos].type == TT.EOF:
+                break   # trailing operator — stop
             right, pos = self._parse_multiplicative(tokens, pos, po)
             if op == TT.PLUS:
                 left = left + right
@@ -643,6 +645,8 @@ class Parser:
                 op = tokens[pos].type
                 op_value = tokens[pos].value
                 pos += 1
+                if pos >= len(tokens) or tokens[pos].type == TT.EOF:
+                    break   # trailing operator — stop
                 right, pos = self._parse_power(tokens, pos, po)
                 if op == TT.STAR:
                     left = left * right
@@ -794,7 +798,7 @@ class Parser:
                 unc_val = float(unc_tok.value)
                 interval_num = Num.from_plusminus(0.0, unc_val)
                 return MathStructure.from_number(interval_num), pos
-            return MathStructure.undefined(), pos
+            return MathStructure.undefined("Invalid uncertainty expression"), pos
 
         # -- Parenthesized expression / column vector --
         if tok.type == TT.LPAREN:
@@ -844,7 +848,7 @@ class Parser:
 
         # fallback
         pos += 1
-        return MathStructure.undefined(), pos
+        return MathStructure.undefined("Unexpected token"), pos
 
     # ------------------------------------------------------------------
     # Bracket / matrix parsing

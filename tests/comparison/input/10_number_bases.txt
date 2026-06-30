@@ -1,0 +1,51 @@
+=== 10. NUMBER BASES ===
+
+10.1 All bases: 255 to bases
+255 to bases
+=> 0000 0000 1111 1111 = 0377 = 255 = 0xFF
+
+
+10.2 Binary: 42 to bin
+42 to bin
+=> 0010 1010
+
+
+10.3 Octal: 255 to oct
+255 to oct
+=> 0377
+
+
+10.4 Hexadecimal: 1024 to hex
+1024 to hex
+=> 0x400
+
+
+10.5 Floating point: 3.14159 to float
+3.14159 to float
+=> 0100 0000 0100 1001 0000 1111 1101 0000
+
+
+10.6 Arbitrary base: 255 to base 7
+255 to base 7
+=> 513
+
+
+10.7 Roman numerals: 2024 to roman
+2024 to roman
+=> MMXXIV
+
+
+10.8 Bitwise operations: (0xABCD & 0xFF00) to hex
+(0xABCD AND 0xFF00) to hex
+=> 0xAB00
+
+
+10.9 Binary with bits: 42 to bin16
+42 to bin16
+=> 0000 0000 0010 1010
+
+
+10.10 Base sqrt(2): 16 to base sqrt(2)
+16 to base sqrt(2)
+=> 100000000
+

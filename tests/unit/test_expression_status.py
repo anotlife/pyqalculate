@@ -14,6 +14,7 @@ from pyqalculate_gui.expression_status import (
     STATUS_TEXT_PARSED,
 )
 from pyqalculate_gui.theme import DARK, LIGHT
+from pyqalculate_gui.i18n import _
 
 # Single module-level root avoids Tcl flake from rapid Tk() creation/teardown.
 _root: tk.Tk | None = None
@@ -190,7 +191,9 @@ class TestUpdateModeIndicators:
         bar = _bar()
         bar.update_mode_indicators({})
         # Default angle is "degrees" → shows DEG
-        assert bar._right_label.cget("text") == "DEG"
+        # Default exact=False due to APPROXIMATE badge → shows Approximate
+        indicator_text = bar._right_label.cget("text")
+        assert indicator_text == _("Approximate") + "  " + _("DEG")
 
     def test_exact_mode(self) -> None:
         bar = _bar()
@@ -234,7 +237,9 @@ class TestUpdateModeIndicators:
         bar = _bar()
         bar.update_mode_indicators({"base": 10})
         # Base 10 is hidden, but default angle "degrees" shows DEG
-        assert bar._right_label.cget("text") == "DEG"
+        # Default exact=False due to APPROXIMATE badge → shows Approximate
+        indicator_text = bar._right_label.cget("text")
+        assert indicator_text == _("Approximate") + "  " + _("DEG")
 
     def test_custom_base(self) -> None:
         bar = _bar()
@@ -314,5 +319,6 @@ class TestEventBusIntegration:
         bus = EventBus()
         bar = _bar(event_bus=bus)
         bus.emit(MODE_CHANGED, {})
-        # Default angle is "degrees" → shows DEG
-        assert bar._right_label.cget("text") == "DEG"
+        # Empty dict → mode_info.get("exact", False) is False → shows Approximate
+        indicator_text = bar._right_label.cget("text")
+        assert indicator_text == _("Approximate") + "  " + _("DEG")

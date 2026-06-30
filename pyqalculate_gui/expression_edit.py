@@ -64,6 +64,18 @@ class ExpressionEdit(ttk.Frame):
         )
         self._entry.pack(fill=tk.BOTH, expand=True)
 
+        # Windows-calc-style: expression small/dim, result large/bold
+        self._entry.tag_configure(
+            "expr_tag",
+            font=(self._theme.expression_font[0], 10),
+            foreground=self._theme.separator_fg,
+        )
+        self._entry.tag_configure(
+            "result_tag",
+            font=(self._theme.result_font[0], 22, "bold"),
+            foreground=self._theme.expression_fg,
+        )
+
         # Bindings
         self._entry.bind("<Return>", self._on_submit)
         self._entry.bind("<Key>", self._on_key)
@@ -73,8 +85,10 @@ class ExpressionEdit(ttk.Frame):
     # ------------------------------------------------------------------
 
     def _on_submit(self, event: tk.Event | None = None) -> str:
-        """Handle Enter key — emit expression via EventBus."""
-        expr = self.get_expression()
+        """Handle Enter key — emit last line as expression via EventBus."""
+        full_text = self.get_expression()
+        lines = [l for l in full_text.split("\n") if l.strip()]
+        expr = lines[-1] if lines else ""
         if expr.strip() and self._event_bus:
             self._event_bus.emit(EXPRESSION_SUBMITTED, expr)
         return "break"
@@ -116,6 +130,18 @@ class ExpressionEdit(ttk.Frame):
         """Clear the expression."""
         self._entry.delete("1.0", tk.END)
         self._current_text = ""
+
+    def show_expression_and_result(self, expression: str, result: str) -> None:
+        """Display expression (small, dim) above result (large, bold).
+
+        Replaces all content.  No '=' prefix.
+        """
+        self._entry.config(state=tk.NORMAL)
+        self._entry.delete("1.0", tk.END)
+        self._entry.insert(tk.END, expression + "\n", "expr_tag")
+        self._entry.insert(tk.END, result, "result_tag")
+        self._entry.config(state=tk.NORMAL)
+        self._current_text = f"{expression}\n{result}"
 
     def focus_input(self) -> None:
         """Focus the expression entry."""

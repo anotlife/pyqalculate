@@ -189,7 +189,7 @@
 | `base(x, n)` | `base(x, n)` | n 进制 | `base(255, 16)` | `ff` |
 | `roman(x)` | `roman(x)` | 罗马数字 | `roman(1999)` | `MCMXCIX` |
 | `float(x)` | `float(x)` | 浮点表示 | — | — |
-| `floatError(x)` | `floatError(x)` | 浮点误差 | — | — |
+| `floaterror(x)` | `floaterror(x)` | 浮点误差 | — | — |
 | `bases(x)` | `bases(x)` | 所有进制 | `bases(42)` | `0010 1010 = 0o52 = 42 = 0x2A` |
 
 [来源: builtin_functions.py:2455-2676]
@@ -226,8 +226,8 @@
 | `besselj(n, x)` | `besselj(n, x)` | Bessel J 函数 | — | — |
 | `bessely(n, x)` | `bessely(n, x)` | Bessel Y 函数 | — | — |
 | `airy(x)` | `airy(x)` | Airy 函数 | — | — |
-| `fresnelS(x)` | `fresnelS(x)` | Fresnel S 函数 | — | — |
-| `fresnelC(x)` | `fresnelC(x)` | Fresnel C 函数 | — | — |
+| `fresnels(x)` | `fresnels(x)` | Fresnel S 函数 | — | — |
+| `fresnelc(x)` | `fresnelc(x)` | Fresnel C 函数 | — | — |
 | `digamma(x)` | `digamma(x)` | Digamma 函数 | — | — |
 | `heaviside(x)` | `heaviside(x)` | 阶跃函数 | — | — |
 | `dirac(x)` | `dirac(x)` | Delta 函数 | — | — |
@@ -311,7 +311,7 @@
 | `besselj(n, x)` | ⚠️ 部分支持 | 特定参数有效 |
 | `bessely(n, x)` | ⚠️ 部分支持 | 特定参数有效 |
 | `airy(x)` | ⚠️ 部分支持 | 特定参数有效 |
-| `fresnelS(x)` / `fresnelC(x)` | ⚠️ 部分支持 | 数值计算为主 |
+| `fresnels(x)` / `fresnelc(x)` | ⚠️ 部分支持 | 数值计算为主 |
 | `erf(x)` | ⚠️ 需浮点输入 | `erf(1)` 返回符号形式，需用 `erf(1.0)` 获取数值 |
 | `digamma(x)` | ⚠️ 部分支持 | 特定参数有效 |
 | `heaviside(x)` | ✅ 基本支持 | 阶跃函数 |

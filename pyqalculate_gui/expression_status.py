@@ -87,8 +87,10 @@ class ExpressionStatusBar(ttk.Frame):
     # Event handlers
     # ------------------------------------------------------------------
 
-    def _on_mode_changed(self, mode_info: dict) -> None:
+    def _on_mode_changed(self, mode_info) -> None:
         """Handle mode change events."""
+        if isinstance(mode_info, bool):
+            mode_info = {"exact": mode_info}
         self.update_mode_indicators(mode_info)
 
     # ------------------------------------------------------------------
@@ -149,6 +151,8 @@ class ExpressionStatusBar(ttk.Frame):
         # Approximation mode
         if mode_info.get("exact", False):
             indicators.append(_("EXACT"))
+        else:
+            indicators.append(_("Approximate"))
 
         # RPN mode
         if mode_info.get("rpn", False):

@@ -2,7 +2,7 @@
 chcp 65001 >nul
 setlocal enabledelayedexpansion
 
-title PyQalculate v3.0.0
+title PyQalculate v0.1.0
 cd /d "%~dp0"
 
 :: ---- fixed paths (no dependency on activate.bat) ----
@@ -11,7 +11,7 @@ set PIP=%PY% -m pip
 
 echo.
 echo ========================================
-echo   PyQalculate v3.0.0 - Python Calculator
+echo   PyQalculate v0.1.0 - Python Calculator
 echo ========================================
 echo.
 
@@ -21,7 +21,7 @@ python --version >nul 2>&1
 if errorlevel 1 (
     echo.
     echo Python is not installed!
-    echo Please install Python 3.8 or later.
+    echo Please install Python 3.10 or later.
     echo Download: https://www.python.org/downloads/
     echo.
     pause
@@ -132,6 +132,8 @@ goto RETURN
 
 :TEST
 echo.
+echo Installing test dependencies...
+%PIP% install -e ".[dev]" -q
 %PY% scripts\test_runner.py
 echo.
 goto RETURN

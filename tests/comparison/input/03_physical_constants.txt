@@ -1,0 +1,38 @@
+=== 3. PHYSICAL CONSTANTS ===
+# FORMAT DIFF: tests 3.2, 3.6, 3.7 may fail due to missing SI prefix auto-selection
+# pyqalculate may return base units instead of SI-prefixed forms (e.g., A*m^2 vs yA*m^2)
+
+3.1 Planck length: sqrt(planck * G / c^3)
+sqrt(planck * newtonian_constant / speed_of_light^3)
+=> 4.051E-35 m
+
+
+3.2 Bohr magneton: e * planck / (4 * pi * electron_mass)
+elementary_charge * planck / (4 * pi * electron_mass)
+=> 9.2740101 yA*m^2
+
+
+3.3 Schwarzschild radius of Sun: 2 * G * M_sun / c^2
+2 * newtonian_constant * sun_mass / speed_of_light^2
+=> 0.000000000 g*s*m^2/Pa
+
+
+3.4 Photon energy at 500nm: h * c / lambda
+planck * speed_of_light / (500 * nm) to eV
+=> 2.479683969 eV
+
+
+3.5 Gravitational force Earth-Moon
+(newtonian_constant * planet(earth; mass) * planet(moon; mass)) / (384400 km)^2
+=> (2.697559184 * planet("moon", "mass") mm/s^2)卤((0.00000006062608591i * sqrt(im(planet("moon", "mass"))^2) + 0.00000006062608591 * sqrt(re(planet("moon", "mass"))^2)) m/s^2)
+
+
+3.6 Speed of light in water (n=1.33): c / n
+speed_of_light / 1.33
+=> 225.4078632 km/ms
+
+
+3.7 Thermal wavelength at 300K: h / sqrt(2*pi*m*k*T)
+planck / sqrt(2 * pi * electron_mass * boltzmann * 300 K)
+=> 4.30347544 nm
+

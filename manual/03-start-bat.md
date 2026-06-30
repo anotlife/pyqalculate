@@ -25,17 +25,17 @@
 ========================================
 ```
 
-[来源: start.bat:64-73]
+[来源: start.bat:94-102]
 
 ---
 
 ## 3.3 模式 1: CLI 模式
 
-**功能**: 启动命令行计算器 [来源: start.bat:88-96]
+**功能**: 启动命令行计算器 [来源: start.bat:117-124]
 
-**启动命令**: `python scripts\cli.py` [来源: start.bat:93]
+**启动命令**: `%PY% scripts\cli.py` [来源: start.bat:122]
 
-**退出方式**: 输入 `quit` 或 `exit` [来源: start.bat:91]
+**退出方式**: 输入 `quit` 或 `exit` [来源: start.bat:120]
 
 **详细说明**: 见 [第4章 命令行界面](04-cli.md)
 
@@ -43,9 +43,9 @@
 
 ## 3.4 模式 2: GUI 模式
 
-**功能**: 启动图形界面计算器 [来源: start.bat:98-104]
+**功能**: 启动图形界面计算器 [来源: start.bat:126-131]
 
-**启动命令**: `python scripts\gui.py` [来源: start.bat:101]
+**启动命令**: `%PY% scripts\gui.py` [来源: start.bat:129]
 
 **详细说明**: 见 [第5章 图形界面](05-gui.md)
 
@@ -53,9 +53,9 @@
 
 ## 3.5 模式 3: 测试模式
 
-**功能**: 运行所有测试套件 [来源: start.bat:106-111]
+**功能**: 运行所有测试套件 [来源: start.bat:133-137]
 
-**启动命令**: `python scripts\test_runner.py` [来源: start.bat:108]
+**启动命令**: `%PY% scripts\test_runner.py` [来源: start.bat:135]
 
 ### 测试套件组成
 
@@ -142,9 +142,9 @@ Total expressions: 69
 
 ## 3.6 模式 4: 演示模式
 
-**功能**: 运行所有演示 [来源: start.bat:113-118]
+**功能**: 运行所有演示 [来源: start.bat:139-143]
 
-**启动命令**: `python scripts\demo.py` [来源: start.bat:115]
+**启动命令**: `%PY% scripts\demo.py` [来源: start.bat:141]
 
 ### 演示命令列表
 
@@ -215,7 +215,7 @@ Errors: 0
 
 ## 3.7 环境检查
 
-启动器自动检查 [来源: start.bat:14-60]:
+启动器自动检查 [来源: start.bat:19-86]:
 
 1. **Python 检查**: 验证 Python 已安装
 2. **虚拟环境检查**: 检查 `.venv` 目录是否存在

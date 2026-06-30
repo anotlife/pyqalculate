@@ -38,15 +38,28 @@ class StatusBar(ttk.Frame):
         )
         self._stats_label.pack(side=tk.LEFT, padx=10)
 
-        self._mode_var = tk.StringVar(value=_("Approximate"))
-        self._mode_label = ttk.Label(
-            self, textvariable=self._mode_var, font=self._theme.info_font
+        # Mode indicators (from expression status bar)
+        self._mode_badges_var = tk.StringVar(value="")
+        self._mode_badges_label = ttk.Label(
+            self, textvariable=self._mode_badges_var, font=self._theme.info_font
         )
-        self._mode_label.pack(side=tk.RIGHT, padx=10)
+        self._mode_badges_label.pack(side=tk.RIGHT, padx=10)
 
-    def _on_mode_changed(self, exact: bool) -> None:
-        """Handle mode change."""
-        self.set_mode(exact)
+    def _on_mode_changed(self, mode_info) -> None:
+        """Update mode indicator badges."""
+        indicators: list[str] = []
+        if isinstance(mode_info, dict):
+            if mode_info.get("exact", False):
+                indicators.append(_("EXACT"))
+            else:
+                indicators.append(_("Approximate"))
+            angle = mode_info.get("angle", "degrees")
+            angle_map = {"degrees": _("DEG"), "radians": _("RAD"), "gradians": _("GRA")}
+            if angle in angle_map:
+                indicators.append(angle_map[angle])
+        elif isinstance(mode_info, bool):
+            indicators.append(_("EXACT") if mode_info else _("Approximate"))
+        self._mode_badges_var.set("  ".join(indicators))
 
     def update_stats(self, n_funcs: int, n_units: int, n_vars: int) -> None:
         """Update statistics display."""
@@ -57,11 +70,11 @@ class StatusBar(ttk.Frame):
         )
 
     def set_mode(self, exact: bool) -> None:
-        """Set mode display."""
-        self._mode_var.set(_("Exact") if exact else _("Approximate"))
+        """Set mode display."""  # no-op: mode display removed
+        pass
 
     def set_theme(self, theme: Theme) -> None:
         """Update the widget's theme."""
         self._theme = theme
         self._stats_label.config(font=theme.info_font)
-        self._mode_label.config(font=theme.info_font)
+        self._mode_badges_label.config(font=theme.info_font)
