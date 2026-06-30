@@ -16,9 +16,10 @@ from pathlib import Path
 from dataclasses import dataclass
 from enum import Enum
 
-# Input/output directories
-INPUT_DIR = Path(r"D:\1\1tmp\qalculate_output")
-OUTPUT_DIR = Path(r"D:\1\1tmp\pyqalculate_output")
+# Input/output directories (relative to project root)
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+INPUT_DIR = _PROJECT_ROOT / "tests" / "comparison" / "input"
+OUTPUT_DIR = _PROJECT_ROOT / "tests" / "output" / "comparison"
 
 # File list
 FILES = [

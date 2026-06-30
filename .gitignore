@@ -64,5 +64,8 @@ test_results/
 # Temp / generated
 tmp/
 
+# Test output artifacts
+tests/output/
+
 # OpenCode agent working files
 .omo/

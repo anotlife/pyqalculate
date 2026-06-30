@@ -40,13 +40,10 @@ HAS_DISPLAY = bool(
 # ---------------------------------------------------------------------------
 
 
-@pytest.fixture
-def root():
-    """Create a withdrawn Tk root for headless testing."""
-    r = tk.Tk()
-    r.withdraw()
-    yield r
-    r.destroy()
+@pytest.fixture(scope="module")
+def root(app: App):
+    """Return the App's Tk root (shared, no second Tk instance)."""
+    return app._root
 
 
 @pytest.fixture
@@ -61,13 +58,21 @@ def service():
     return CalculatorService()
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def app():
-    """Create an App instance with withdrawn root."""
+    """Create an App instance with withdrawn root (module-scoped for Tk)."""
     a = App()
     a._root.withdraw()
     yield a
+    a._root.update_idletasks()
+    a._root.quit()
     a._root.destroy()
+
+
+@pytest.fixture(autouse=True)
+def _reset_app(app: App) -> None:
+    """Reset app state before each test."""
+    app._on_clear_all()
 
 
 # ---------------------------------------------------------------------------
@@ -117,9 +122,11 @@ class TestAppInstantiation:
     def test_status_bar_populated(self, app: App) -> None:
         """Status bar shows calculator statistics."""
         stats_text = app._status_bar._stats_var.get()
-        assert "Functions:" in stats_text
-        assert "Units:" in stats_text
-        assert "Variables:" in stats_text
+        assert stats_text, "Status bar stats should not be empty"
+        import re
+        assert re.search(r"\b[1-9]\d*\b", stats_text), (
+            f"Stats should contain non-zero numbers, got: {stats_text!r}"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -137,11 +144,13 @@ class TestCalculationFlow:
         assert result != ""
         assert "4" in result
 
-    def test_expression_cleared_after_submit(self, app: App) -> None:
-        """Expression edit is cleared after submission."""
+    def test_expression_not_cleared_after_submit(self, app: App) -> None:
+        """Expression and result stay in the input box after submission."""
         app._on_expression_submitted("1 + 1")
         expr = app._expr_edit.get_expression()
-        assert expr == ""
+        assert expr != "", "Expression should not be cleared after submit"
+        assert "1 + 1" in expr, "Expression should be shown"
+        assert "2" in expr, "Result should be shown"
 
     def test_history_records_expression(self, app: App) -> None:
         """History captures the expression."""

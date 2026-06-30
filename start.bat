@@ -132,6 +132,8 @@ goto RETURN
 
 :TEST
 echo.
+echo Installing test dependencies...
+%PIP% install -e ".[dev]" -q
 %PY% scripts\test_runner.py
 echo.
 goto RETURN

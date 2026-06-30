@@ -5,7 +5,7 @@ Executes three test categories:
 2. Comparison tests (run_pyqalculate_tests.py)
 3. Plot tests (run_plot_tests.py)
 
-Results are saved to the test_results/ directory.
+Results are saved to the tests/output/ directory.
 """
 import os
 import subprocess
@@ -70,7 +70,7 @@ def main():
     # Determine paths
     scripts_dir = os.path.dirname(os.path.abspath(__file__))
     project_dir = os.path.dirname(scripts_dir)
-    output_dir = os.path.join(project_dir, 'test_results')
+    output_dir = os.path.join(project_dir, 'tests', 'output')
     os.makedirs(output_dir, exist_ok=True)
     print(f'Results directory: {output_dir}')
     print()
@@ -81,28 +81,29 @@ def main():
     # 1. Unit tests (pytest) — must run from project root to find tests/
     print('[1/3] Unit tests (pytest)...')
     results['unit'] = run_command(
-        [python, '-m', 'pytest', 'tests', '-v', '--tb=short'],
+        [python, '-m', 'pytest', 'tests/unit', '-v', '--tb=short'],
         os.path.join(output_dir, 'unit_tests.txt'),
         'Unit Tests',
         cwd=project_dir,
     )
 
-    # 2. Comparison tests — runs from scripts dir (has its own paths)
+    # 2. Comparison tests — runs from project root
     print('[2/3] Comparison tests...')
     results['comparison'] = run_command(
-        [python, 'run_pyqalculate_tests.py'],
+        [python, 'tests/comparison/run.py'],
         os.path.join(output_dir, 'comparison.txt'),
         'Comparison Tests',
-        cwd=scripts_dir,
+        cwd=project_dir,
     )
 
-    # 3. Plot tests — runs from scripts dir
+    # 3. Plot tests — runs from project root
     print('[3/3] Plot tests...')
+    subprocess.run([python, "-m", "pip", "install", "matplotlib", "-q"], check=False)
     results['plot'] = run_command(
-        [python, 'run_plot_tests.py'],
+        [python, 'tests/plot/run.py'],
         os.path.join(output_dir, 'plot_tests.txt'),
         'Plot Tests',
-        cwd=scripts_dir,
+        cwd=project_dir,
     )
 
     # Summary

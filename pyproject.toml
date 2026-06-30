@@ -63,5 +63,10 @@ pyqalculate_data = ["*.json"]
 pyqalculate_gui = ["locales/**/*.mo"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests/unit"]
 addopts = "-v --tb=short"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]

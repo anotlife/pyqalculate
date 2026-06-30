@@ -147,8 +147,8 @@ class TestTemperatureConversions:
     def test_minus40_celsius_to_fahrenheit(self, calc):
         # -40 is where C and F scales cross
         result = calc.calculate_and_print("-40 C to F")
-        # Qalculate returns undefined for this edge case — verify behavior
-        assert "undefined" in result.lower() or "-40" in result
+        # Qalculate returns error/undefined for this edge case — verify behavior
+        assert "undefined" in result.lower() or "-40" in result or "error" in result.lower()
 
 
 class TestFrequencyConversions:

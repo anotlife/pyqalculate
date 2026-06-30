@@ -58,9 +58,9 @@ class TestConstructor:
         bar = _menu(event_bus=None)
         assert bar._event_bus is None
 
-    def test_exact_mode_default_true(self) -> None:
+    def test_exact_mode_default_false(self) -> None:
         bar = _menu()
-        assert bar.get_exact_mode_var().get() is True
+        assert bar.get_exact_mode_var().get() is False
 
 
 # --- get_exact_mode_var ---
@@ -74,9 +74,9 @@ class TestExactModeVar:
     def test_toggle_exact_off(self) -> None:
         bar = _menu()
         var = bar.get_exact_mode_var()
-        assert var.get() is True
-        var.set(False)
         assert var.get() is False
+        var.set(True)
+        assert var.get() is True
 
     def test_toggle_exact_on(self) -> None:
         bar = _menu()
