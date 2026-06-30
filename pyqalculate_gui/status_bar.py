@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from pyqalculate_gui.event_bus import MODE_CHANGED, EventBus
+from pyqalculate_gui.i18n import _
 from pyqalculate_gui.theme import LIGHT, Theme
 
 
@@ -28,14 +29,16 @@ class StatusBar(ttk.Frame):
     def _build_ui(self) -> None:
         """Build the status bar."""
         self._stats_var = tk.StringVar(
-            value="Functions: 0 | Units: 0 | Variables: 0"
+            value=_("Functions: {n_funcs} | Units: {n_units} | Variables: {n_vars}").format(
+                n_funcs=0, n_units=0, n_vars=0
+            )
         )
         self._stats_label = ttk.Label(
             self, textvariable=self._stats_var, font=self._theme.info_font
         )
         self._stats_label.pack(side=tk.LEFT, padx=10)
 
-        self._mode_var = tk.StringVar(value="Approximate")
+        self._mode_var = tk.StringVar(value=_("Approximate"))
         self._mode_label = ttk.Label(
             self, textvariable=self._mode_var, font=self._theme.info_font
         )
@@ -48,12 +51,14 @@ class StatusBar(ttk.Frame):
     def update_stats(self, n_funcs: int, n_units: int, n_vars: int) -> None:
         """Update statistics display."""
         self._stats_var.set(
-            f"Functions: {n_funcs} | Units: {n_units} | Variables: {n_vars}"
+            _("Functions: {n_funcs} | Units: {n_units} | Variables: {n_vars}").format(
+                n_funcs=n_funcs, n_units=n_units, n_vars=n_vars
+            )
         )
 
     def set_mode(self, exact: bool) -> None:
         """Set mode display."""
-        self._mode_var.set("Exact" if exact else "Approximate")
+        self._mode_var.set(_("Exact") if exact else _("Approximate"))
 
     def set_theme(self, theme: Theme) -> None:
         """Update the widget's theme."""

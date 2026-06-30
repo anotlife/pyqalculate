@@ -7,52 +7,53 @@ from tkinter import ttk
 
 from pyqalculate_gui.event_bus import EXPRESSION_SUBMITTED, EventBus
 from pyqalculate_gui.theme import LIGHT, ButtonStyle, Theme
+from pyqalculate_gui.i18n import _
 
 # (label, action_type, value, style_key)
 _ButtonDef = tuple[str, str, str, str]
 
 BUTTON_DEFS: list[list[_ButtonDef]] = [
     [
-        ("AC", "clear", "", "action"),
-        ("DEL", "backspace", "", "action"),
-        ("(", "insert", "(", "op"),
-        (")", "insert", ")", "op"),
-        ("÷", "insert", "/", "op"),
+        (_("sin"), "insert", "sin(", "func"),
+        (_("cos"), "insert", "cos(", "func"),
+        (_("tan"), "insert", "tan(", "func"),
+        (_("ln"), "insert", "ln(", "func"),
+        (_("log"), "insert", "log(", "func"),
     ],
     [
-        ("7", "insert", "7", "digit"),
-        ("8", "insert", "8", "digit"),
-        ("9", "insert", "9", "digit"),
-        ("×", "insert", "*", "op"),
-        ("x²", "insert", "^2", "op"),
+        (_("("), "insert", "(", "op"),
+        (_(")"), "insert", ")", "op"),
+        (_("x²"), "insert", "^2", "op"),
+        (_("xʸ"), "insert", "^", "op"),
+        (_("√"), "insert", "sqrt(", "func"),
     ],
     [
-        ("4", "insert", "4", "digit"),
-        ("5", "insert", "5", "digit"),
-        ("6", "insert", "6", "digit"),
-        ("−", "insert", "-", "op"),
-        ("√", "insert", "sqrt(", "func"),
+        (_("7"), "insert", "7", "digit"),
+        (_("8"), "insert", "8", "digit"),
+        (_("9"), "insert", "9", "digit"),
+        (_("DEL"), "backspace", "", "action"),
+        (_("AC"), "clear", "", "action"),
     ],
     [
-        ("1", "insert", "1", "digit"),
-        ("2", "insert", "2", "digit"),
-        ("3", "insert", "3", "digit"),
-        ("+", "insert", "+", "op"),
-        ("xʸ", "insert", "^", "op"),
+        (_("4"), "insert", "4", "digit"),
+        (_("5"), "insert", "5", "digit"),
+        (_("6"), "insert", "6", "digit"),
+        (_("×"), "insert", "*", "op"),
+        (_("÷"), "insert", "/", "op"),
     ],
     [
-        ("0", "insert", "0", "digit"),
-        (".", "insert", ".", "digit"),
-        ("EXP", "insert", "E", "digit"),
-        ("±", "negate", "", "op"),
-        ("=", "submit", "", "equals"),
+        (_("1"), "insert", "1", "digit"),
+        (_("2"), "insert", "2", "digit"),
+        (_("3"), "insert", "3", "digit"),
+        (_("+"), "insert", "+", "op"),
+        (_("−"), "insert", "-", "op"),
     ],
     [
-        ("sin", "insert", "sin(", "func"),
-        ("cos", "insert", "cos(", "func"),
-        ("tan", "insert", "tan(", "func"),
-        ("ln", "insert", "ln(", "func"),
-        ("log", "insert", "log(", "func"),
+        (_("0"), "insert", "0", "digit"),
+        (_("."), "insert", ".", "digit"),
+        (_("EXP"), "insert", "E", "digit"),
+        (_("±"), "negate", "", "op"),
+        (_("="), "submit", "", "equals"),
     ],
 ]
 
@@ -60,37 +61,37 @@ BUTTON_DEFS: list[list[_ButtonDef]] = [
 # Left-click inserts the primary function; right-click shows alternatives.
 _DROPDOWN_MAP: dict[str, list[tuple[str, str]]] = {
     "sin": [
-        ("asin", "asin("),
-        ("sinh", "sinh("),
-        ("asinh", "asinh("),
+        (_("asin"), "asin("),
+        (_("sinh"), "sinh("),
+        (_("asinh"), "asinh("),
     ],
     "cos": [
-        ("acos", "acos("),
-        ("cosh", "cosh("),
-        ("acosh", "acosh("),
+        (_("acos"), "acos("),
+        (_("cosh"), "cosh("),
+        (_("acosh"), "acosh("),
     ],
     "tan": [
-        ("atan", "atan("),
-        ("tanh", "tanh("),
-        ("atanh", "atanh("),
+        (_("atan"), "atan("),
+        (_("tanh"), "tanh("),
+        (_("atanh"), "atanh("),
     ],
     "√": [
-        ("∛ (cbrt)", "cbrt("),
+        (_("∛ (cbrt)"), "cbrt("),
     ],
     "ln": [
-        ("log", "log("),
-        ("log₂", "log2("),
-        ("log₁₀", "log10("),
+        (_("log"), "log("),
+        (_("log₂"), "log2("),
+        (_("log₁₀"), "log10("),
     ],
     "log": [
-        ("log₂", "log2("),
-        ("log₁₀", "log10("),
+        (_("log₂"), "log2("),
+        (_("log₁₀"), "log10("),
     ],
     "x²": [
-        ("x³", "^3"),
+        (_("x³"), "^3"),
     ],
     "xʸ": [
-        ("x^(1/y)", "^(1/)"),
+        (_("x^(1/y)"), "^(1/)"),
     ],
 }
 
@@ -266,7 +267,7 @@ class KeypadWidget(ttk.Frame):
         self._theme = theme
         for label, btn in self._buttons.items():
             for row in BUTTON_DEFS:
-                for l, _, _, style_key in row:
+                for l, _action, _value, style_key in row:
                     if l == label:
                         style = _style_for_button(theme, style_key)
                         btn.config(

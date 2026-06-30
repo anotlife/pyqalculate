@@ -14,6 +14,7 @@ from typing import Callable
 from pyqalculate_gui.calculator_service import CalculatorService
 from pyqalculate_gui.dialogs.base import ModalDialog
 from pyqalculate_gui.theme import LIGHT, Theme
+from pyqalculate_gui.i18n import _
 
 
 _DELIMITER_MAP: dict[str, str] = {
@@ -41,50 +42,50 @@ class ExportCsvDialog(ModalDialog):
         calculator: CalculatorService | None = None,
         get_last_result: Callable[[], object | None] | None = None,
     ) -> None:
-        super().__init__(parent, "Export CSV", size=(480, 340), theme=theme)
+        super().__init__(parent, _("Export CSV"), size=(480, 340), theme=theme)
         self._calc = calculator
         self._get_last_result = get_last_result
 
     def _build_content(self, parent: ttk.Frame) -> None:
         """Build the dialog UI."""
         # --- Data source ---
-        ttk.Label(parent, text="Source:").grid(row=0, column=0, sticky="w", pady=4)
+        ttk.Label(parent, text=_("Source:")).grid(row=0, column=0, sticky="w", pady=4)
         source_frame = ttk.Frame(parent)
         source_frame.grid(row=0, column=1, columnspan=2, sticky="ew", pady=4)
         parent.columnconfigure(1, weight=1)
 
         self._source_var = tk.StringVar(value="variable")
         ttk.Radiobutton(
-            source_frame, text="Named variable",
+            source_frame, text=_("Named variable"),
             variable=self._source_var, value="variable",
             command=self._on_source_change,
         ).pack(anchor=tk.W)
         ttk.Radiobutton(
-            source_frame, text="Current result",
+            source_frame, text=_("Current result"),
             variable=self._source_var, value="result",
             command=self._on_source_change,
         ).pack(anchor=tk.W)
 
         # --- Variable name ---
-        ttk.Label(parent, text="Variable:").grid(row=1, column=0, sticky="w", pady=4)
+        ttk.Label(parent, text=_("Variable:")).grid(row=1, column=0, sticky="w", pady=4)
         self._var_name_var = tk.StringVar()
         self._var_name_entry = ttk.Entry(parent, textvariable=self._var_name_var, width=30)
         self._var_name_entry.grid(row=1, column=1, columnspan=2, sticky="ew", pady=4)
 
         # --- File path ---
-        ttk.Label(parent, text="File:").grid(row=2, column=0, sticky="w", pady=4)
+        ttk.Label(parent, text=_("File:")).grid(row=2, column=0, sticky="w", pady=4)
         file_frame = ttk.Frame(parent)
         file_frame.grid(row=2, column=1, columnspan=2, sticky="ew", pady=4)
 
         self._file_var = tk.StringVar()
         self._file_entry = ttk.Entry(file_frame, textvariable=self._file_var, width=35)
         self._file_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
-        ttk.Button(file_frame, text="Browse...", command=self._browse_file).pack(
+        ttk.Button(file_frame, text=_("Browse..."), command=self._browse_file).pack(
             side=tk.LEFT, padx=(4, 0),
         )
 
         # --- Delimiter ---
-        ttk.Label(parent, text="Delimiter:").grid(row=3, column=0, sticky="w", pady=4)
+        ttk.Label(parent, text=_("Delimiter:")).grid(row=3, column=0, sticky="w", pady=4)
         delim_frame = ttk.Frame(parent)
         delim_frame.grid(row=3, column=1, columnspan=2, sticky="ew", pady=4)
 
@@ -92,11 +93,11 @@ class ExportCsvDialog(ModalDialog):
         self._delimiter_choice = tk.StringVar(value="comma")
 
         delim_options = [
-            ("Comma", "comma"),
-            ("Tab", "tab"),
-            ("Semicolon", "semicolon"),
-            ("Space", "space"),
-            ("Other", "other"),
+            (_("Comma"), "comma"),
+            (_("Tab"), "tab"),
+            (_("Semicolon"), "semicolon"),
+            (_("Space"), "space"),
+            (_("Other"), "other"),
         ]
         for text, val in delim_options:
             ttk.Radiobutton(
@@ -133,9 +134,9 @@ class ExportCsvDialog(ModalDialog):
         """Open save-file dialog."""
         path = filedialog.asksaveasfilename(
             parent=self._dialog,  # type: ignore[arg-type]
-            title="Save CSV File",
+            title=_("Save CSV File"),
             defaultextension=".csv",
-            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")],
+            filetypes=[(_("CSV files"), "*.csv"), (_("All files"), "*.*")],
         )
         if path:
             self._file_var.set(path)
@@ -149,7 +150,7 @@ class ExportCsvDialog(ModalDialog):
         filename = self._file_var.get().strip()
         if not filename:
             messagebox.showerror(
-                "Error", "Please specify an output file.",
+                _("Error"), _("Please specify an output file."),
                 parent=self._dialog,  # type: ignore[arg-type]
             )
             return
@@ -163,20 +164,20 @@ class ExportCsvDialog(ModalDialog):
             var_name = self._var_name_var.get().strip()
             if not var_name:
                 messagebox.showerror(
-                    "Error", "Please enter a variable name.",
+                    _("Error"), _("Please enter a variable name."),
                     parent=self._dialog,  # type: ignore[arg-type]
                 )
                 return
             if self._calc is None:
                 messagebox.showerror(
-                    "Error", "No calculator available.",
+                    _("Error"), _("No calculator available."),
                     parent=self._dialog,  # type: ignore[arg-type]
                 )
                 return
             var = self._calc.get_variable(var_name)
             if var is None:
                 messagebox.showerror(
-                    "Error", f"Variable '{var_name}' not found.",
+                    _("Error"), _("Variable '{}' not found.").format(var_name),
                     parent=self._dialog,  # type: ignore[arg-type]
                 )
                 return
@@ -190,7 +191,7 @@ class ExportCsvDialog(ModalDialog):
 
         if mstruct is None or self._calc is None:
             messagebox.showerror(
-                "Error", "No data to export.",
+                _("Error"), _("No data to export."),
                 parent=self._dialog,  # type: ignore[arg-type]
             )
             return
@@ -199,19 +200,19 @@ class ExportCsvDialog(ModalDialog):
             success = self._calc.export_csv(mstruct, filename, delimiter=delimiter)
             if success:
                 messagebox.showinfo(
-                    "Export Successful",
-                    f"Data exported to {filename}",
+                    _("Export Successful"),
+                    _("Data exported to {}").format(filename),
                     parent=self._dialog,  # type: ignore[arg-type]
                 )
                 super()._on_ok()
             else:
                 messagebox.showerror(
-                    "Export Failed",
-                    "Could not write the CSV file.",
+                    _("Export Failed"),
+                    _("Could not write the CSV file."),
                     parent=self._dialog,  # type: ignore[arg-type]
                 )
         except Exception as e:
             messagebox.showerror(
-                "Export Error", str(e),
+                _("Export Error"), str(e),
                 parent=self._dialog,  # type: ignore[arg-type]
             )

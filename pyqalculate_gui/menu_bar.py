@@ -11,14 +11,14 @@ from pyqalculate_gui.event_bus import (
     EXPORT_CSV,
     IMPORT_CSV,
     OPEN_HELP_DOC,
+    OPEN_HISTORY_WINDOW,
     OPEN_NUMBER_BASES,
     OPEN_PLOT,
     OPEN_PREFERENCES,
-    TOGGLE_CONVERSION,
-    TOGGLE_HISTORY,
-    TOGGLE_KEYPAD,
+    OPEN_UNIT_CONVERSION,
     EventBus,
 )
+from pyqalculate_gui.i18n import _
 from pyqalculate_gui.theme import LIGHT, Theme
 
 
@@ -46,59 +46,53 @@ class MenuBar:
         self._build_file_menu(menubar)
         self._build_edit_menu(menubar)
         self._build_mode_menu(menubar)
-        self._build_view_menu(menubar)
+        self._build_tools_menu(menubar)
         self._build_help_menu(menubar)
         self._bind_shortcuts()
 
     def _build_file_menu(self, menubar: tk.Menu) -> None:
         menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="File", menu=menu)
-        menu.add_command(
-            label="Clear All", command=self._emit(CLEAR_ALL), accelerator="Ctrl+L"
-        )
+        menubar.add_cascade(label=_("File"), menu=menu)
+        menu.add_command(label=_("Import CSV..."), command=self._emit(IMPORT_CSV))
+        menu.add_command(label=_("Export CSV..."), command=self._emit(EXPORT_CSV))
         menu.add_separator()
-        menu.add_command(label="Import CSV...", command=self._emit(IMPORT_CSV))
-        menu.add_command(label="Export CSV...", command=self._emit(EXPORT_CSV))
-        menu.add_separator()
-        menu.add_command(label="Exit", command=self._parent.quit)
+        menu.add_command(label=_("Preferences..."), command=self._emit(OPEN_PREFERENCES))
+        menu.add_command(label=_("Exit"), command=self._parent.quit)
 
     def _build_edit_menu(self, menubar: tk.Menu) -> None:
         menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Edit", menu=menu)
+        menubar.add_cascade(label=_("Edit"), menu=menu)
         menu.add_command(
-            label="Copy Result", command=self._emit(COPY_RESULT), accelerator="Ctrl+C"
+            label=_("Copy Result"), command=self._emit(COPY_RESULT), accelerator="Ctrl+C"
         )
-        menu.add_command(label="Clear Expression", command=self._emit(CLEAR_ALL))
+        menu.add_command(label=_("Clear Expression"), command=self._emit(CLEAR_ALL))
+        menu.add_command(
+            label=_("Clear All"), command=self._emit(CLEAR_ALL), accelerator="Ctrl+L"
+        )
 
     def _build_mode_menu(self, menubar: tk.Menu) -> None:
         menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Mode", menu=menu)
-        menu.add_checkbutton(label="Exact Mode", variable=self._exact_var)
+        menubar.add_cascade(label=_("Mode"), menu=menu)
+        menu.add_checkbutton(label=_("Exact Mode"), variable=self._exact_var)
         menu.add_separator()
-        menu.add_command(label="Functions...", command=self._emit("open_manage_functions"))
-        menu.add_command(label="Variables...", command=self._emit("open_manage_variables"))
-        menu.add_command(label="Units...", command=self._emit("open_manage_units"))
-        menu.add_separator()
-        menu.add_command(label="Preferences...", command=self._emit(OPEN_PREFERENCES))
+        menu.add_command(label=_("Functions..."), command=self._emit("open_manage_functions"))
+        menu.add_command(label=_("Variables..."), command=self._emit("open_manage_variables"))
+        menu.add_command(label=_("Units..."), command=self._emit("open_manage_units"))
 
-    def _build_view_menu(self, menubar: tk.Menu) -> None:
+    def _build_tools_menu(self, menubar: tk.Menu) -> None:
         menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="View", menu=menu)
-        menu.add_command(label="Toggle History", command=self._emit(TOGGLE_HISTORY))
-        menu.add_command(label="Toggle Keypad", command=self._emit(TOGGLE_KEYPAD))
-        menu.add_command(
-            label="Toggle Conversion", command=self._emit(TOGGLE_CONVERSION)
-        )
-        menu.add_separator()
-        menu.add_command(label="Plot...", command=self._emit(OPEN_PLOT))
-        menu.add_command(label="Number Bases...", command=self._emit(OPEN_NUMBER_BASES))
+        menubar.add_cascade(label=_("Tools"), menu=menu)
+        menu.add_command(label=_("Plot..."), command=self._emit(OPEN_PLOT))
+        menu.add_command(label=_("Number Bases..."), command=self._emit(OPEN_NUMBER_BASES))
+        menu.add_command(label=_("Unit Conversion..."), command=self._emit(OPEN_UNIT_CONVERSION))
+        menu.add_command(label=_("History..."), command=self._emit(OPEN_HISTORY_WINDOW))
 
     def _build_help_menu(self, menubar: tk.Menu) -> None:
         menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Help", menu=menu)
-        menu.add_command(label="Help Documentation", command=self._emit(OPEN_HELP_DOC))
+        menubar.add_cascade(label=_("Help"), menu=menu)
+        menu.add_command(label=_("Help Documentation"), command=self._emit(OPEN_HELP_DOC))
         menu.add_separator()
-        menu.add_command(label="About", command=self._show_about)
+        menu.add_command(label=_("About"), command=self._show_about)
 
     def _bind_shortcuts(self) -> None:
         self._parent.bind("<Control-l>", lambda _: self._emit(CLEAR_ALL)())
@@ -117,7 +111,7 @@ class MenuBar:
         return handler
 
     def _show_about(self) -> None:
-        messagebox.showinfo("About", "PyQalculate v3.0\nPure Python calculator")
+        messagebox.showinfo(_("About"), _("PyQalculate v3.0\nPure Python calculator"))
 
     # -- public API ----------------------------------------------------------
 

@@ -10,6 +10,7 @@ from tkinter import ttk
 
 from pyqalculate_gui.dialogs.base import ModalDialog
 from pyqalculate_gui.theme import LIGHT, Theme
+from pyqalculate_gui.i18n import _
 
 
 class HelpDialog(ModalDialog):
@@ -22,7 +23,7 @@ class HelpDialog(ModalDialog):
     ) -> None:
         super().__init__(
             parent,
-            title="About PyQalculate",
+            title=_("About PyQalculate"),
             size=(400, 350),
             resizable=(False, False),
             theme=theme,
@@ -32,7 +33,7 @@ class HelpDialog(ModalDialog):
         """Build the help dialog content."""
         ttk.Label(
             parent,
-            text="PyQalculate",
+            text=_("PyQalculate"),
             font=("Arial", 18, "bold"),
         ).pack(pady=(10, 5))
 
@@ -40,11 +41,11 @@ class HelpDialog(ModalDialog):
 
         ttk.Label(
             parent,
-            text=f"Version {__version__}",
+            text=_("Version {}").format(__version__),
             font=self._theme.info_font,
         ).pack(pady=(0, 15))
 
-        desc_text = (
+        desc_text = _(
             "A pure Python port of the Qalculate! library.\n"
             "Features a complete calculator with unit conversion,\n"
             "function plotting, and mathematical expression evaluation."
@@ -58,14 +59,14 @@ class HelpDialog(ModalDialog):
 
         ttk.Label(
             parent,
-            text="Credits:",
+            text=_("Credits:"),
             font=("Arial", 11, "bold"),
         ).pack(anchor=tk.W, padx=20)
 
         for credit in (
-            "Original Qalculate! by Hanna Knutsson",
-            "Python port by anotlife",
-            "Built with tkinter and matplotlib",
+            _("Original Qalculate! by Hanna Knutsson"),
+            _("Python port by anotlife"),
+            _("Built with tkinter and matplotlib"),
         ):
             ttk.Label(
                 parent,
@@ -82,7 +83,7 @@ class HelpDialog(ModalDialog):
 
         github_label = ttk.Label(
             links_frame,
-            text="GitHub: github.com/anotlife/pyqalculate",
+            text=_("GitHub: github.com/anotlife/pyqalculate"),
             font=self._theme.info_font,
             foreground=self._theme.result_fg,
             cursor="hand2",
@@ -95,7 +96,7 @@ class HelpDialog(ModalDialog):
 
         ttk.Label(
             links_frame,
-            text="License: MIT",
+            text=_("License: MIT"),
             font=self._theme.info_font,
         ).pack(anchor=tk.W, pady=(5, 0))
 

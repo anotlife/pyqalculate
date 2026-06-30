@@ -6,9 +6,11 @@ through the EventBus; no widget holds a reference to another widget.
 
 from __future__ import annotations
 
+import json
 import re
 import tkinter as tk
-from tkinter import ttk
+from pathlib import Path
+from tkinter import messagebox, ttk
 
 from pyqalculate.types import ApproximationMode, EvaluationOptions
 from pyqalculate_gui.autocomplete import AutoComplete
@@ -22,31 +24,28 @@ from pyqalculate_gui.event_bus import (
     HISTORY_RECALLED,
     IMPORT_CSV,
     OPEN_HELP_DOC,
+    OPEN_HISTORY_WINDOW,
     OPEN_NUMBER_BASES,
     OPEN_PLOT,
     OPEN_PREFERENCES,
+    OPEN_UNIT_CONVERSION,
     PREFERENCE_APPLIED,
     RESULT_DISPLAYED,
-    TOGGLE_CONVERSION,
-    TOGGLE_HISTORY,
-    TOGGLE_KEYPAD,
     EventBus,
 )
-from pyqalculate_gui.conversion_view import ConversionView
+from pyqalculate_gui.conversion_view import ConversionWindow
 from pyqalculate_gui.expression_edit import ExpressionEdit
-from pyqalculate_gui.history_view import HistoryView
+from pyqalculate_gui.history_view import HistoryView, HistoryWindow
 from pyqalculate_gui.expression_status import ExpressionStatusBar
+from pyqalculate_gui.i18n import _, init as i18n_init
 from pyqalculate_gui.keyboard_shortcuts import (
     SHORTCUT_TYPE_ACTIVATE_FIRST_COMPLETION,
     SHORTCUT_TYPE_COPY_RESULT as KS_COPY_RESULT,
     SHORTCUT_TYPE_HELP,
-    SHORTCUT_TYPE_HISTORY,
     SHORTCUT_TYPE_HISTORY_CLEAR,
-    SHORTCUT_TYPE_KEYPAD,
     SHORTCUT_TYPE_MANAGE_FUNCTIONS,
     SHORTCUT_TYPE_MANAGE_UNITS,
     SHORTCUT_TYPE_MANAGE_VARIABLES,
-    SHORTCUT_TYPE_MINIMAL,
     SHORTCUT_TYPE_NUMBER_BASES,
     SHORTCUT_TYPE_PARENTHESES,
     SHORTCUT_TYPE_PROGRAMMING,
@@ -64,7 +63,7 @@ from pyqalculate_gui.keyboard_shortcuts import (
 from pyqalculate_gui.keypad import KeypadWidget
 from pyqalculate_gui.menu_bar import MenuBar
 from pyqalculate_gui.plot_dialog import PlotDialog
-from pyqalculate_gui.preferences_dialog import PreferencesDialog
+from pyqalculate_gui.preferences_dialog import DEFAULT_SETTINGS, PreferencesDialog
 from pyqalculate_gui.result_view import ResultView
 from pyqalculate_gui.state import AppState
 from pyqalculate_gui.status_bar import StatusBar
@@ -83,7 +82,6 @@ class App:
 
     def __init__(self) -> None:
         self._root = tk.Tk()
-        self._root.title("PyQalculate")
         self._root.geometry("800x600")
         self._root.minsize(600, 400)
 
@@ -92,12 +90,39 @@ class App:
         self._event_bus = EventBus()
         self._calculator = CalculatorService()
         self._eo = EvaluationOptions(approximation=ApproximationMode.TRY_EXACT)
+        self._conversion_window: ConversionWindow | None = None
+        self._history_window: HistoryWindow | None = None
+
+        lang = self._load_language()
+        i18n_init(lang)
+        self._root.title(_("PyQalculate"))
 
         self._build_ui()
         self._wire_events()
         self._init_shortcuts()
         self._update_status()
         self._root.after(100, self._expr_edit.focus_input)
+
+    @staticmethod
+    def _load_language() -> str:
+        """Load the user's language preference from the config file."""
+        config_file = Path.home() / ".pyqalculate" / "preferences.json"
+        try:
+            if config_file.is_file():
+                with open(config_file, "r", encoding="utf-8") as fh:
+                    data = json.load(fh)
+                return data.get("language", DEFAULT_SETTINGS["language"])
+        except (json.JSONDecodeError, OSError, KeyError):
+            pass
+        return DEFAULT_SETTINGS["language"]
+
+    @staticmethod
+    def _get_initial_font_family(language: str) -> str:
+        """Return the appropriate font family for the given language."""
+        if language == "zh_CN":
+            from pyqalculate_gui.i18n import get_cjk_font_family
+            return get_cjk_font_family()
+        return "Consolas"
 
     # ------------------------------------------------------------------
     # UI construction
@@ -136,20 +161,10 @@ class App:
         )
         self._keypad.pack(fill=tk.X, side=tk.BOTTOM, pady=(4, 0))
 
-        # PanedWindow for history + conversion (bottom area)
-        self._paned = ttk.PanedWindow(main, orient=tk.HORIZONTAL, height=150)
-        self._paned.pack(fill=tk.X, side=tk.BOTTOM, pady=(4, 0))
-
+        # History view (backend only — not packed; used by answer(N) and Tools window)
         self._history_view = HistoryView(
-            self._paned, theme=self._theme, event_bus=self._event_bus,
+            main, theme=self._theme, event_bus=self._event_bus, emit_updates=True,
         )
-        self._paned.add(self._history_view, weight=1)
-
-        self._conversion_view = ConversionView(
-            self._paned, theme=self._theme, event_bus=self._event_bus,
-            calculator=self._calculator,
-        )
-        self._paned.add(self._conversion_view, weight=1)
 
         # Expression status bar (below expression)
         self._expr_status = ExpressionStatusBar(
@@ -207,13 +222,12 @@ class App:
         bus.subscribe(COPY_RESULT, self._on_copy_result)
         bus.subscribe(HISTORY_RECALLED, self._on_history_recalled)
         bus.subscribe(PREFERENCE_APPLIED, self._on_preference_applied)
-        bus.subscribe(TOGGLE_KEYPAD, self._on_toggle_keypad)
-        bus.subscribe(TOGGLE_HISTORY, self._on_toggle_history)
-        bus.subscribe(TOGGLE_CONVERSION, self._on_toggle_conversion)
         bus.subscribe(RESULT_DISPLAYED, self._on_result_displayed)
         bus.subscribe(IMPORT_CSV, self._on_import_csv)
         bus.subscribe(EXPORT_CSV, self._on_export_csv)
         bus.subscribe(OPEN_HELP_DOC, self._on_open_help_doc)
+        bus.subscribe(OPEN_UNIT_CONVERSION, lambda: self._on_open_unit_conversion())
+        bus.subscribe(OPEN_HISTORY_WINDOW, lambda: self._on_open_history_window())
         bus.subscribe("open_manage_functions", lambda: self._open_manage_functions())
 
     # ------------------------------------------------------------------
@@ -235,9 +249,6 @@ class App:
         mgr.register_handler(SHORTCUT_TYPE_MANAGE_VARIABLES, lambda v: self._open_manage_variables())
         mgr.register_handler(SHORTCUT_TYPE_MANAGE_FUNCTIONS, lambda v: self._open_manage_functions())
         mgr.register_handler(SHORTCUT_TYPE_MANAGE_UNITS, lambda v: self._open_manage_units())
-        mgr.register_handler(SHORTCUT_TYPE_KEYPAD, lambda v: self._on_toggle_keypad())
-        mgr.register_handler(SHORTCUT_TYPE_HISTORY, lambda v: self._on_toggle_history())
-        mgr.register_handler(SHORTCUT_TYPE_MINIMAL, lambda v: self._toggle_minimal())
         mgr.register_handler(SHORTCUT_TYPE_PROGRAMMING, lambda v: self._toggle_programming())
         mgr.register_handler(SHORTCUT_TYPE_PARENTHESES, lambda v: self._insert_parentheses())
         mgr.register_handler(SHORTCUT_TYPE_RPN_UP, lambda v: self._rpn_up())
@@ -370,7 +381,6 @@ class App:
             self._menu_bar,
             self._status_bar,
             self._keypad,
-            self._conversion_view,
             self._expr_status,
             self._expr_edit,
             self._result_view,
@@ -380,6 +390,20 @@ class App:
             set_theme_fn = getattr(widget, "set_theme", None)
             if set_theme_fn is not None:
                 set_theme_fn(self._theme)
+
+        if self._conversion_window is not None and self._conversion_window.is_alive():
+            self._conversion_window.set_theme(self._theme)
+        if self._history_window is not None and self._history_window.is_alive():
+            self._history_window.set_theme(self._theme)
+
+        # Detect language change and prompt restart
+        new_lang = str(settings.get("language", "en"))
+        from pyqalculate_gui.i18n import get_current_language
+        if new_lang != get_current_language():
+            messagebox.showinfo(
+                _("Language Changed"),
+                _("Please restart the application for the language change to take effect."),
+            )
 
         # Wire approximation mode from preferences
         approx_map = {
@@ -413,26 +437,27 @@ class App:
     # Handlers — view toggles
     # ------------------------------------------------------------------
 
-    def _on_toggle_keypad(self) -> None:
-        """Show or hide the virtual keypad."""
-        if self._keypad.winfo_viewable():
-            self._keypad.pack_forget()
-        else:
-            self._keypad.pack(fill=tk.X, side=tk.BOTTOM, pady=(4, 0))
+    def _on_open_unit_conversion(self) -> None:
+        """Open the unit conversion tool in a separate window."""
+        if self._conversion_window is not None and self._conversion_window.is_alive():
+            self._conversion_window.focus()
+            return
+        self._conversion_window = ConversionWindow(
+            self._root, calculator=self._calculator,
+            event_bus=self._event_bus, theme=self._theme,
+        )
+        self._conversion_window.show()
 
-    def _on_toggle_history(self) -> None:
-        """Show or hide the history pane inside the PanedWindow."""
-        try:
-            self._paned.forget(self._history_view)
-        except tk.TclError:
-            self._paned.add(self._history_view, weight=1)
-
-    def _on_toggle_conversion(self) -> None:
-        """Show or hide the conversion pane inside the PanedWindow."""
-        try:
-            self._paned.forget(self._conversion_view)
-        except tk.TclError:
-            self._paned.add(self._conversion_view, weight=1)
+    def _on_open_history_window(self) -> None:
+        """Open the history tool in a separate window."""
+        if self._history_window is not None and self._history_window.is_alive():
+            self._history_window.focus()
+            return
+        self._history_window = HistoryWindow(
+            self._root, theme=self._theme, event_bus=self._event_bus,
+            source_view=self._history_view,
+        )
+        self._history_window.show()
 
     # ------------------------------------------------------------------
     # Handlers — keyboard shortcut actions
@@ -486,10 +511,6 @@ class App:
     def _open_manage_units(self) -> None:
         """Open the manage units dialog."""
         self._event_bus.emit("open_manage_units")
-
-    def _toggle_minimal(self) -> None:
-        """Toggle minimal window mode (hide keypad)."""
-        self._on_toggle_keypad()
 
     def _toggle_programming(self) -> None:
         """Toggle programming keypad mode."""

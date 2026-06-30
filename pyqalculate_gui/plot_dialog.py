@@ -15,6 +15,7 @@ from typing import TYPE_CHECKING, Any
 
 from pyqalculate_gui.dialogs.base import ModalDialog
 from pyqalculate_gui.theme import LIGHT, Theme
+from pyqalculate_gui.i18n import _
 
 if TYPE_CHECKING:
     pass
@@ -38,7 +39,7 @@ class PlotDialog(ModalDialog):
     """
 
     def __init__(self, parent: tk.Widget, theme: Theme = LIGHT) -> None:  # type: ignore[override]
-        super().__init__(parent, "Plot", size=(900, 680), resizable=(True, True), theme=theme)
+        super().__init__(parent, _("Plot"), size=(900, 680), resizable=(True, True), theme=theme)
         self._expressions: list[str] = []
         self._canvas: Any = None
         self._toolbar: Any = None
@@ -76,19 +77,19 @@ class PlotDialog(ModalDialog):
         btn_frame = ttk.Frame(self._dialog, padding=(10, 0, 10, 10))
         btn_frame.pack(fill=tk.X)
 
-        ttk.Button(btn_frame, text="Plot", command=self._on_plot).pack(
+        ttk.Button(btn_frame, text=_("Plot"), command=self._on_plot).pack(
             side=tk.LEFT, padx=(0, 4),
         )
-        ttk.Button(btn_frame, text="Save PNG", command=self._on_save_png).pack(
+        ttk.Button(btn_frame, text=_("Save PNG"), command=self._on_save_png).pack(
             side=tk.LEFT, padx=(0, 4),
         )
-        ttk.Button(btn_frame, text="Save SVG", command=self._on_save_svg).pack(
+        ttk.Button(btn_frame, text=_("Save SVG"), command=self._on_save_svg).pack(
             side=tk.LEFT, padx=(0, 4),
         )
-        ttk.Button(btn_frame, text="Clear", command=self._on_clear).pack(
+        ttk.Button(btn_frame, text=_("Clear"), command=self._on_clear).pack(
             side=tk.LEFT, padx=(0, 4),
         )
-        ttk.Button(btn_frame, text="Close", command=self._on_cancel).pack(
+        ttk.Button(btn_frame, text=_("Close"), command=self._on_cancel).pack(
             side=tk.RIGHT,
         )
 
@@ -146,7 +147,7 @@ class PlotDialog(ModalDialog):
         # Placeholder
         self._placeholder = ttk.Label(
             self._canvas_frame,
-            text="Add expressions and click Plot",
+            text=_("Add expressions and click Plot"),
             anchor=tk.CENTER,
             foreground=self._theme.separator_fg,
         )
@@ -157,7 +158,7 @@ class PlotDialog(ModalDialog):
         row = 0
 
         # -- Expression list --
-        ttk.Label(parent, text="Expressions", font=("", 10, "bold")).grid(
+        ttk.Label(parent, text=_("Expressions"), font=("", 10, "bold")).grid(
             row=row, column=0, columnspan=2, sticky="w", pady=(0, 4),
         )
         row += 1
@@ -176,13 +177,13 @@ class PlotDialog(ModalDialog):
         # Add / Remove / Edit buttons
         btn_row = ttk.Frame(parent)
         btn_row.grid(row=row, column=0, columnspan=2, sticky="ew", pady=(4, 0))
-        ttk.Button(btn_row, text="Add", width=6, command=self._on_add).pack(
+        ttk.Button(btn_row, text=_("Add"), width=6, command=self._on_add).pack(
             side=tk.LEFT, padx=(0, 4),
         )
-        ttk.Button(btn_row, text="Remove", width=6, command=self._on_remove).pack(
+        ttk.Button(btn_row, text=_("Remove"), width=6, command=self._on_remove).pack(
             side=tk.LEFT, padx=(0, 4),
         )
-        ttk.Button(btn_row, text="Edit", width=6, command=self._on_edit).pack(
+        ttk.Button(btn_row, text=_("Edit"), width=6, command=self._on_edit).pack(
             side=tk.LEFT,
         )
         row += 1
@@ -194,26 +195,26 @@ class PlotDialog(ModalDialog):
         row += 1
 
         # -- X Range --
-        ttk.Label(parent, text="X Range", font=("", 10, "bold")).grid(
+        ttk.Label(parent, text=_("X Range"), font=("", 10, "bold")).grid(
             row=row, column=0, columnspan=2, sticky="w", pady=(0, 4),
         )
         row += 1
 
-        ttk.Label(parent, text="Min:").grid(row=row, column=0, sticky="w")
+        ttk.Label(parent, text=_("Min:")).grid(row=row, column=0, sticky="w")
         self._x_min_var = tk.StringVar(value="-10")
         ttk.Entry(parent, textvariable=self._x_min_var, width=12).grid(
             row=row, column=1, sticky="ew", padx=(4, 0),
         )
         row += 1
 
-        ttk.Label(parent, text="Max:").grid(row=row, column=0, sticky="w")
+        ttk.Label(parent, text=_("Max:")).grid(row=row, column=0, sticky="w")
         self._x_max_var = tk.StringVar(value="10")
         ttk.Entry(parent, textvariable=self._x_max_var, width=12).grid(
             row=row, column=1, sticky="ew", padx=(4, 0),
         )
         row += 1
 
-        ttk.Label(parent, text="Points:").grid(row=row, column=0, sticky="w")
+        ttk.Label(parent, text=_("Points:")).grid(row=row, column=0, sticky="w")
         self._points_var = tk.StringVar(value="1000")
         ttk.Entry(parent, textvariable=self._points_var, width=12).grid(
             row=row, column=1, sticky="ew", padx=(4, 0),
@@ -227,12 +228,12 @@ class PlotDialog(ModalDialog):
         row += 1
 
         # -- Style --
-        ttk.Label(parent, text="Style", font=("", 10, "bold")).grid(
+        ttk.Label(parent, text=_("Style"), font=("", 10, "bold")).grid(
             row=row, column=0, columnspan=2, sticky="w", pady=(0, 4),
         )
         row += 1
 
-        ttk.Label(parent, text="Line style:").grid(row=row, column=0, sticky="w")
+        ttk.Label(parent, text=_("Line style:")).grid(row=row, column=0, sticky="w")
         self._style_var = tk.StringVar(value="lines")
         style_combo = ttk.Combobox(
             parent,
@@ -244,7 +245,7 @@ class PlotDialog(ModalDialog):
         style_combo.grid(row=row, column=1, sticky="ew", padx=(4, 0))
         row += 1
 
-        ttk.Label(parent, text="Line width:").grid(row=row, column=0, sticky="w")
+        ttk.Label(parent, text=_("Line width:")).grid(row=row, column=0, sticky="w")
         self._linewidth_var = tk.StringVar(value="1.5")
         ttk.Entry(parent, textvariable=self._linewidth_var, width=12).grid(
             row=row, column=1, sticky="ew", padx=(4, 0),
@@ -253,20 +254,20 @@ class PlotDialog(ModalDialog):
 
         # Grid toggle
         self._grid_var = tk.BooleanVar(value=True)
-        ttk.Checkbutton(parent, text="Show grid", variable=self._grid_var).grid(
+        ttk.Checkbutton(parent, text=_("Show grid"), variable=self._grid_var).grid(
             row=row, column=0, columnspan=2, sticky="w", pady=(4, 0),
         )
         row += 1
 
         # Legend toggle
         self._legend_var = tk.BooleanVar(value=True)
-        ttk.Checkbutton(parent, text="Show legend", variable=self._legend_var).grid(
+        ttk.Checkbutton(parent, text=_("Show legend"), variable=self._legend_var).grid(
             row=row, column=0, columnspan=2, sticky="w",
         )
         row += 1
 
         # Plot title
-        ttk.Label(parent, text="Title:").grid(row=row, column=0, sticky="w", pady=(4, 0))
+        ttk.Label(parent, text=_("Title:")).grid(row=row, column=0, sticky="w", pady=(4, 0))
         self._title_var = tk.StringVar(value="")
         ttk.Entry(parent, textvariable=self._title_var, width=16).grid(
             row=row, column=1, sticky="ew", padx=(4, 0), pady=(4, 0),
@@ -287,9 +288,9 @@ class PlotDialog(ModalDialog):
         except ImportError:
             if self._dialog is not None:
                 messagebox.showerror(
-                    "Missing Dependency",
-                    "matplotlib is required for plotting.\n"
-                    "Install with:  pip install matplotlib",
+                    _("Missing Dependency"),
+                    _("matplotlib is required for plotting.\n"
+                    "Install with:  pip install matplotlib"),
                     parent=self._dialog,
                 )
 
@@ -306,8 +307,8 @@ class PlotDialog(ModalDialog):
         except ValueError:
             if self._dialog is not None:
                 messagebox.showerror(
-                    "Invalid Range",
-                    "X min, max, and points must be valid numbers.",
+                    _("Invalid Range"),
+                    _("X min, max, and points must be valid numbers."),
                     parent=self._dialog,
                 )
             return
@@ -315,8 +316,8 @@ class PlotDialog(ModalDialog):
         if x_min >= x_max:
             if self._dialog is not None:
                 messagebox.showerror(
-                    "Invalid Range",
-                    "X min must be less than X max.",
+                    _("Invalid Range"),
+                    _("X min must be less than X max."),
                     parent=self._dialog,
                 )
             return
@@ -326,8 +327,8 @@ class PlotDialog(ModalDialog):
         if not exprs:
             if self._dialog is not None:
                 messagebox.showwarning(
-                    "No Expressions",
-                    "Add at least one expression to plot.",
+                    _("No Expressions"),
+                    _("Add at least one expression to plot."),
                     parent=self._dialog,
                 )
             return
@@ -408,13 +409,13 @@ class PlotDialog(ModalDialog):
     def _add_expression(self, expr: str) -> None:
         """Add an expression to the list."""
         self._expressions.append(expr)
-        self._expr_listbox.insert(tk.END, expr if expr else "(empty)")
+        self._expr_listbox.insert(tk.END, expr if expr else _("(empty)"))
 
     def _sync_listbox(self) -> None:
         """Rebuild the listbox from the internal expression list."""
         self._expr_listbox.delete(0, tk.END)
         for e in self._expressions:
-            self._expr_listbox.insert(tk.END, e if e else "(empty)")
+            self._expr_listbox.insert(tk.END, e if e else _("(empty)"))
 
     # ------------------------------------------------------------------
     # Callbacks
@@ -426,7 +427,7 @@ class PlotDialog(ModalDialog):
 
     def _on_add(self) -> None:
         """Open a simple entry popup to add an expression."""
-        self._prompt_expression("Add Expression")
+        self._prompt_expression(_("Add Expression"))
 
     def _on_remove(self) -> None:
         """Remove the selected expression."""
@@ -445,7 +446,7 @@ class PlotDialog(ModalDialog):
             return
         idx = sel[0]
         if 0 <= idx < len(self._expressions):
-            self._prompt_expression("Edit Expression", idx=idx)
+            self._prompt_expression(_("Edit Expression"), idx=idx)
 
     def _prompt_expression(self, title: str, idx: int | None = None) -> None:
         """Show a simple dialog to enter/edit an expression."""
@@ -460,7 +461,7 @@ class PlotDialog(ModalDialog):
         popup.resizable(False, False)
         popup.configure(bg=self._theme.bg)
 
-        ttk.Label(popup, text="Expression:").grid(
+        ttk.Label(popup, text=_("Expression:")).grid(
             row=0, column=0, padx=8, pady=(12, 4), sticky="w",
         )
         init_val = self._expressions[idx] if idx is not None and 0 <= idx < len(self._expressions) else ""
@@ -482,7 +483,7 @@ class PlotDialog(ModalDialog):
 
         popup.bind("<Return>", lambda _: _confirm())
 
-        ttk.Button(popup, text="OK", command=_confirm, width=8).grid(
+        ttk.Button(popup, text=_("OK"), command=_confirm, width=8).grid(
             row=1, column=0, columnspan=2, pady=8,
         )
 
@@ -501,8 +502,8 @@ class PlotDialog(ModalDialog):
         if self._fig is None:
             if self._dialog is not None:
                 messagebox.showinfo(
-                    "No Plot",
-                    "Nothing to save. Click Plot first.",
+                    _("No Plot"),
+                    _("Nothing to save. Click Plot first."),
                     parent=self._dialog,
                 )
             return
@@ -513,7 +514,7 @@ class PlotDialog(ModalDialog):
         }
         path = filedialog.asksaveasfilename(
             parent=self._dialog,
-            title=f"Save Plot as {fmt.upper()}",
+            title=_("Save Plot as {}").format(fmt.upper()),
             defaultextension=f".{fmt}",
             filetypes=ftypes.get(fmt, [("All Files", "*.*")]),
         )
@@ -524,15 +525,15 @@ class PlotDialog(ModalDialog):
             self._fig.savefig(path, dpi=150, bbox_inches="tight", format=fmt)
             if self._dialog is not None:
                 messagebox.showinfo(
-                    "Saved",
-                    f"Plot saved to:\n{path}",
+                    _("Saved"),
+                    _("Plot saved to:\n{}").format(path),
                     parent=self._dialog,
                 )
         except Exception as exc:
             if self._dialog is not None:
                 messagebox.showerror(
-                    "Save Error",
-                    f"Failed to save:\n{exc}",
+                    _("Save Error"),
+                    _("Failed to save:\n{}").format(exc),
                     parent=self._dialog,
                 )
 

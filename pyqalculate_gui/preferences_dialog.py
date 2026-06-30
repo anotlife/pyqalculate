@@ -15,7 +15,11 @@ from typing import Any
 
 from pyqalculate_gui.dialogs.base import ModalDialog
 from pyqalculate_gui.event_bus import EventBus, PREFERENCE_APPLIED
+from pyqalculate_gui.i18n import _
 from pyqalculate_gui.theme import LIGHT, Theme
+
+_LANG_DISPLAY_TO_CODE = {"English": "en", "中文（简体）": "zh_CN"}
+_LANG_CODE_TO_DISPLAY = {"en": "English", "zh_CN": "中文（简体）"}
 
 # ---------------------------------------------------------------------------
 # Settings file location
@@ -44,6 +48,7 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "font_family": "Consolas",
     "font_size": 11,
     "theme": "light",  # light | dark
+    "language": "en",  # en | zh_CN
 }
 
 
@@ -62,7 +67,7 @@ class PreferencesDialog(ModalDialog):
         theme: Theme = LIGHT,
         event_bus: EventBus | None = None,
     ) -> None:
-        super().__init__(parent, "Preferences", size=(520, 440), theme=theme)
+        super().__init__(parent, _("Preferences"), size=(520, 500), theme=theme)
         self._event_bus = event_bus
         self._settings = self._load_settings()
         self._vars: dict[str, tk.Variable] = {}
@@ -123,12 +128,12 @@ class PreferencesDialog(ModalDialog):
     def _build_calc_tab(self, notebook: ttk.Notebook) -> None:
         """Build the Calculation settings tab."""
         frame = ttk.Frame(notebook, padding=12)
-        notebook.add(frame, text="  Calculation  ")
+        notebook.add(frame, text="  " + _("Calculation") + "  ")
 
         row = 0
 
         # Precision
-        ttk.Label(frame, text="Precision (significant digits):", font=("", 10)).grid(
+        ttk.Label(frame, text=_("Precision (significant digits):"), font=("", 10)).grid(
             row=row, column=0, sticky="w", pady=(0, 4),
         )
         prec_var = tk.IntVar(value=self._settings["precision"])
@@ -144,7 +149,7 @@ class PreferencesDialog(ModalDialog):
         row += 1
 
         # Approximation mode
-        ttk.Label(frame, text="Approximation mode:", font=("", 10)).grid(
+        ttk.Label(frame, text=_("Approximation mode:"), font=("", 10)).grid(
             row=row, column=0, sticky="w", pady=(0, 4),
         )
         approx_var = tk.StringVar(value=self._settings["approximation"])
@@ -152,9 +157,9 @@ class PreferencesDialog(ModalDialog):
         approx_frame = ttk.Frame(frame)
         approx_frame.grid(row=row, column=1, sticky="w", padx=(12, 0), pady=(0, 4))
         for label, val in [
-            ("Exact", "exact"),
-            ("Try Exact", "try_exact"),
-            ("Approximate", "approximate"),
+            (_("Exact"), "exact"),
+            (_("Try Exact"), "try_exact"),
+            (_("Approximate"), "approximate"),
         ]:
             ttk.Radiobutton(
                 approx_frame, text=label, variable=approx_var, value=val,
@@ -167,7 +172,7 @@ class PreferencesDialog(ModalDialog):
         row += 1
 
         # Angle unit
-        ttk.Label(frame, text="Angle unit:", font=("", 10)).grid(
+        ttk.Label(frame, text=_("Angle unit:"), font=("", 10)).grid(
             row=row, column=0, sticky="w", pady=(0, 4),
         )
         angle_var = tk.StringVar(value=self._settings["angle_unit"])
@@ -175,7 +180,7 @@ class PreferencesDialog(ModalDialog):
         ttk.Combobox(
             frame,
             textvariable=angle_var,
-            values=["none", "radians", "degrees", "gradians"],
+            values=[_("none"), _("radians"), _("degrees"), _("gradians")],
             state="readonly",
             width=14,
         ).grid(row=row, column=1, sticky="w", padx=(12, 0), pady=(0, 4))
@@ -187,12 +192,12 @@ class PreferencesDialog(ModalDialog):
     def _build_display_tab(self, notebook: ttk.Notebook) -> None:
         """Build the Display settings tab."""
         frame = ttk.Frame(notebook, padding=12)
-        notebook.add(frame, text="  Display  ")
+        notebook.add(frame, text="  " + _("Display") + "  ")
 
         row = 0
 
         # Number format
-        ttk.Label(frame, text="Number format:", font=("", 10)).grid(
+        ttk.Label(frame, text=_("Number format:"), font=("", 10)).grid(
             row=row, column=0, sticky="w", pady=(0, 4),
         )
         fmt_var = tk.StringVar(value=self._settings["number_format"])
@@ -200,9 +205,9 @@ class PreferencesDialog(ModalDialog):
         fmt_frame = ttk.Frame(frame)
         fmt_frame.grid(row=row, column=1, sticky="w", padx=(12, 0), pady=(0, 4))
         for label, val in [
-            ("Decimal", "decimal"),
-            ("Scientific", "scientific"),
-            ("Engineering", "engineering"),
+            (_("Decimal"), "decimal"),
+            (_("Scientific"), "scientific"),
+            (_("Engineering"), "engineering"),
         ]:
             ttk.Radiobutton(
                 fmt_frame, text=label, variable=fmt_var, value=val,
@@ -219,7 +224,7 @@ class PreferencesDialog(ModalDialog):
         self._vars["digit_grouping"] = grouping_var
         ttk.Checkbutton(
             frame,
-            text="Enable digit grouping (e.g. 1,000,000)",
+            text=_("Enable digit grouping (e.g. 1,000,000)"),
             variable=grouping_var,
         ).grid(row=row, column=0, columnspan=2, sticky="w", pady=(0, 4))
         row += 1
@@ -229,7 +234,7 @@ class PreferencesDialog(ModalDialog):
         self._vars["unicode_signs"] = unicode_var
         ttk.Checkbutton(
             frame,
-            text="Use Unicode signs (\u00d7, \u00f7, \u221a, \u2248)",
+            text=_("Use Unicode signs (\u00d7, \u00f7, \u221a, \u2248)"),
             variable=unicode_var,
         ).grid(row=row, column=0, columnspan=2, sticky="w", pady=(0, 4))
         row += 1
@@ -240,7 +245,7 @@ class PreferencesDialog(ModalDialog):
         row += 1
 
         # Exponent display
-        ttk.Label(frame, text="Exponent display:", font=("", 10)).grid(
+        ttk.Label(frame, text=_("Exponent display:"), font=("", 10)).grid(
             row=row, column=0, sticky="w", pady=(0, 4),
         )
         exp_var = tk.StringVar(value=self._settings["exp_display"])
@@ -260,12 +265,12 @@ class PreferencesDialog(ModalDialog):
     def _build_appearance_tab(self, notebook: ttk.Notebook) -> None:
         """Build the Appearance settings tab."""
         frame = ttk.Frame(notebook, padding=12)
-        notebook.add(frame, text="  Appearance  ")
+        notebook.add(frame, text="  " + _("Appearance") + "  ")
 
         row = 0
 
         # Font family
-        ttk.Label(frame, text="Font family:", font=("", 10)).grid(
+        ttk.Label(frame, text=_("Font family:"), font=("", 10)).grid(
             row=row, column=0, sticky="w", pady=(0, 4),
         )
         family_var = tk.StringVar(value=self._settings["font_family"])
@@ -276,14 +281,15 @@ class PreferencesDialog(ModalDialog):
             values=[
                 "Consolas", "Courier New", "Cascadia Code",
                 "Fira Code", "Source Code Pro", "Monaco",
-                "Menlo", "monospace",
+                "Menlo", "Noto Sans CJK SC", "Microsoft YaHei",
+                "monospace",
             ],
             width=18,
         ).grid(row=row, column=1, sticky="w", padx=(12, 0), pady=(0, 4))
         row += 1
 
         # Font size
-        ttk.Label(frame, text="Font size:", font=("", 10)).grid(
+        ttk.Label(frame, text=_("Font size:"), font=("", 10)).grid(
             row=row, column=0, sticky="w", pady=(0, 4),
         )
         size_var = tk.IntVar(value=self._settings["font_size"])
@@ -299,7 +305,7 @@ class PreferencesDialog(ModalDialog):
         row += 1
 
         # Theme
-        ttk.Label(frame, text="Theme:", font=("", 10)).grid(
+        ttk.Label(frame, text=_("Theme:"), font=("", 10)).grid(
             row=row, column=0, sticky="w", pady=(0, 4),
         )
         theme_var = tk.StringVar(value=self._settings["theme"])
@@ -307,11 +313,34 @@ class PreferencesDialog(ModalDialog):
         theme_frame = ttk.Frame(frame)
         theme_frame.grid(row=row, column=1, sticky="w", padx=(12, 0), pady=(0, 4))
         ttk.Radiobutton(
-            theme_frame, text="Light", variable=theme_var, value="light",
+            theme_frame, text=_("Light"), variable=theme_var, value="light",
         ).pack(side=tk.LEFT, padx=(0, 16))
         ttk.Radiobutton(
-            theme_frame, text="Dark", variable=theme_var, value="dark",
+            theme_frame, text=_("Dark"), variable=theme_var, value="dark",
         ).pack(side=tk.LEFT)
+        row += 1
+
+        ttk.Separator(frame, orient=tk.HORIZONTAL).grid(
+            row=row, column=0, columnspan=2, sticky="ew", pady=8,
+        )
+        row += 1
+
+        # Language
+        ttk.Label(frame, text=_("Language:"), font=("", 10)).grid(
+            row=row, column=0, sticky="w", pady=(0, 4),
+        )
+        lang_display = _LANG_CODE_TO_DISPLAY.get(
+            self._settings.get("language", "en"), "English"
+        )
+        lang_var = tk.StringVar(value=lang_display)
+        self._vars["language"] = lang_var
+        ttk.Combobox(
+            frame,
+            textvariable=lang_var,
+            values=["English", "中文（简体）"],
+            state="readonly",
+            width=18,
+        ).grid(row=row, column=1, sticky="w", padx=(12, 0), pady=(0, 4))
 
         frame.columnconfigure(1, weight=1)
 
@@ -335,3 +364,5 @@ class PreferencesDialog(ModalDialog):
         """Read current widget values into the settings dict."""
         for key, var in self._vars.items():
             self._settings[key] = var.get()
+        lang_display = self._settings.get("language", "English")
+        self._settings["language"] = _LANG_DISPLAY_TO_CODE.get(lang_display, "en")
