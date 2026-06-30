@@ -10,6 +10,7 @@ from pyqalculate_gui.event_bus import (
     COPY_RESULT,
     EXPORT_CSV,
     IMPORT_CSV,
+    OPEN_HELP_DOC,
     OPEN_NUMBER_BASES,
     OPEN_PLOT,
     OPEN_PREFERENCES,
@@ -95,6 +96,8 @@ class MenuBar:
     def _build_help_menu(self, menubar: tk.Menu) -> None:
         menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Help", menu=menu)
+        menu.add_command(label="Help Documentation", command=self._emit(OPEN_HELP_DOC))
+        menu.add_separator()
         menu.add_command(label="About", command=self._show_about)
 
     def _bind_shortcuts(self) -> None:

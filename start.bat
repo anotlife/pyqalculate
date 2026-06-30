@@ -69,17 +69,19 @@ if %VENV_VALID%==0 (
 ) else (
     echo Virtual environment found.
 
-    :: pip check -- verifies ALL installed packages, not just sympy
-    echo   Verifying dependencies...
-    %PIP% check --require-virtualenv >nul 2>&1
+    echo   Checking dependencies...
+    %PIP% install -e . --require-virtualenv
     if errorlevel 1 (
-        echo   Dependencies broken or missing. Reinstalling...
-        %PIP% install -e . --require-virtualenv
-        if errorlevel 1 (
-            %PIP% install -e .
-        )
-    ) else (
-        echo   All dependencies OK.
+        echo   Retrying without --require-virtualenv...
+        %PIP% install -e .
+    )
+
+    :: Sanity-check key imports (detect orphaned metadata / missing module files)
+    echo   Verifying imports...
+    %PY% -c "import sympy,gmpy2,mpmath,pint,convertdate,matplotlib,numpy,scipy,requests,PIL,dateutil,pyreadline3" >nul 2>&1
+    if errorlevel 1 (
+        echo   [!] Broken packages detected. Force-reinstalling...
+        %PIP% install --force-reinstall sympy gmpy2 mpmath pint convertdate matplotlib numpy scipy requests Pillow python-dateutil pyreadline3
     )
 )
 

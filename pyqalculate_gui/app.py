@@ -21,6 +21,7 @@ from pyqalculate_gui.event_bus import (
     EXPORT_CSV,
     HISTORY_RECALLED,
     IMPORT_CSV,
+    OPEN_HELP_DOC,
     OPEN_NUMBER_BASES,
     OPEN_PLOT,
     OPEN_PREFERENCES,
@@ -212,6 +213,7 @@ class App:
         bus.subscribe(RESULT_DISPLAYED, self._on_result_displayed)
         bus.subscribe(IMPORT_CSV, self._on_import_csv)
         bus.subscribe(EXPORT_CSV, self._on_export_csv)
+        bus.subscribe(OPEN_HELP_DOC, self._on_open_help_doc)
         bus.subscribe("open_manage_functions", lambda: self._open_manage_functions())
 
     # ------------------------------------------------------------------
@@ -435,6 +437,14 @@ class App:
     # ------------------------------------------------------------------
     # Handlers — keyboard shortcut actions
     # ------------------------------------------------------------------
+
+    def _on_open_help_doc(self) -> None:
+        import os
+        import webbrowser
+
+        manual_dir = os.path.join(os.path.dirname(__file__), "..", "manual")
+        html_path = os.path.abspath(os.path.join(manual_dir, "pyqalculate-help.html"))
+        webbrowser.open(f"file://{html_path}")
 
     def _show_help(self) -> None:
         """Open the help dialog."""
