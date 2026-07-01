@@ -9,7 +9,7 @@ import pytest
 from pyqalculate_gui.event_bus import MODE_CHANGED, EventBus
 from pyqalculate_gui.i18n import _
 from pyqalculate_gui.status_bar import StatusBar
-from pyqalculate_gui.theme import DARK, LIGHT
+from pyqalculate_gui.theme import LIGHT
 
 # Single module-level root avoids Tcl flake from rapid Tk() creation/teardown.
 _root: tk.Tk | None = None
@@ -43,10 +43,6 @@ class TestConstructor:
         bar = _bar()
         assert bar._theme is LIGHT
         assert bar._event_bus is None
-
-    def test_custom_theme(self) -> None:
-        bar = _bar(theme=DARK)
-        assert bar._theme is DARK
 
     def test_event_bus_subscribes_to_mode_changed(self) -> None:
         bus = EventBus()

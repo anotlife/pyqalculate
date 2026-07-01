@@ -7,7 +7,7 @@ import os
 import pytest
 
 from pyqalculate_gui.event_bus import EXPRESSION_SUBMITTED, EventBus
-from pyqalculate_gui.theme import DARK, LIGHT, ButtonStyle, Theme
+from pyqalculate_gui.theme import LIGHT, ButtonStyle, Theme
 
 from pyqalculate_gui.keypad import (
     BUTTON_DEFS,
@@ -107,16 +107,6 @@ class TestKeypadTheme:
         try:
             assert kp._theme is LIGHT
             assert len(kp._buttons) == EXPECTED_ROWS * EXPECTED_COLS
-        finally:
-            root.destroy()
-
-    def test_set_theme_updates_buttons(self) -> None:
-        root, kp, _ = self._make_keypad(LIGHT)
-        try:
-            kp.set_theme(DARK)
-            assert kp._theme is DARK
-            for label, btn in kp._buttons.items():
-                assert btn.cget("bg") != LIGHT.keypad_digit.bg or True
         finally:
             root.destroy()
 

@@ -11,7 +11,7 @@ import pytest
 from pyqalculate_gui.event_bus import EventBus, HISTORY_RECALLED
 from pyqalculate_gui.history_view import HistoryView, HistoryEntry
 from pyqalculate_gui.i18n import _
-from pyqalculate_gui.theme import LIGHT, DARK
+from pyqalculate_gui.theme import LIGHT
 
 
 def _no_display() -> bool:
@@ -38,6 +38,7 @@ def root():
         root.destroy()
     except Exception:
         pass
+
 
 
 @pytest.fixture
@@ -297,8 +298,3 @@ class TestTheme:
         """Given: no theme specified When: creating view Then: uses LIGHT theme."""
         view = HistoryView(root)
         assert view._theme is LIGHT
-
-    def test_custom_theme(self, root: tk.Tk) -> None:
-        """Given: DARK theme When: creating view Then: theme applied."""
-        view = HistoryView(root, theme=DARK)
-        assert view._theme is DARK

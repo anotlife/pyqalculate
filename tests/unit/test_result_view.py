@@ -13,7 +13,7 @@ from pyqalculate_gui.event_bus import (
     EventBus,
 )
 from pyqalculate_gui.i18n import _
-from pyqalculate_gui.theme import DARK, LIGHT, Theme
+from pyqalculate_gui.theme import LIGHT, Theme
 
 
 def _make_view(
@@ -38,11 +38,6 @@ class TestConstructor:
         assert view._theme is LIGHT
         assert view._event_bus is None
         assert view._last_result == ""
-        root.destroy()
-
-    def test_custom_theme(self) -> None:
-        view, root = _make_view(theme=DARK)
-        assert view._theme is DARK
         root.destroy()
 
     def test_event_bus_subscribes_to_expression_submitted(self) -> None:

@@ -9,7 +9,7 @@ import tkinter as tk
 import pytest
 
 from pyqalculate_gui.plot_dialog import PlotDialog
-from pyqalculate_gui.theme import DARK, LIGHT
+from pyqalculate_gui.theme import LIGHT
 
 
 # ---------------------------------------------------------------------------
@@ -50,15 +50,6 @@ class TestPlotDialogInstantiation:
         try:
             dlg = PlotDialog(root)
             assert dlg._theme is LIGHT
-        finally:
-            root.destroy()
-
-    def test_custom_theme(self) -> None:
-        """Custom theme is stored."""
-        root = _make_root()
-        try:
-            dlg = PlotDialog(root, theme=DARK)
-            assert dlg._theme is DARK
         finally:
             root.destroy()
 

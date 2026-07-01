@@ -8,7 +8,7 @@ import tkinter as tk
 import pytest
 
 from pyqalculate_gui.dialogs.number_bases import NumberBasesDialog
-from pyqalculate_gui.theme import DARK, LIGHT
+from pyqalculate_gui.theme import LIGHT
 
 
 # ---------------------------------------------------------------------------
@@ -155,14 +155,6 @@ class TestDialogInstantiation:
         try:
             dlg = NumberBasesDialog(root)
             assert dlg._theme is LIGHT
-        finally:
-            root.destroy()
-
-    def test_custom_theme(self) -> None:
-        root = _make_root()
-        try:
-            dlg = NumberBasesDialog(root, theme=DARK)
-            assert dlg._theme is DARK
         finally:
             root.destroy()
 

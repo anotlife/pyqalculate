@@ -10,7 +10,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from pyqalculate_gui.event_bus import CONVERSION_RESULT, EventBus
-from pyqalculate_gui.theme import DARK, LIGHT, Theme
+from pyqalculate_gui.theme import LIGHT, Theme
 
 
 def _no_display() -> bool:
@@ -80,12 +80,6 @@ class TestConstructor:
         assert v._theme is LIGHT
         assert v._event_bus is None
         assert v._calc is mock_calc
-
-    def test_custom_theme(self, mock_calc) -> None:
-        from pyqalculate_gui.conversion_view import ConversionView
-
-        v = ConversionView(_root, theme=DARK, calculator=mock_calc)
-        assert v._theme is DARK
 
     def test_no_calculator(self) -> None:
         """Widget builds without error when calculator is None."""

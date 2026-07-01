@@ -68,7 +68,7 @@ from pyqalculate_gui.preferences_dialog import DEFAULT_SETTINGS, PreferencesDial
 from pyqalculate_gui.result_view import ResultView
 from pyqalculate_gui.state import AppState
 from pyqalculate_gui.status_bar import StatusBar
-from pyqalculate_gui.theme import LIGHT, Theme, get_theme
+from pyqalculate_gui.theme import LIGHT, Theme
 
 _ANSWER_RE = re.compile(r"answer\(\s*(-?\d+)\s*\)")
 
@@ -101,6 +101,10 @@ class App:
         self._build_ui()
         self._wire_events()
         self._init_shortcuts()
+        self._base_width = 400
+        self._last_scale = 1.0
+        self._resize_after_id = None
+        self._root.bind("<Configure>", self._on_window_resize)
         self._update_status()
         self._root.after(100, self._expr_edit.focus_input)
 
@@ -161,7 +165,7 @@ class App:
             event_bus=self._event_bus,
             state=self._state,
         )
-        self._expr_edit.pack(fill=tk.BOTH, expand=True, side=tk.TOP, pady=(0, 4))
+        self._expr_edit.pack(fill=tk.X, side=tk.TOP, pady=(0, 4))
 
         # Status bar at bottom (packed first to anchor)
         self._status_bar = StatusBar(
@@ -173,7 +177,7 @@ class App:
         self._keypad = KeypadWidget(
             main, theme=self._theme, event_bus=self._event_bus,
         )
-        self._keypad.pack(fill=tk.X, side=tk.BOTTOM, pady=(4, 0))
+        self._keypad.pack(fill=tk.BOTH, expand=True, side=tk.BOTTOM, pady=(4, 0))
 
         # History view (backend only — not packed; used by answer(N) and Tools window)
         self._history_view = HistoryView(
@@ -376,9 +380,6 @@ class App:
 
     def _on_preference_applied(self, settings: dict[str, object]) -> None:
         """React to preference changes (theme switch, approximation, etc.)."""
-        theme_name = settings.get("theme", "light")
-        if isinstance(theme_name, str):
-            self._theme = get_theme(theme_name)
         # Push new theme to every child widget that supports it
         for widget in (
             self._menu_bar,
@@ -440,6 +441,40 @@ class App:
     def _on_result_displayed(self, expression: str, result: str, exact: bool) -> None:
         """Update expression status bar when a result is displayed."""
         self._expr_status.show_autocalc_result(result, exact)
+
+    # ------------------------------------------------------------------
+    # Handlers — window resize
+    # ------------------------------------------------------------------
+
+    def _on_window_resize(self, event: tk.Event) -> None:
+        if event.widget != self._root:
+            return
+        if self._resize_after_id is not None:
+            self._root.after_cancel(self._resize_after_id)
+        self._resize_after_id = self._root.after(100, self._apply_scaled_theme)
+
+    def _apply_scaled_theme(self) -> None:
+        scale = max(min(self._root.winfo_width() / self._base_width, 1.5), 0.7)
+        if abs(scale - self._last_scale) < 0.05:
+            return
+        self._last_scale = scale
+        self._theme = LIGHT.with_scaled_fonts(scale)
+        for widget in (
+            self._menu_bar,
+            self._status_bar,
+            self._keypad,
+            self._expr_edit,
+            self._result_view,
+            self._autocomplete,
+            self._history_view,
+        ):
+            set_theme_fn = getattr(widget, "set_theme", None)
+            if set_theme_fn is not None:
+                set_theme_fn(self._theme)
+        if self._conversion_window is not None and self._conversion_window.is_alive():
+            self._conversion_window.set_theme(self._theme)
+        if self._history_window is not None and self._history_window.is_alive():
+            self._history_window.set_theme(self._theme)
 
     # ------------------------------------------------------------------
     # Handlers — view toggles

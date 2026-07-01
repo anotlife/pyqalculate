@@ -11,7 +11,7 @@ from pyqalculate_gui.calculator_service import CalculatorService, FunctionInfo
 from pyqalculate_gui.dialogs.base import ModalDialog
 from pyqalculate_gui.dialogs.functions_list import FunctionsListDialog
 from pyqalculate_gui.event_bus import EventBus
-from pyqalculate_gui.theme import DARK, LIGHT
+from pyqalculate_gui.theme import LIGHT
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -49,15 +49,6 @@ class TestFunctionsListDialogInstantiation:
         try:
             dlg = FunctionsListDialog(root)
             assert dlg._theme is LIGHT
-        finally:
-            root.destroy()
-
-    def test_custom_theme(self) -> None:
-        """Custom theme is stored."""
-        root = _make_root()
-        try:
-            dlg = FunctionsListDialog(root, theme=DARK)
-            assert dlg._theme is DARK
         finally:
             root.destroy()
 

@@ -58,7 +58,7 @@ class ExpressionEdit(ttk.Frame):
             fg=self._theme.expression_fg,
             insertbackground=self._theme.fg,
             selectbackground=self._theme.select_bg,
-            height=3,
+            height=4,
             wrap=tk.WORD,
             undo=False,  # We manage undo ourselves
         )
@@ -206,4 +206,12 @@ class ExpressionEdit(ttk.Frame):
             fg=theme.expression_fg,
             insertbackground=theme.fg,
             selectbackground=theme.select_bg,
+        )
+        self._entry.tag_configure(
+            "expr_tag",
+            font=(theme.expression_font[0], max(8, int(round(theme.expression_font[1] * 0.555)))),
+        )
+        self._entry.tag_configure(
+            "result_tag",
+            font=(theme.result_font[0], max(10, int(round(theme.result_font[1] * 1.833))), "bold"),
         )

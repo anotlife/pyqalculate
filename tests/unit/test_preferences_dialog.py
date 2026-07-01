@@ -58,9 +58,6 @@ class TestDefaultSettings:
             "digit_grouping",
             "unicode_signs",
             "exp_display",
-            "font_family",
-            "font_size",
-            "theme",
             "language",
         }
         assert expected == set(DEFAULT_SETTINGS.keys())
@@ -68,11 +65,6 @@ class TestDefaultSettings:
     def test_default_precision_is_int(self) -> None:
         """Given: DEFAULT_SETTINGS\nWhen:  precision accessed\nThen:  value is an int."""
         assert isinstance(DEFAULT_SETTINGS["precision"], int)
-
-    def test_default_theme_is_light(self) -> None:
-        """Given: DEFAULT_SETTINGS\nWhen:  theme accessed\nThen:  value is 'light'."""
-        assert DEFAULT_SETTINGS["theme"] == "light"
-
 
 class TestLoadSettings:
     """_load_settings behavior."""
@@ -92,7 +84,7 @@ class TestLoadSettings:
         """Given: a valid JSON config file\nWhen:  _load_settings called\nThen:  merges with defaults."""
         _reset_config_file(tmp_path)
         cfg = _get_config_file()
-        data = {"precision": 20, "theme": "dark"}
+        data = {"precision": 20, "digit_grouping": True}
         cfg.write_text(json.dumps(data), encoding="utf-8")
 
         root = tk.Tk()
@@ -100,7 +92,7 @@ class TestLoadSettings:
         try:
             dlg = PreferencesDialog(root)
             assert dlg._settings["precision"] == 20
-            assert dlg._settings["theme"] == "dark"
+            assert dlg._settings["digit_grouping"] is True
             # Unset keys fall back to defaults
             assert dlg._settings["angle_unit"] == DEFAULT_SETTINGS["angle_unit"]
         finally:
