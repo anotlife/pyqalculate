@@ -1,6 +1,6 @@
 """Centralized theme with design tokens for the pyQalculate GUI."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 
 @dataclass(frozen=True)
@@ -46,6 +46,30 @@ class Theme:
     keypad_action: ButtonStyle
     keypad_equals: ButtonStyle
 
+    def with_scaled_fonts(self, scale: float) -> "Theme":
+        """Return a new Theme with all font sizes scaled by *scale*."""
+        def _scale_font(font: tuple) -> tuple:
+            if len(font) == 3:
+                return (font[0], int(round(font[1] * scale)), font[2])
+            return (font[0], int(round(font[1] * scale)))
+
+        def _scale_button(bs: ButtonStyle) -> ButtonStyle:
+            return ButtonStyle(bs.bg, bs.fg, bs.hover_bg, _scale_font(bs.font))
+
+        return replace(
+            self,
+            expression_font=_scale_font(self.expression_font),
+            result_font=_scale_font(self.result_font),
+            info_font=_scale_font(self.info_font),
+            keypad_digit=_scale_button(self.keypad_digit),
+            keypad_op=_scale_button(self.keypad_op),
+            keypad_func=_scale_button(self.keypad_func),
+            keypad_const=_scale_button(self.keypad_const),
+            keypad_var=_scale_button(self.keypad_var),
+            keypad_action=_scale_button(self.keypad_action),
+            keypad_equals=_scale_button(self.keypad_equals),
+        )
+
 
 LIGHT = Theme(
     bg="#ffffff",
@@ -71,32 +95,3 @@ LIGHT = Theme(
     keypad_equals=ButtonStyle("#2e86c1", "#ffffff", "#1a5276", ("Arial", 12, "bold")),
 )
 
-DARK = Theme(
-    bg="#1e1e1e",
-    fg="#d4d4d4",
-    entry_bg="#2d2d2d",
-    select_bg="#264f78",
-    expression_fg="#d4d4d4",
-    result_fg="#569cd6",
-    result_approx_fg="#ce9178",
-    error_fg="#f44747",
-    warning_fg="#e5c07b",
-    separator_fg="#808080",
-    info_fg="#4ec9b0",
-    expression_font=("Consolas", 18),
-    result_font=("Consolas", 12, "bold"),
-    info_font=("Consolas", 9),
-    keypad_digit=ButtonStyle("#333333", "#d4d4d4", "#444444", ("Arial", 11)),
-    keypad_op=ButtonStyle("#264f78", "#569cd6", "#37699e", ("Arial", 11, "bold")),
-    keypad_func=ButtonStyle("#1e3a2d", "#4ec9b0", "#2d5a47", ("Arial", 10)),
-    keypad_const=ButtonStyle("#3d2e1e", "#ce9178", "#5a4530", ("Arial", 10)),
-    keypad_var=ButtonStyle("#2d1e3d", "#c586c0", "#45305a", ("Arial", 10)),
-    keypad_action=ButtonStyle("#3d1e1e", "#f44747", "#5a3030", ("Arial", 10)),
-    keypad_equals=ButtonStyle("#0e639c", "#ffffff", "#1177bb", ("Arial", 12, "bold")),
-)
-
-
-def get_theme(name: str) -> Theme:
-    """Get theme by name."""
-    themes = {"light": LIGHT, "dark": DARK}
-    return themes.get(name.lower(), LIGHT)

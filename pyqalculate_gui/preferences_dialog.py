@@ -44,10 +44,6 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "unicode_signs": False,
     "exp_display": "default",  # default | uppercase_e | lowercase_e | power_of_10
 
-    # Appearance
-    "font_family": "Consolas",
-    "font_size": 11,
-    "theme": "light",  # light | dark
     "language": "en",  # en | zh_CN
 }
 
@@ -57,8 +53,7 @@ class PreferencesDialog(ModalDialog):
 
     Organised into tabs:
       - Calculation: precision, approximation mode, angle unit
-      - Display: number format, digit grouping, exponent display
-      - Appearance: font family/size, theme
+      - Display: number format, digit grouping, exponent display, language
     """
 
     def __init__(
@@ -121,7 +116,6 @@ class PreferencesDialog(ModalDialog):
 
         self._build_calc_tab(notebook)
         self._build_display_tab(notebook)
-        self._build_appearance_tab(notebook)
 
     # ---- Calculation tab ----
 
@@ -267,75 +261,9 @@ class PreferencesDialog(ModalDialog):
             state="readonly",
             width=16,
         ).grid(row=row, column=1, sticky="w", padx=(12, 0), pady=(0, 4))
-
-        frame.columnconfigure(1, weight=1)
-
-    # ---- Appearance tab ----
-
-    def _build_appearance_tab(self, notebook: ttk.Notebook) -> None:
-        """Build the Appearance settings tab."""
-        frame = ttk.Frame(notebook, padding=12)
-        notebook.add(frame, text="  " + _("Appearance") + "  ")
-
-        row = 0
-
-        # Font family
-        ttk.Label(frame, text=_("Font family:"), font=("", 10)).grid(
-            row=row, column=0, sticky="w", pady=(0, 4),
-        )
-        family_var = tk.StringVar(value=self._settings["font_family"])
-        self._vars["font_family"] = family_var
-        ttk.Combobox(
-            frame,
-            textvariable=family_var,
-            values=[
-                "Consolas", "Courier New", "Cascadia Code",
-                "Fira Code", "Source Code Pro", "Monaco",
-                "Menlo", "Noto Sans CJK SC", "Microsoft YaHei",
-                "monospace",
-            ],
-            width=18,
-        ).grid(row=row, column=1, sticky="w", padx=(12, 0), pady=(0, 4))
         row += 1
 
-        # Font size
-        ttk.Label(frame, text=_("Font size:"), font=("", 10)).grid(
-            row=row, column=0, sticky="w", pady=(0, 4),
-        )
-        size_var = tk.IntVar(value=self._settings["font_size"])
-        self._vars["font_size"] = size_var
-        ttk.Spinbox(
-            frame, from_=8, to=24, textvariable=size_var, width=8,
-        ).grid(row=row, column=1, sticky="w", padx=(12, 0), pady=(0, 4))
-        row += 1
-
-        ttk.Separator(frame, orient=tk.HORIZONTAL).grid(
-            row=row, column=0, columnspan=2, sticky="ew", pady=8,
-        )
-        row += 1
-
-        # Theme
-        ttk.Label(frame, text=_("Theme:"), font=("", 10)).grid(
-            row=row, column=0, sticky="w", pady=(0, 4),
-        )
-        theme_var = tk.StringVar(value=self._settings["theme"])
-        self._vars["theme"] = theme_var
-        theme_frame = ttk.Frame(frame)
-        theme_frame.grid(row=row, column=1, sticky="w", padx=(12, 0), pady=(0, 4))
-        ttk.Radiobutton(
-            theme_frame, text=_("Light"), variable=theme_var, value="light",
-        ).pack(side=tk.LEFT, padx=(0, 16))
-        ttk.Radiobutton(
-            theme_frame, text=_("Dark"), variable=theme_var, value="dark",
-        ).pack(side=tk.LEFT)
-        row += 1
-
-        ttk.Separator(frame, orient=tk.HORIZONTAL).grid(
-            row=row, column=0, columnspan=2, sticky="ew", pady=8,
-        )
-        row += 1
-
-        # Language
+        ttk.Separator(frame, orient=tk.HORIZONTAL).grid(row=row, column=0, columnspan=2, sticky="ew", pady=8); row += 1
         ttk.Label(frame, text=_("Language:"), font=("", 10)).grid(
             row=row, column=0, sticky="w", pady=(0, 4),
         )

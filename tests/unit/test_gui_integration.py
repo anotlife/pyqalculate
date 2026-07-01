@@ -27,7 +27,7 @@ from pyqalculate_gui.event_bus import (
 from pyqalculate_gui.history_view import HistoryView
 from pyqalculate_gui.result_view import ResultView
 from pyqalculate_gui.state import AppState
-from pyqalculate_gui.theme import DARK, LIGHT, Theme, get_theme
+from pyqalculate_gui.theme import LIGHT, Theme
 
 
 HAS_DISPLAY = bool(
@@ -283,28 +283,6 @@ class TestThemeLoading:
         """LIGHT theme is a valid Theme."""
         assert isinstance(LIGHT, Theme)
         assert LIGHT.bg == "#ffffff"
-
-    def test_dark_theme_exists(self) -> None:
-        """DARK theme is a valid Theme."""
-        assert isinstance(DARK, Theme)
-        assert DARK.bg == "#1e1e1e"
-
-    def test_get_theme_light(self) -> None:
-        """get_theme('light') returns LIGHT."""
-        assert get_theme("light") is LIGHT
-
-    def test_get_theme_dark(self) -> None:
-        """get_theme('dark') returns DARK."""
-        assert get_theme("dark") is DARK
-
-    def test_get_theme_unknown_defaults_to_light(self) -> None:
-        """Unknown theme name defaults to LIGHT."""
-        assert get_theme("nonexistent") is LIGHT
-
-    def test_theme_case_insensitive(self) -> None:
-        """Theme lookup is case-insensitive."""
-        assert get_theme("LIGHT") is LIGHT
-        assert get_theme("Dark") is DARK
 
     def test_theme_is_frozen(self) -> None:
         """Theme dataclass is immutable."""

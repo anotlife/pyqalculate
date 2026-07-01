@@ -15,7 +15,7 @@ from pyqalculate_gui.event_bus import (
     EventBus,
 )
 from pyqalculate_gui.menu_bar import MenuBar
-from pyqalculate_gui.theme import DARK, LIGHT
+from pyqalculate_gui.theme import LIGHT
 
 # Single module-level root avoids Tcl flake from rapid Tk() creation/teardown.
 _root: tk.Tk | None = None
@@ -49,10 +49,6 @@ class TestConstructor:
         bar = _menu()
         assert bar._theme is LIGHT
         assert bar._event_bus is None
-
-    def test_custom_theme(self) -> None:
-        bar = _menu(theme=DARK)
-        assert bar._theme is DARK
 
     def test_no_event_bus(self) -> None:
         bar = _menu(event_bus=None)
